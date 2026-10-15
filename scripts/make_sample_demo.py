@@ -23,74 +23,75 @@ OUT_DIR = ROOT / "api" / "app" / "data"
 rng = random.Random(42)
 
 SEGMENTS = [
-    {"segment_id": "seg_value", "name": "Value-hunting students", "share": 0.30},
-    {"segment_id": "seg_health", "name": "Health-conscious professionals", "share": 0.22},
-    {"segment_id": "seg_trend", "name": "Trend-driven Gen Z", "share": 0.20},
-    {"segment_id": "seg_family", "name": "Practical family shoppers", "share": 0.16},
-    {"segment_id": "seg_premium", "name": "Premium café lovers", "share": 0.12},
+    {"segment_id": "seg_value", "name": "Value-for-money buyers", "share": 0.30},
+    {"segment_id": "seg_durable", "name": "Durability skeptics", "share": 0.22},
+    {"segment_id": "seg_power", "name": "Fast-charging power users", "share": 0.20},
+    {"segment_id": "seg_brand", "name": "Brand-trust shoppers", "share": 0.16},
+    {"segment_id": "seg_gift", "name": "Convenience & gift buyers", "share": 0.12},
 ]
 
 NAMES = ["Priya", "Arjun", "Meera", "Rahul", "Ananya", "Karthik", "Sneha", "Vikram", "Divya", "Rohan",
          "Lakshmi", "Aditya", "Pooja", "Siddharth", "Nisha", "Farhan", "Kavya", "Manish", "Ishita", "Suresh",
          "Neha", "Harish", "Tanvi", "Imran", "Revathi", "Gaurav", "Aisha", "Deepak", "Shreya", "Naveen"]
 CITIES = ["Pune", "Bengaluru", "Chennai", "Mumbai", "Delhi", "Hyderabad", "Kochi", "Jaipur", "Indore", "Kolkata"]
-AGES = {"seg_value": (18, 24), "seg_health": (27, 40), "seg_trend": (18, 26), "seg_family": (32, 48), "seg_premium": (25, 38)}
+AGES = {"seg_value": (18, 26), "seg_durable": (26, 45), "seg_power": (22, 35), "seg_brand": (30, 52), "seg_gift": (24, 40)}
 
 # (likes, objections, buyer quotes, non-buyer quotes) per segment, for each variant.
 TEXT = {
     "original": {
-        "seg_value": (["Cold coffee taste", "Convenient bottle"], ["Too expensive for a student", "Pack too big for one sitting"],
-                      ["If it tastes like café cold coffee, ₹149 is still cheaper than a café."],
-                      ["₹149 for one drink? I'd rather get two from the canteen.", "Nice idea, but that price is my whole lunch budget."]),
-        "seg_health": (["Real coffee", "Less sugar than café drinks"], ["Looks like an energy drink", "Unclear sugar content"],
-                       ["Fine as an occasional treat if the label is honest about sugar."],
-                       ["The can design screams energy drink. I don't trust what's inside.", "I need to see grams of sugar before I buy."]),
-        "seg_trend": (["Instagram-worthy idea", "Bold flavour"], ["Pack looks generic", "Too expensive to try"],
-                      ["Would try it once if it shows up on Reels."],
-                      ["Looks like every other energy drink, nothing to post about."]),
-        "seg_family": (["Ready to drink", "Good for guests"], ["Too expensive per ml", "Looks like an energy drink"],
-                       ["Handy to keep in the fridge for weekends."],
-                       ["I wouldn't give my kids something that looks like an energy drink.", "Too costly to buy for the whole family."]),
-        "seg_premium": (["Proper coffee strength", "Smooth texture"], ["Not as good as fresh brew"],
-                        ["Good enough when I can't get to my café, and ₹149 is fair.", "I'd pay this for decent cold brew on the go."],
-                        ["Bottled coffee never matches a fresh pour."]),
+        "seg_value": (["Braided build", "Long 2 m length"], ["Too expensive for a cable", "Cheaper cables do the same job"],
+                      ["If it really lasts two years, ₹799 works out cheaper than buying three ₹299 cables."],
+                      ["₹799 for a cable? My ₹299 one charges just fine.", "Nice cable, but I'd wait for a sale under ₹400."]),
+        "seg_durable": (["Nylon braiding", "Bend-tested claim"], ["No warranty mentioned", "Braided cables still fray at the neck"],
+                        ["The bend test sounds serious. I'll try it."],
+                        ["Every braided cable I bought frayed at the connector within months. No warranty, no deal.",
+                         "10,000 bends is just a claim. Show me a replacement warranty."]),
+        "seg_power": (["65W laptop charging", "One cable for phone and laptop"], ["Want e-marker chip details"],
+                      ["65W on a 2 m cable means I can charge my laptop from the sofa. Worth ₹799.",
+                       "Finally one cable for my phone and MacBook. Buying."],
+                      ["Need to know if it has an e-marker chip before trusting 65W."]),
+        "seg_brand": (["Looks premium"], ["Unknown brand", "No reviews yet"],
+                      ["Looks well made, I'll take a chance."],
+                      ["Never heard of this brand. I'll stick with what I know for ₹100 more.", "Zero reviews, so I'll wait."]),
+        "seg_gift": (["Premium look", "Long cable"], ["Plain packaging"],
+                     ["Good as a small gift for my brother, it looks premium.", "2 m is great next to the bed."],
+                     ["Packaging is too plain to gift."]),
     },
     "v1": {
-        "seg_value": (["₹99 is affordable", "Right size for one person", "Cold coffee taste"], ["Still want discounts"],
-                      ["₹99 for a proper cold coffee? I'd buy it after class.", "Smaller pack, lower price, perfect for me."],
-                      ["Would wait for a combo offer."]),
-        "seg_health": (["Clean label", "Less sugar than café drinks", "Real coffee"], ["Want a no-sugar option"],
-                       ["The new label makes it clear what's inside. I'd try it.", "Cleaner design looks like a coffee, not a stimulant."],
-                       ["I'd still want a zero-sugar version."]),
-        "seg_trend": (["Clean aesthetic", "Affordable to try"], ["Not unique enough"],
-                      ["The new pack actually looks nice in a photo.", "At ₹99 I'll try it with friends."],
-                      ["Cute pack, but I'm not sure it's special."]),
-        "seg_family": (["Better value", "Looks like coffee now"], ["Small pack for sharing"],
-                       ["At ₹99 I can pick a few for the fridge."],
-                       ["Too small to share with the family."]),
-        "seg_premium": (["Smooth texture", "Proper coffee strength"], ["Smaller pack feels less premium"],
-                        ["Still good coffee. Price is fine."],
-                        ["Smaller bottle feels like a downgrade.", "I'd rather pay more for a bigger bottle."]),
+        "seg_value": (["₹449 is fair", "Braided build", "Warranty included"], ["Still want a 2-pack deal"],
+                      ["₹449 with 18 months' warranty? That's an easy yes.", "At this price it beats my usual ₹299 cable."],
+                      ["I'd wait for a 2-pack offer."]),
+        "seg_durable": (["18-month replacement warranty", "Bend-test shown on pack"], ["Want to see real reviews"],
+                        ["If it frays they'll replace it, so I'm not taking a risk.", "Warranty on the box finally makes the claim believable."],
+                        ["Warranty is good, but I'll wait for a few reviews."]),
+        "seg_power": (["65W laptop charging", "Good price"], ["Doubt 65W at this price"],
+                      ["Same 65W cable, cheaper. Buying two."],
+                      ["At ₹449 I'm not sure it really does 65W safely.", "Cheaper makes me doubt the chip inside."]),
+        "seg_brand": (["Warranty builds trust"], ["Unknown brand"],
+                      ["A replacement warranty makes an unknown brand less risky."],
+                      ["Still an unknown brand, warranty or not."]),
+        "seg_gift": (["Affordable gift", "Clean box"], ["Plain packaging"],
+                     ["At ₹449 it's an easy add-on gift.", "Good value for a stocking filler."],
+                     ["Still a bit plain to gift."]),
     },
 }
 
-# Probability of would_buy per segment per variant: tells the demo story.
+# Probability of a "yes" per segment per variant: tells the demo story.
 P_BUY = {
-    "original": {"seg_value": 0.12, "seg_health": 0.29, "seg_trend": 0.34, "seg_family": 0.40, "seg_premium": 0.67},
-    "v1": {"seg_value": 0.78, "seg_health": 0.58, "seg_trend": 0.50, "seg_family": 0.60, "seg_premium": 0.34},
+    "original": {"seg_value": 0.11, "seg_durable": 0.14, "seg_power": 0.67, "seg_brand": 0.20, "seg_gift": 0.67},
+    "v1": {"seg_value": 0.78, "seg_durable": 0.71, "seg_power": 0.50, "seg_brand": 0.40, "seg_gift": 0.67},
 }
-WTP_MEAN = {"seg_value": 85, "seg_health": 120, "seg_trend": 105, "seg_family": 110, "seg_premium": 165}
+WTP_MEAN = {"seg_value": 380, "seg_durable": 520, "seg_power": 820, "seg_brand": 600, "seg_gift": 650}
 
 PRODUCTS = {
-    "original": {"name": "BrewChill Cold Coffee", "description": "Ready-to-drink cold coffee made with Arabica, in a slim 300 ml can.",
-                 "price_inr": 149, "pack_size": "300 ml can", "channel": "Quick commerce"},
-    "v1": {"name": "BrewChill Cold Coffee (Mini)", "description": "Same Arabica cold coffee in a 200 ml bottle with a clean, café-style label showing sugar per serving.",
-           "price_inr": 99, "pack_size": "200 ml bottle", "channel": "Quick commerce"},
+    "original": {"name": "WeaveCharge 65W USB-C Cable", "description": "Nylon-braided USB-C to USB-C cable, 2 m, 65W fast charging for phones and laptops, 10,000-bend tested.",
+                 "price_inr": 799, "pack_size": "1 cable, 2 m", "channel": "E-commerce marketplace"},
+    "v1": {"name": "WeaveCharge 65W USB-C Cable", "description": "Same 2 m braided 65W cable, now with an 18-month replacement warranty and the bend test shown on the box.",
+           "price_inr": 449, "pack_size": "1 cable, 2 m", "channel": "E-commerce marketplace"},
 }
 
 
-COUNTS = {"seg_value": 9, "seg_health": 7, "seg_trend": 6, "seg_family": 5, "seg_premium": 3}  # 30 live personas
-
+COUNTS = {"seg_value": 9, "seg_durable": 7, "seg_power": 6, "seg_brand": 5, "seg_gift": 3}  # 30 live personas
 
 def personas() -> list[dict]:
     out, i = [], 0
@@ -131,64 +132,65 @@ def demo() -> dict:
     original = aggregate_variant("original", PRODUCTS["original"], rows_for("original", people), SEGMENTS)
     improved = aggregate_variant("v1", PRODUCTS["v1"], rows_for("v1", people), SEGMENTS)
     original["insights"] = {
-        "headline": "Only 3 in 10 AI customers would buy at ₹149, held back by price and an energy-drink look.",
+        "headline": "Only 3 in 10 AI customers would buy at ₹799: price and durability doubts hold back the biggest segments.",
         "overall_verdict": "launch_with_changes",
         "best_segments": [
-            {"segment_name": "Premium café lovers", "why": "They value proper coffee strength and see ₹149 as fair for cold brew on the go."},
-            {"segment_name": "Practical family shoppers", "why": "Like having a ready-to-drink option in the fridge for weekends and guests."},
+            {"segment_name": "Fast-charging power users", "why": "65W laptop charging on a 2 m cable solves a real problem for them, and ₹799 feels fair."},
+            {"segment_name": "Convenience & gift buyers", "why": "The premium look and long cable appeal; price matters less for an occasional purchase."},
         ],
         "weakest_segments": [
-            {"segment_name": "Value-hunting students", "why": "The largest segment, but ₹149 is far above what they expect to pay for one drink."},
-            {"segment_name": "Health-conscious professionals", "why": "The can reads as an energy drink and the sugar content is unclear."},
+            {"segment_name": "Value-for-money buyers", "why": "The largest segment, but they compare against ₹299 cables that already work."},
+            {"segment_name": "Durability skeptics", "why": "Past braided cables frayed at the connector, and there is no warranty to back the bend-test claim."},
         ],
-        "price_insight": "Median willingness to pay is ₹102, and only 10% would pay ₹149 or more. A price near ₹99 would clear most customers' ceiling.",
+        "price_insight": "Median willingness to pay is well below ₹799, and only power users regularly go above it. A price under ₹500 would clear most customers' ceiling.",
         "top_3_objections": [
-            {"objection": "Too expensive for one drink", "segments_affected": ["Value-hunting students", "Practical family shoppers"]},
-            {"objection": "Looks like an energy drink", "segments_affected": ["Health-conscious professionals", "Practical family shoppers"]},
-            {"objection": "Pack looks generic", "segments_affected": ["Trend-driven Gen Z"]},
+            {"objection": "Too expensive for a cable", "segments_affected": ["Value-for-money buyers"]},
+            {"objection": "No warranty mentioned", "segments_affected": ["Durability skeptics", "Brand-trust shoppers"]},
+            {"objection": "Unknown brand with no reviews", "segments_affected": ["Brand-trust shoppers"]},
         ],
-        "top_3_strengths": ["Cold coffee taste", "Convenient ready-to-drink format", "Less sugar than café drinks"],
-        "standout_quotes": ["₹149 for one drink? I'd rather get two from the canteen."],
-        "recommended_target_segment": "Value-hunting students, if the price comes down",
+        "top_3_strengths": ["65W laptop charging", "Braided build", "Long 2 m length"],
+        "standout_quotes": ["Every braided cable I bought frayed at the connector within months. No warranty, no deal."],
+        "recommended_target_segment": "Value-for-money buyers, if the price drops and a warranty is added",
         "caveat": "These are AI-simulated customers; validate the winning variant with a small real-customer test.",
     }
     improved["insights"] = {
-        "headline": "The ₹99 mini pack doubles purchase intent to 60%, led by students.",
+        "headline": "At ₹449 with an 18-month warranty, purchase intent doubles to over 60%, led by value buyers and durability skeptics.",
         "overall_verdict": "launch",
         "best_segments": [
-            {"segment_name": "Value-hunting students", "why": "₹99 fits their budget and the 200 ml size suits a single serving."},
-            {"segment_name": "Health-conscious professionals", "why": "The clean label showing sugar per serving removed the energy-drink concern."},
+            {"segment_name": "Value-for-money buyers", "why": "₹449 now beats replacing cheap cables, and the warranty removes the risk."},
+            {"segment_name": "Durability skeptics", "why": "A replacement warranty on the box makes the bend-test claim believable."},
         ],
         "weakest_segments": [
-            {"segment_name": "Premium café lovers", "why": "The smaller bottle feels less premium to them."},
+            {"segment_name": "Brand-trust shoppers", "why": "Still wary of an unknown brand, though the warranty helps."},
+            {"segment_name": "Fast-charging power users", "why": "Some now doubt a ₹449 cable can safely deliver 65W."},
         ],
-        "price_insight": "Two thirds of AI customers would pay ₹99 or more, with a median of ₹110, so there is a little headroom.",
+        "price_insight": "Most AI customers would pay ₹449 or more, so the new price sits comfortably inside their range.",
         "top_3_objections": [
-            {"objection": "Smaller pack feels less premium", "segments_affected": ["Premium café lovers"]},
-            {"objection": "Too small to share", "segments_affected": ["Practical family shoppers"]},
-            {"objection": "Want a no-sugar option", "segments_affected": ["Health-conscious professionals"]},
+            {"objection": "Doubt 65W at this price", "segments_affected": ["Fast-charging power users"]},
+            {"objection": "Unknown brand", "segments_affected": ["Brand-trust shoppers"]},
+            {"objection": "Want to see real reviews first", "segments_affected": ["Durability skeptics"]},
         ],
-        "top_3_strengths": ["Affordable price", "Right size for one person", "Clean, café-style label"],
-        "standout_quotes": ["₹99 for a proper cold coffee? I'd buy it after class."],
-        "recommended_target_segment": "Value-hunting students",
+        "top_3_strengths": ["Fair price", "18-month replacement warranty", "Braided 65W build"],
+        "standout_quotes": ["If it frays they'll replace it, so I'm not taking a risk."],
+        "recommended_target_segment": "Value-for-money buyers",
         "caveat": "These are AI-simulated customers; validate with a small real-customer test before scaling.",
     }
     suggestions = [
-        {"variant_id": "v1", "title": "Smaller pack at ₹99 with a café-style label",
-         "changes": ["Price ₹149 → ₹99", "300 ml can → 200 ml bottle", "Clean label showing sugar per serving"],
-         "objections_addressed": ["Too expensive for one drink", "Looks like an energy drink"],
-         "expected_effect": "Students and health-conscious buyers should respond better: lower price and a coffee-like look.",
-         "risk": "Premium café lovers may see the smaller bottle as less premium.",
+        {"variant_id": "v1", "title": "₹449 with an 18-month replacement warranty",
+         "changes": ["Price ₹799 → ₹449", "Add an 18-month replacement warranty", "Show the bend test on the box"],
+         "objections_addressed": ["Too expensive for a cable", "No warranty mentioned"],
+         "expected_effect": "Value buyers and durability skeptics should respond better: lower price and lower risk.",
+         "risk": "Power users may doubt a cheaper cable delivers 65W safely.",
          "updated_product": {"product_name": PRODUCTS["v1"]["name"], "product_description": PRODUCTS["v1"]["description"],
-                             "price_inr": 99, "pack_size": "200 ml bottle", "channel": "Quick commerce"},
-         "imagen_prompt": "Clean product packshot of a slim 200 ml glass cold coffee bottle, cream and coffee-brown label, sugar per serving shown, soft daylight, white background."},
-        {"variant_id": "v2", "title": "Student 2-pack for ₹249",
-         "changes": ["2 × 300 ml cans for ₹249", "Campus-focused messaging"],
-         "objections_addressed": ["Too expensive for one drink"],
-         "expected_effect": "Lowers the per-drink price for students while keeping the premium can.",
-         "risk": "Still looks like an energy drink to health-conscious buyers.",
-         "updated_product": {"product_name": "BrewChill Cold Coffee 2-pack", "product_description": PRODUCTS["original"]["description"],
-                             "price_inr": 249, "pack_size": "2 × 300 ml cans", "channel": "Quick commerce"},
+                             "price_inr": 449, "pack_size": "1 cable, 2 m", "channel": "E-commerce marketplace"},
+         "imagen_prompt": "Clean product packshot of a coiled grey nylon-braided USB-C cable on a matte white box showing an 18-month warranty badge and a bend-test icon, soft studio light, white background."},
+        {"variant_id": "v2", "title": "Bundle with a 20W adapter for ₹999",
+         "changes": ["Add a 20W USB-C wall adapter", "Price ₹799 → ₹999 for the bundle"],
+         "objections_addressed": ["Too expensive for a cable"],
+         "expected_effect": "Gift buyers and first-time USB-C users get a complete kit, so the price feels justified.",
+         "risk": "Value buyers who already own an adapter will see it as a more expensive cable.",
+         "updated_product": {"product_name": "WeaveCharge 65W USB-C Cable + 20W Adapter", "product_description": "2 m braided 65W USB-C cable bundled with a 20W USB-C wall adapter.",
+                             "price_inr": 999, "pack_size": "1 cable + 1 adapter", "channel": "E-commerce marketplace"},
          "imagen_prompt": None},
     ]
     return build_test_result("demo", [original, improved], created_at="2026-10-17T19:30:00Z",

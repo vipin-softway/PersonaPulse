@@ -8,633 +8,636 @@
     {
       "variant": "original",
       "product": {
-        "name": "BrewChill Cold Coffee",
-        "description": "Ready-to-drink cold coffee made with Arabica, in a slim 300 ml can.",
-        "price_inr": 149,
-        "pack_size": "300 ml can",
-        "channel": "Quick commerce"
+        "name": "WeaveCharge 65W USB-C Cable",
+        "description": "Nylon-braided USB-C to USB-C cable, 2 m, 65W fast charging for phones and laptops, 10,000-bend tested.",
+        "price_inr": 799,
+        "pack_size": "1 cable, 2 m",
+        "channel": "E-commerce marketplace"
       },
       "n_personas": 30,
       "overall": {
         "would_buy_pct": 30.0,
-        "maybe_pct": 16.7,
-        "avg_intent": 2.57,
-        "avg_wtp_inr": 106.33
+        "maybe_pct": 30.0,
+        "avg_intent": 2.73,
+        "avg_wtp_inr": 560.83
       },
       "segments": [
         {
           "segment_id": "seg_value",
-          "segment_name": "Value-hunting students",
+          "segment_name": "Value-for-money buyers",
           "share": 0.3,
           "n": 9,
           "would_buy_pct": 11.1,
-          "maybe_pct": 22.2,
-          "no_pct": 66.7,
-          "avg_intent": 2,
-          "avg_wtp_inr": 82.78,
-          "median_wtp_inr": 75
+          "maybe_pct": 44.4,
+          "no_pct": 44.4,
+          "avg_intent": 2.33,
+          "avg_wtp_inr": 379.44,
+          "median_wtp_inr": 370
         },
         {
-          "segment_id": "seg_health",
-          "segment_name": "Health-conscious professionals",
+          "segment_id": "seg_durable",
+          "segment_name": "Durability skeptics",
           "share": 0.22,
           "n": 7,
-          "would_buy_pct": 28.6,
-          "maybe_pct": 28.6,
+          "would_buy_pct": 14.3,
+          "maybe_pct": 42.9,
           "no_pct": 42.9,
-          "avg_intent": 2.57,
-          "avg_wtp_inr": 114.29,
-          "median_wtp_inr": 110
+          "avg_intent": 2.43,
+          "avg_wtp_inr": 519.29,
+          "median_wtp_inr": 520
         },
         {
-          "segment_id": "seg_trend",
-          "segment_name": "Trend-driven Gen Z",
+          "segment_id": "seg_power",
+          "segment_name": "Fast-charging power users",
           "share": 0.2,
           "n": 6,
-          "would_buy_pct": 33.3,
+          "would_buy_pct": 66.7,
           "maybe_pct": 0.0,
-          "no_pct": 66.7,
-          "avg_intent": 2.5,
-          "avg_wtp_inr": 105,
-          "median_wtp_inr": 98
+          "no_pct": 33.3,
+          "avg_intent": 3.5,
+          "avg_wtp_inr": 817.5,
+          "median_wtp_inr": 822
         },
         {
-          "segment_id": "seg_family",
-          "segment_name": "Practical family shoppers",
+          "segment_id": "seg_brand",
+          "segment_name": "Brand-trust shoppers",
           "share": 0.16,
           "n": 5,
-          "would_buy_pct": 40.0,
-          "maybe_pct": 20.0,
+          "would_buy_pct": 20.0,
+          "maybe_pct": 40.0,
           "no_pct": 40.0,
-          "avg_intent": 3.2,
-          "avg_wtp_inr": 112,
-          "median_wtp_inr": 120
+          "avg_intent": 2.4,
+          "avg_wtp_inr": 587,
+          "median_wtp_inr": 585
         },
         {
-          "segment_id": "seg_premium",
-          "segment_name": "Premium café lovers",
+          "segment_id": "seg_gift",
+          "segment_name": "Convenience & gift buyers",
           "share": 0.12,
           "n": 3,
           "would_buy_pct": 66.7,
           "maybe_pct": 0.0,
           "no_pct": 33.3,
-          "avg_intent": 3.33,
-          "avg_wtp_inr": 151.67,
-          "median_wtp_inr": 155
+          "avg_intent": 3.67,
+          "avg_wtp_inr": 645,
+          "median_wtp_inr": 645
         }
       ],
       "price": {
-        "price_inr": 149.0,
-        "median_wtp_inr": 102,
-        "pct_wtp_at_or_above_price": 10.0,
+        "price_inr": 799.0,
+        "median_wtp_inr": 532,
+        "pct_wtp_at_or_above_price": 16.7,
         "buckets": [
           {
-            "from_inr": 59.0,
-            "to_inr": 89.0,
-            "count": 7
-          },
-          {
-            "from_inr": 89.0,
-            "to_inr": 119.0,
-            "count": 11
-          },
-          {
-            "from_inr": 119.0,
-            "to_inr": 149.0,
+            "from_inr": 319.0,
+            "to_inr": 479.0,
             "count": 9
           },
           {
-            "from_inr": 149.0,
-            "to_inr": 179.0,
+            "from_inr": 479.0,
+            "to_inr": 639.0,
+            "count": 13
+          },
+          {
+            "from_inr": 639.0,
+            "to_inr": 799.0,
             "count": 3
-          }
-        ]
-      },
-      "top_objections": [
-        {
-          "text": "Pack too big for one sitting",
-          "count": 6,
-          "pct": 20.0
-        },
-        {
-          "text": "Pack looks generic",
-          "count": 5,
-          "pct": 16.7
-        },
-        {
-          "text": "Looks like an energy drink",
-          "count": 4,
-          "pct": 13.3
-        },
-        {
-          "text": "Too expensive for a student",
-          "count": 3,
-          "pct": 10.0
-        },
-        {
-          "text": "Unclear sugar content",
-          "count": 3,
-          "pct": 10.0
-        },
-        {
-          "text": "Too expensive per ml",
-          "count": 3,
-          "pct": 10.0
-        }
-      ],
-      "top_likes": [
-        {
-          "text": "Convenient bottle",
-          "count": 9,
-          "pct": 30.0
-        },
-        {
-          "text": "Cold coffee taste",
-          "count": 9,
-          "pct": 30.0
-        },
-        {
-          "text": "Less sugar than café drinks",
-          "count": 7,
-          "pct": 23.3
-        },
-        {
-          "text": "Real coffee",
-          "count": 7,
-          "pct": 23.3
-        },
-        {
-          "text": "Instagram-worthy idea",
-          "count": 6,
-          "pct": 20.0
-        },
-        {
-          "text": "Bold flavour",
-          "count": 6,
-          "pct": 20.0
-        }
-      ],
-      "quotes": [
-        {
-          "persona_id": "p000",
-          "persona_name": "Priya",
-          "age": 23,
-          "city": "Bengaluru",
-          "segment_name": "Value-hunting students",
-          "would_buy": "yes",
-          "purchase_intent": 5,
-          "main_reason": "Cold coffee taste",
-          "quote": "If it tastes like café cold coffee, ₹149 is still cheaper than a café."
-        },
-        {
-          "persona_id": "p010",
-          "persona_name": "Lakshmi",
-          "age": 27,
-          "city": "Indore",
-          "segment_name": "Health-conscious professionals",
-          "would_buy": "yes",
-          "purchase_intent": 5,
-          "main_reason": "Real coffee",
-          "quote": "Fine as an occasional treat if the label is honest about sugar."
-        },
-        {
-          "persona_id": "p022",
-          "persona_name": "Tanvi",
-          "age": 40,
-          "city": "Pune",
-          "segment_name": "Practical family shoppers",
-          "would_buy": "yes",
-          "purchase_intent": 5,
-          "main_reason": "Ready to drink",
-          "quote": "Handy to keep in the fridge for weekends."
-        },
-        {
-          "persona_id": "p028",
-          "persona_name": "Shreya",
-          "age": 34,
-          "city": "Mumbai",
-          "segment_name": "Premium café lovers",
-          "would_buy": "yes",
-          "purchase_intent": 5,
-          "main_reason": "Proper coffee strength",
-          "quote": "Good enough when I can't get to my café, and ₹149 is fair."
-        },
-        {
-          "persona_id": "p003",
-          "persona_name": "Rahul",
-          "age": 19,
-          "city": "Bengaluru",
-          "segment_name": "Value-hunting students",
-          "would_buy": "no",
-          "purchase_intent": 1,
-          "main_reason": "Too expensive for a student",
-          "quote": "₹149 for one drink? I'd rather get two from the canteen."
-        },
-        {
-          "persona_id": "p012",
-          "persona_name": "Pooja",
-          "age": 33,
-          "city": "Mumbai",
-          "segment_name": "Health-conscious professionals",
-          "would_buy": "no",
-          "purchase_intent": 1,
-          "main_reason": "Looks like an energy drink",
-          "quote": "The can design screams energy drink. I don't trust what's inside."
-        },
-        {
-          "persona_id": "p019",
-          "persona_name": "Suresh",
-          "age": 19,
-          "city": "Bengaluru",
-          "segment_name": "Trend-driven Gen Z",
-          "would_buy": "no",
-          "purchase_intent": 1,
-          "main_reason": "Pack looks generic",
-          "quote": "Looks like every other energy drink, nothing to post about."
-        },
-        {
-          "persona_id": "p027",
-          "persona_name": "Deepak",
-          "age": 38,
-          "city": "Hyderabad",
-          "segment_name": "Premium café lovers",
-          "would_buy": "no",
-          "purchase_intent": 1,
-          "main_reason": "Not as good as fresh brew",
-          "quote": "Bottled coffee never matches a fresh pour."
-        }
-      ],
-      "insights": {
-        "headline": "Only 3 in 10 AI customers would buy at ₹149, held back by price and an energy-drink look.",
-        "overall_verdict": "launch_with_changes",
-        "best_segments": [
-          {
-            "segment_name": "Premium café lovers",
-            "why": "They value proper coffee strength and see ₹149 as fair for cold brew on the go."
           },
           {
-            "segment_name": "Practical family shoppers",
-            "why": "Like having a ready-to-drink option in the fridge for weekends and guests."
-          }
-        ],
-        "weakest_segments": [
-          {
-            "segment_name": "Value-hunting students",
-            "why": "The largest segment, but ₹149 is far above what they expect to pay for one drink."
-          },
-          {
-            "segment_name": "Health-conscious professionals",
-            "why": "The can reads as an energy drink and the sugar content is unclear."
-          }
-        ],
-        "price_insight": "Median willingness to pay is ₹102, and only 10% would pay ₹149 or more. A price near ₹99 would clear most customers' ceiling.",
-        "top_3_objections": [
-          {
-            "objection": "Too expensive for one drink",
-            "segments_affected": [
-              "Value-hunting students",
-              "Practical family shoppers"
-            ]
-          },
-          {
-            "objection": "Looks like an energy drink",
-            "segments_affected": [
-              "Health-conscious professionals",
-              "Practical family shoppers"
-            ]
-          },
-          {
-            "objection": "Pack looks generic",
-            "segments_affected": [
-              "Trend-driven Gen Z"
-            ]
-          }
-        ],
-        "top_3_strengths": [
-          "Cold coffee taste",
-          "Convenient ready-to-drink format",
-          "Less sugar than café drinks"
-        ],
-        "standout_quotes": [
-          "₹149 for one drink? I'd rather get two from the canteen."
-        ],
-        "recommended_target_segment": "Value-hunting students, if the price comes down",
-        "caveat": "These are AI-simulated customers; validate the winning variant with a small real-customer test."
-      }
-    },
-    {
-      "variant": "v1",
-      "product": {
-        "name": "BrewChill Cold Coffee (Mini)",
-        "description": "Same Arabica cold coffee in a 200 ml bottle with a clean, café-style label showing sugar per serving.",
-        "price_inr": 99,
-        "pack_size": "200 ml bottle",
-        "channel": "Quick commerce"
-      },
-      "n_personas": 30,
-      "overall": {
-        "would_buy_pct": 60.0,
-        "maybe_pct": 20.0,
-        "avg_intent": 3.6,
-        "avg_wtp_inr": 108.83
-      },
-      "segments": [
-        {
-          "segment_id": "seg_value",
-          "segment_name": "Value-hunting students",
-          "share": 0.3,
-          "n": 9,
-          "would_buy_pct": 77.8,
-          "maybe_pct": 11.1,
-          "no_pct": 11.1,
-          "avg_intent": 4,
-          "avg_wtp_inr": 86.67,
-          "median_wtp_inr": 90
-        },
-        {
-          "segment_id": "seg_health",
-          "segment_name": "Health-conscious professionals",
-          "share": 0.22,
-          "n": 7,
-          "would_buy_pct": 57.1,
-          "maybe_pct": 14.3,
-          "no_pct": 28.6,
-          "avg_intent": 3.29,
-          "avg_wtp_inr": 130.71,
-          "median_wtp_inr": 140
-        },
-        {
-          "segment_id": "seg_trend",
-          "segment_name": "Trend-driven Gen Z",
-          "share": 0.2,
-          "n": 6,
-          "would_buy_pct": 50.0,
-          "maybe_pct": 0.0,
-          "no_pct": 50.0,
-          "avg_intent": 3,
-          "avg_wtp_inr": 102.5,
-          "median_wtp_inr": 102
-        },
-        {
-          "segment_id": "seg_family",
-          "segment_name": "Practical family shoppers",
-          "share": 0.16,
-          "n": 5,
-          "would_buy_pct": 60.0,
-          "maybe_pct": 40.0,
-          "no_pct": 0.0,
-          "avg_intent": 4.2,
-          "avg_wtp_inr": 108,
-          "median_wtp_inr": 120
-        },
-        {
-          "segment_id": "seg_premium",
-          "segment_name": "Premium café lovers",
-          "share": 0.12,
-          "n": 3,
-          "would_buy_pct": 33.3,
-          "maybe_pct": 66.7,
-          "no_pct": 0.0,
-          "avg_intent": 3.33,
-          "avg_wtp_inr": 138.33,
-          "median_wtp_inr": 135
-        }
-      ],
-      "price": {
-        "price_inr": 99.0,
-        "median_wtp_inr": 110,
-        "pct_wtp_at_or_above_price": 66.7,
-        "buckets": [
-          {
-            "from_inr": 39.0,
-            "to_inr": 59.0,
-            "count": 1
-          },
-          {
-            "from_inr": 59.0,
-            "to_inr": 79.0,
-            "count": 2
-          },
-          {
-            "from_inr": 79.0,
-            "to_inr": 99.0,
-            "count": 7
-          },
-          {
-            "from_inr": 99.0,
-            "to_inr": 119.0,
-            "count": 8
-          },
-          {
-            "from_inr": 119.0,
-            "to_inr": 139.0,
-            "count": 7
-          },
-          {
-            "from_inr": 139.0,
-            "to_inr": 159.0,
+            "from_inr": 799.0,
+            "to_inr": 959.0,
             "count": 5
           }
         ]
       },
       "top_objections": [
         {
-          "text": "Still want discounts",
+          "text": "Too expensive for a cable",
           "count": 5,
           "pct": 16.7
         },
         {
-          "text": "Want a no-sugar option",
+          "text": "Cheaper cables do the same job",
+          "count": 4,
+          "pct": 13.3
+        },
+        {
+          "text": "Braided cables still fray at the neck",
+          "count": 4,
+          "pct": 13.3
+        },
+        {
+          "text": "No warranty mentioned",
+          "count": 3,
+          "pct": 10.0
+        },
+        {
+          "text": "Want e-marker chip details",
+          "count": 3,
+          "pct": 10.0
+        },
+        {
+          "text": "Plain packaging",
+          "count": 3,
+          "pct": 10.0
+        }
+      ],
+      "top_likes": [
+        {
+          "text": "Long 2 m length",
+          "count": 9,
+          "pct": 30.0
+        },
+        {
+          "text": "Braided build",
+          "count": 9,
+          "pct": 30.0
+        },
+        {
+          "text": "Bend-tested claim",
+          "count": 7,
+          "pct": 23.3
+        },
+        {
+          "text": "Nylon braiding",
+          "count": 7,
+          "pct": 23.3
+        },
+        {
+          "text": "One cable for phone and laptop",
+          "count": 6,
+          "pct": 20.0
+        },
+        {
+          "text": "65W laptop charging",
+          "count": 6,
+          "pct": 20.0
+        }
+      ],
+      "quotes": [
+        {
+          "persona_id": "p016",
+          "persona_name": "Kavya",
+          "age": 24,
+          "city": "Mumbai",
+          "segment_name": "Fast-charging power users",
+          "would_buy": "yes",
+          "purchase_intent": 5,
+          "main_reason": "65W laptop charging",
+          "quote": "65W on a 2 m cable means I can charge my laptop from the sofa. Worth ₹799."
+        },
+        {
+          "persona_id": "p028",
+          "persona_name": "Shreya",
+          "age": 30,
+          "city": "Bengaluru",
+          "segment_name": "Convenience & gift buyers",
+          "would_buy": "yes",
+          "purchase_intent": 5,
+          "main_reason": "Premium look",
+          "quote": "2 m is great next to the bed."
+        },
+        {
+          "persona_id": "p004",
+          "persona_name": "Ananya",
+          "age": 19,
+          "city": "Kolkata",
+          "segment_name": "Value-for-money buyers",
+          "would_buy": "yes",
+          "purchase_intent": 4,
+          "main_reason": "Braided build",
+          "quote": "If it really lasts two years, ₹799 works out cheaper than buying three ₹299 cables."
+        },
+        {
+          "persona_id": "p009",
+          "persona_name": "Rohan",
+          "age": 26,
+          "city": "Indore",
+          "segment_name": "Durability skeptics",
+          "would_buy": "yes",
+          "purchase_intent": 4,
+          "main_reason": "Nylon braiding",
+          "quote": "The bend test sounds serious. I'll try it."
+        },
+        {
+          "persona_id": "p000",
+          "persona_name": "Priya",
+          "age": 19,
+          "city": "Pune",
+          "segment_name": "Value-for-money buyers",
+          "would_buy": "no",
+          "purchase_intent": 1,
+          "main_reason": "Too expensive for a cable",
+          "quote": "₹799 for a cable? My ₹299 one charges just fine."
+        },
+        {
+          "persona_id": "p012",
+          "persona_name": "Pooja",
+          "age": 40,
+          "city": "Kolkata",
+          "segment_name": "Durability skeptics",
+          "would_buy": "no",
+          "purchase_intent": 1,
+          "main_reason": "No warranty mentioned",
+          "quote": "Every braided cable I bought frayed at the connector within months. No warranty, no deal."
+        },
+        {
+          "persona_id": "p018",
+          "persona_name": "Ishita",
+          "age": 23,
+          "city": "Bengaluru",
+          "segment_name": "Fast-charging power users",
+          "would_buy": "no",
+          "purchase_intent": 1,
+          "main_reason": "Want e-marker chip details",
+          "quote": "Need to know if it has an e-marker chip before trusting 65W."
+        },
+        {
+          "persona_id": "p023",
+          "persona_name": "Imran",
+          "age": 47,
+          "city": "Bengaluru",
+          "segment_name": "Brand-trust shoppers",
+          "would_buy": "no",
+          "purchase_intent": 1,
+          "main_reason": "Unknown brand",
+          "quote": "Never heard of this brand. I'll stick with what I know for ₹100 more."
+        }
+      ],
+      "insights": {
+        "headline": "Only 3 in 10 AI customers would buy at ₹799: price and durability doubts hold back the biggest segments.",
+        "overall_verdict": "launch_with_changes",
+        "best_segments": [
+          {
+            "segment_name": "Fast-charging power users",
+            "why": "65W laptop charging on a 2 m cable solves a real problem for them, and ₹799 feels fair."
+          },
+          {
+            "segment_name": "Convenience & gift buyers",
+            "why": "The premium look and long cable appeal; price matters less for an occasional purchase."
+          }
+        ],
+        "weakest_segments": [
+          {
+            "segment_name": "Value-for-money buyers",
+            "why": "The largest segment, but they compare against ₹299 cables that already work."
+          },
+          {
+            "segment_name": "Durability skeptics",
+            "why": "Past braided cables frayed at the connector, and there is no warranty to back the bend-test claim."
+          }
+        ],
+        "price_insight": "Median willingness to pay is well below ₹799, and only power users regularly go above it. A price under ₹500 would clear most customers' ceiling.",
+        "top_3_objections": [
+          {
+            "objection": "Too expensive for a cable",
+            "segments_affected": [
+              "Value-for-money buyers"
+            ]
+          },
+          {
+            "objection": "No warranty mentioned",
+            "segments_affected": [
+              "Durability skeptics",
+              "Brand-trust shoppers"
+            ]
+          },
+          {
+            "objection": "Unknown brand with no reviews",
+            "segments_affected": [
+              "Brand-trust shoppers"
+            ]
+          }
+        ],
+        "top_3_strengths": [
+          "65W laptop charging",
+          "Braided build",
+          "Long 2 m length"
+        ],
+        "standout_quotes": [
+          "Every braided cable I bought frayed at the connector within months. No warranty, no deal."
+        ],
+        "recommended_target_segment": "Value-for-money buyers, if the price drops and a warranty is added",
+        "caveat": "These are AI-simulated customers; validate the winning variant with a small real-customer test."
+      }
+    },
+    {
+      "variant": "v1",
+      "product": {
+        "name": "WeaveCharge 65W USB-C Cable",
+        "description": "Same 2 m braided 65W cable, now with an 18-month replacement warranty and the bend test shown on the box.",
+        "price_inr": 449,
+        "pack_size": "1 cable, 2 m",
+        "channel": "E-commerce marketplace"
+      },
+      "n_personas": 30,
+      "overall": {
+        "would_buy_pct": 63.3,
+        "maybe_pct": 16.7,
+        "avg_intent": 3.83,
+        "avg_wtp_inr": 537.67
+      },
+      "segments": [
+        {
+          "segment_id": "seg_value",
+          "segment_name": "Value-for-money buyers",
+          "share": 0.3,
+          "n": 9,
+          "would_buy_pct": 77.8,
+          "maybe_pct": 11.1,
+          "no_pct": 11.1,
+          "avg_intent": 4.33,
+          "avg_wtp_inr": 370.56,
+          "median_wtp_inr": 370
+        },
+        {
+          "segment_id": "seg_durable",
+          "segment_name": "Durability skeptics",
+          "share": 0.22,
+          "n": 7,
+          "would_buy_pct": 71.4,
+          "maybe_pct": 14.3,
+          "no_pct": 14.3,
+          "avg_intent": 3.86,
+          "avg_wtp_inr": 495,
+          "median_wtp_inr": 495
+        },
+        {
+          "segment_id": "seg_power",
+          "segment_name": "Fast-charging power users",
+          "share": 0.2,
+          "n": 6,
+          "would_buy_pct": 50.0,
+          "maybe_pct": 0.0,
+          "no_pct": 50.0,
+          "avg_intent": 3.17,
+          "avg_wtp_inr": 785,
+          "median_wtp_inr": 788
+        },
+        {
+          "segment_id": "seg_brand",
+          "segment_name": "Brand-trust shoppers",
+          "share": 0.16,
+          "n": 5,
+          "would_buy_pct": 40.0,
+          "maybe_pct": 60.0,
+          "no_pct": 0.0,
+          "avg_intent": 3.6,
+          "avg_wtp_inr": 561,
+          "median_wtp_inr": 560
+        },
+        {
+          "segment_id": "seg_gift",
+          "segment_name": "Convenience & gift buyers",
+          "share": 0.12,
+          "n": 3,
+          "would_buy_pct": 66.7,
+          "maybe_pct": 0.0,
+          "no_pct": 33.3,
+          "avg_intent": 4,
+          "avg_wtp_inr": 605,
+          "median_wtp_inr": 600
+        }
+      ],
+      "price": {
+        "price_inr": 449.0,
+        "median_wtp_inr": 525,
+        "pct_wtp_at_or_above_price": 70.0,
+        "buckets": [
+          {
+            "from_inr": 269.0,
+            "to_inr": 359.0,
+            "count": 1
+          },
+          {
+            "from_inr": 359.0,
+            "to_inr": 449.0,
+            "count": 8
+          },
+          {
+            "from_inr": 449.0,
+            "to_inr": 539.0,
+            "count": 7
+          },
+          {
+            "from_inr": 539.0,
+            "to_inr": 629.0,
+            "count": 8
+          },
+          {
+            "from_inr": 629.0,
+            "to_inr": 719.0,
+            "count": 0
+          },
+          {
+            "from_inr": 719.0,
+            "to_inr": 809.0,
+            "count": 6
+          }
+        ]
+      },
+      "top_objections": [
+        {
+          "text": "Want to see real reviews",
           "count": 5,
           "pct": 16.7
         },
         {
-          "text": "Not unique enough",
+          "text": "Doubt 65W at this price",
+          "count": 4,
+          "pct": 13.3
+        },
+        {
+          "text": "Still want a 2-pack deal",
           "count": 3,
           "pct": 10.0
         },
         {
-          "text": "Smaller pack feels less premium",
+          "text": "Unknown brand",
           "count": 3,
           "pct": 10.0
         },
         {
-          "text": "Small pack for sharing",
+          "text": "Plain packaging",
           "count": 2,
           "pct": 6.7
         }
       ],
       "top_likes": [
         {
-          "text": "Right size for one person",
+          "text": "18-month replacement warranty",
           "count": 7,
           "pct": 23.3
         },
         {
-          "text": "Cold coffee taste",
+          "text": "Bend-test shown on pack",
           "count": 7,
           "pct": 23.3
         },
         {
-          "text": "Affordable to try",
+          "text": "₹449 is fair",
           "count": 6,
           "pct": 20.0
         },
         {
-          "text": "Clean aesthetic",
+          "text": "Warranty included",
           "count": 6,
           "pct": 20.0
         },
         {
-          "text": "Real coffee",
-          "count": 5,
-          "pct": 16.7
+          "text": "Braided build",
+          "count": 6,
+          "pct": 20.0
         },
         {
-          "text": "Clean label",
-          "count": 5,
-          "pct": 16.7
+          "text": "Good price",
+          "count": 6,
+          "pct": 20.0
         }
       ],
       "quotes": [
         {
           "persona_id": "p000",
           "persona_name": "Priya",
-          "age": 23,
-          "city": "Bengaluru",
-          "segment_name": "Value-hunting students",
-          "would_buy": "yes",
-          "purchase_intent": 5,
-          "main_reason": "₹99 is affordable",
-          "quote": "₹99 for a proper cold coffee? I'd buy it after class."
-        },
-        {
-          "persona_id": "p015",
-          "persona_name": "Farhan",
-          "age": 39,
-          "city": "Chennai",
-          "segment_name": "Health-conscious professionals",
-          "would_buy": "yes",
-          "purchase_intent": 5,
-          "main_reason": "Clean label",
-          "quote": "Cleaner design looks like a coffee, not a stimulant."
-        },
-        {
-          "persona_id": "p020",
-          "persona_name": "Neha",
-          "age": 24,
-          "city": "Bengaluru",
-          "segment_name": "Trend-driven Gen Z",
-          "would_buy": "yes",
-          "purchase_intent": 5,
-          "main_reason": "Clean aesthetic",
-          "quote": "The new pack actually looks nice in a photo."
-        },
-        {
-          "persona_id": "p022",
-          "persona_name": "Tanvi",
-          "age": 40,
+          "age": 19,
           "city": "Pune",
-          "segment_name": "Practical family shoppers",
+          "segment_name": "Value-for-money buyers",
           "would_buy": "yes",
           "purchase_intent": 5,
-          "main_reason": "Better value",
-          "quote": "At ₹99 I can pick a few for the fridge."
+          "main_reason": "₹449 is fair",
+          "quote": "At this price it beats my usual ₹299 cable."
         },
         {
-          "persona_id": "p024",
-          "persona_name": "Revathi",
-          "age": 35,
-          "city": "Kochi",
-          "segment_name": "Practical family shoppers",
-          "would_buy": "maybe",
-          "purchase_intent": 3,
-          "main_reason": "Small pack for sharing",
-          "quote": "Too small to share with the family."
+          "persona_id": "p012",
+          "persona_name": "Pooja",
+          "age": 40,
+          "city": "Kolkata",
+          "segment_name": "Durability skeptics",
+          "would_buy": "yes",
+          "purchase_intent": 5,
+          "main_reason": "18-month replacement warranty",
+          "quote": "If it frays they'll replace it, so I'm not taking a risk."
+        },
+        {
+          "persona_id": "p016",
+          "persona_name": "Kavya",
+          "age": 24,
+          "city": "Mumbai",
+          "segment_name": "Fast-charging power users",
+          "would_buy": "yes",
+          "purchase_intent": 5,
+          "main_reason": "65W laptop charging",
+          "quote": "Same 65W cable, cheaper. Buying two."
+        },
+        {
+          "persona_id": "p026",
+          "persona_name": "Aisha",
+          "age": 50,
+          "city": "Kolkata",
+          "segment_name": "Brand-trust shoppers",
+          "would_buy": "yes",
+          "purchase_intent": 5,
+          "main_reason": "Warranty builds trust",
+          "quote": "A replacement warranty makes an unknown brand less risky."
         },
         {
           "persona_id": "p003",
           "persona_name": "Rahul",
           "age": 19,
+          "city": "Indore",
+          "segment_name": "Value-for-money buyers",
+          "would_buy": "no",
+          "purchase_intent": 1,
+          "main_reason": "Still want a 2-pack deal",
+          "quote": "I'd wait for a 2-pack offer."
+        },
+        {
+          "persona_id": "p019",
+          "persona_name": "Suresh",
+          "age": 28,
           "city": "Bengaluru",
-          "segment_name": "Value-hunting students",
+          "segment_name": "Fast-charging power users",
           "would_buy": "no",
           "purchase_intent": 1,
-          "main_reason": "Still want discounts",
-          "quote": "Would wait for a combo offer."
+          "main_reason": "Doubt 65W at this price",
+          "quote": "Cheaper makes me doubt the chip inside."
         },
         {
-          "persona_id": "p014",
-          "persona_name": "Nisha",
-          "age": 31,
-          "city": "Pune",
-          "segment_name": "Health-conscious professionals",
+          "persona_id": "p011",
+          "persona_name": "Aditya",
+          "age": 39,
+          "city": "Mumbai",
+          "segment_name": "Durability skeptics",
           "would_buy": "no",
-          "purchase_intent": 1,
-          "main_reason": "Want a no-sugar option",
-          "quote": "I'd still want a zero-sugar version."
+          "purchase_intent": 2,
+          "main_reason": "Want to see real reviews",
+          "quote": "Warranty is good, but I'll wait for a few reviews."
         },
         {
-          "persona_id": "p018",
-          "persona_name": "Ishita",
-          "age": 21,
-          "city": "Hyderabad",
-          "segment_name": "Trend-driven Gen Z",
+          "persona_id": "p028",
+          "persona_name": "Shreya",
+          "age": 30,
+          "city": "Bengaluru",
+          "segment_name": "Convenience & gift buyers",
           "would_buy": "no",
-          "purchase_intent": 1,
-          "main_reason": "Not unique enough",
-          "quote": "Cute pack, but I'm not sure it's special."
+          "purchase_intent": 2,
+          "main_reason": "Plain packaging",
+          "quote": "Still a bit plain to gift."
         }
       ],
       "insights": {
-        "headline": "The ₹99 mini pack doubles purchase intent to 60%, led by students.",
+        "headline": "At ₹449 with an 18-month warranty, purchase intent doubles to over 60%, led by value buyers and durability skeptics.",
         "overall_verdict": "launch",
         "best_segments": [
           {
-            "segment_name": "Value-hunting students",
-            "why": "₹99 fits their budget and the 200 ml size suits a single serving."
+            "segment_name": "Value-for-money buyers",
+            "why": "₹449 now beats replacing cheap cables, and the warranty removes the risk."
           },
           {
-            "segment_name": "Health-conscious professionals",
-            "why": "The clean label showing sugar per serving removed the energy-drink concern."
+            "segment_name": "Durability skeptics",
+            "why": "A replacement warranty on the box makes the bend-test claim believable."
           }
         ],
         "weakest_segments": [
           {
-            "segment_name": "Premium café lovers",
-            "why": "The smaller bottle feels less premium to them."
+            "segment_name": "Brand-trust shoppers",
+            "why": "Still wary of an unknown brand, though the warranty helps."
+          },
+          {
+            "segment_name": "Fast-charging power users",
+            "why": "Some now doubt a ₹449 cable can safely deliver 65W."
           }
         ],
-        "price_insight": "Two thirds of AI customers would pay ₹99 or more, with a median of ₹110, so there is a little headroom.",
+        "price_insight": "Most AI customers would pay ₹449 or more, so the new price sits comfortably inside their range.",
         "top_3_objections": [
           {
-            "objection": "Smaller pack feels less premium",
+            "objection": "Doubt 65W at this price",
             "segments_affected": [
-              "Premium café lovers"
+              "Fast-charging power users"
             ]
           },
           {
-            "objection": "Too small to share",
+            "objection": "Unknown brand",
             "segments_affected": [
-              "Practical family shoppers"
+              "Brand-trust shoppers"
             ]
           },
           {
-            "objection": "Want a no-sugar option",
+            "objection": "Want to see real reviews first",
             "segments_affected": [
-              "Health-conscious professionals"
+              "Durability skeptics"
             ]
           }
         ],
         "top_3_strengths": [
-          "Affordable price",
-          "Right size for one person",
-          "Clean, café-style label"
+          "Fair price",
+          "18-month replacement warranty",
+          "Braided 65W build"
         ],
         "standout_quotes": [
-          "₹99 for a proper cold coffee? I'd buy it after class."
+          "If it frays they'll replace it, so I'm not taking a risk."
         ],
-        "recommended_target_segment": "Value-hunting students",
+        "recommended_target_segment": "Value-for-money buyers",
         "caveat": "These are AI-simulated customers; validate with a small real-customer test before scaling."
       }
     }
@@ -642,45 +645,45 @@
   "suggestions": [
     {
       "variant_id": "v1",
-      "title": "Smaller pack at ₹99 with a café-style label",
+      "title": "₹449 with an 18-month replacement warranty",
       "changes": [
-        "Price ₹149 → ₹99",
-        "300 ml can → 200 ml bottle",
-        "Clean label showing sugar per serving"
+        "Price ₹799 → ₹449",
+        "Add an 18-month replacement warranty",
+        "Show the bend test on the box"
       ],
       "objections_addressed": [
-        "Too expensive for one drink",
-        "Looks like an energy drink"
+        "Too expensive for a cable",
+        "No warranty mentioned"
       ],
-      "expected_effect": "Students and health-conscious buyers should respond better: lower price and a coffee-like look.",
-      "risk": "Premium café lovers may see the smaller bottle as less premium.",
+      "expected_effect": "Value buyers and durability skeptics should respond better: lower price and lower risk.",
+      "risk": "Power users may doubt a cheaper cable delivers 65W safely.",
       "updated_product": {
-        "product_name": "BrewChill Cold Coffee (Mini)",
-        "product_description": "Same Arabica cold coffee in a 200 ml bottle with a clean, café-style label showing sugar per serving.",
-        "price_inr": 99,
-        "pack_size": "200 ml bottle",
-        "channel": "Quick commerce"
+        "product_name": "WeaveCharge 65W USB-C Cable",
+        "product_description": "Same 2 m braided 65W cable, now with an 18-month replacement warranty and the bend test shown on the box.",
+        "price_inr": 449,
+        "pack_size": "1 cable, 2 m",
+        "channel": "E-commerce marketplace"
       },
-      "imagen_prompt": "Clean product packshot of a slim 200 ml glass cold coffee bottle, cream and coffee-brown label, sugar per serving shown, soft daylight, white background."
+      "imagen_prompt": "Clean product packshot of a coiled grey nylon-braided USB-C cable on a matte white box showing an 18-month warranty badge and a bend-test icon, soft studio light, white background."
     },
     {
       "variant_id": "v2",
-      "title": "Student 2-pack for ₹249",
+      "title": "Bundle with a 20W adapter for ₹999",
       "changes": [
-        "2 × 300 ml cans for ₹249",
-        "Campus-focused messaging"
+        "Add a 20W USB-C wall adapter",
+        "Price ₹799 → ₹999 for the bundle"
       ],
       "objections_addressed": [
-        "Too expensive for one drink"
+        "Too expensive for a cable"
       ],
-      "expected_effect": "Lowers the per-drink price for students while keeping the premium can.",
-      "risk": "Still looks like an energy drink to health-conscious buyers.",
+      "expected_effect": "Gift buyers and first-time USB-C users get a complete kit, so the price feels justified.",
+      "risk": "Value buyers who already own an adapter will see it as a more expensive cable.",
       "updated_product": {
-        "product_name": "BrewChill Cold Coffee 2-pack",
-        "product_description": "Ready-to-drink cold coffee made with Arabica, in a slim 300 ml can.",
-        "price_inr": 249,
-        "pack_size": "2 × 300 ml cans",
-        "channel": "Quick commerce"
+        "product_name": "WeaveCharge 65W USB-C Cable + 20W Adapter",
+        "product_description": "2 m braided 65W USB-C cable bundled with a 20W USB-C wall adapter.",
+        "price_inr": 999,
+        "pack_size": "1 cable + 1 adapter",
+        "channel": "E-commerce marketplace"
       },
       "imagen_prompt": null
     }

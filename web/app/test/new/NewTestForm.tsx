@@ -7,7 +7,7 @@ import { ErrorBox } from "@/components/ui";
 import { createTest } from "@/lib/api";
 import type { NewTestInput } from "@/lib/types";
 
-const CHANNELS = ["Quick commerce", "E-commerce marketplace", "Supermarket / retail", "D2C website", "Local kirana store", "Café / restaurant"];
+const CHANNELS = ["E-commerce marketplace", "Quick commerce", "D2C website", "Electronics store", "Local retail store", "Instagram / social ads"];
 const MAX_IMAGE_BYTES = 3 * 1024 * 1024;
 const LIVE_PERSONAS = 30;
 
@@ -65,23 +65,23 @@ export default function NewTestForm() {
 
       <label className="block text-sm font-medium text-slate-800">
         Product name
-        <input name="name" required maxLength={80} placeholder="e.g. BrewChill Cold Coffee" className={field} />
+        <input name="name" required maxLength={80} placeholder="e.g. WeaveCharge 65W USB-C Cable" className={field} />
       </label>
 
       <label className="block text-sm font-medium text-slate-800">
         Description
         <textarea name="description" required maxLength={600} rows={4} className={field}
-          placeholder="What is it, who is it for, and what makes it different? e.g. Ready-to-drink Arabica cold coffee, less sugar than café drinks." />
+          placeholder="What is it, who is it for, and what makes it different? e.g. 2 m nylon-braided USB-C cable, 65W fast charging for phones and laptops." />
       </label>
 
       <div className="grid gap-5 sm:grid-cols-2">
         <label className="block text-sm font-medium text-slate-800">
           Price (₹)
-          <input name="price_inr" type="number" required min={1} max={1000000} step="1" inputMode="numeric" placeholder="149" className={field} />
+          <input name="price_inr" type="number" required min={1} max={1000000} step="1" inputMode="numeric" placeholder="799" className={field} />
         </label>
         <label className="block text-sm font-medium text-slate-800">
           Pack size
-          <input name="pack_size" required maxLength={60} placeholder="e.g. 300 ml can" className={field} />
+          <input name="pack_size" required maxLength={60} placeholder="e.g. 1 cable, 2 m" className={field} />
         </label>
       </div>
 
@@ -94,7 +94,7 @@ export default function NewTestForm() {
 
       <label className="block text-sm font-medium text-slate-800">
         Similar products customers know <span className="font-normal text-slate-500">(optional)</span>
-        <input name="competitors" maxLength={200} placeholder="e.g. Café cold coffee ₹180, canned cold brew ₹150" className={field} />
+        <input name="competitors" maxLength={200} placeholder="e.g. Basic USB-C cables ₹199–399, branded braided cables ₹499–999" className={field} />
       </label>
 
       <div className="text-sm font-medium text-slate-800">
