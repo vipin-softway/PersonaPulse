@@ -56,13 +56,23 @@ BigQuery calls, and the UI labels them as sample data. They get replaced with re
 
 ## Data setup (one-time scripts)
 
+Put the Kaggle "Amazon Sales Dataset" at `data/raw/amazon.csv` (git-ignored), then:
+
 ```bash
 cd scripts
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
-python create_tables.py --print   # preview schemas
-python create_tables.py           # create dataset + tables (needs billing + ADC)
+python create_tables.py           # dataset + 8 tables (needs billing + ADC)
+python load_reviews.py            # split packed reviews, pick 10 hidden back-test products, load reviews_raw
+python extract_signals.py         # Prompt 1, ~110 Flash calls, resumable
+python build_segments.py          # Prompt 2, one Pro call
+python build_personas.py          # Prompt 3, ~100 personas, 30 flagged for live tests
 ```
+
+Every script takes `--dry-run` to print what it would send without calling Gemini.
+Category: electronics accessories (USB cables, earphones, chargers, mice, ...). Reviewer names and
+IDs are dropped on load. Hidden back-test products are listed in `scripts/holdout_products.json`
+and never reach persona building.
 
 ## Deploy
 

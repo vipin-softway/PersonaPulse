@@ -22,7 +22,9 @@ REQ, REP = "REQUIRED", "REPEATED"
 TABLES: dict[str, tuple[str, list[bigquery.SchemaField]]] = {
     "reviews_raw": ("One row per review, cleaned from the Kaggle Amazon Sales dataset.", [
         F("review_id", S, REQ), F("product_id", S, REQ), F("product_name", S), F("category", S),
-        F("price_inr", FL), F("list_price_inr", FL), F("rating", FL), F("rating_count", I),
+        F("price_inr", FL), F("list_price_inr", FL),
+        F("product_rating", FL, description="Product's average Amazon rating (the dataset has no per-review rating)"),
+        F("rating_count", I),
         F("about_product", S), F("review_title", S), F("review_content", S),
         F("is_holdout", B, description="True for back-test products hidden from persona building"),
         F("loaded_at", T),

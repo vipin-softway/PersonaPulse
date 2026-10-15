@@ -32,6 +32,7 @@ npm-debug.log*
 
 # --- Data (load into BigQuery; don't commit raw dumps) ---
 data/raw/
+data/processed/
 
 # --- OS / editor ---
 .DS_Store
