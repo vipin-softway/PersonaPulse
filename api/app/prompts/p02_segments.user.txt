@@ -1,0 +1,28 @@
+Product category: {{category}}
+
+Customer signals extracted from real reviews (JSON):
+{{signals_sample_json}}
+
+Task:
+1. Identify 4 to 7 distinct customer segments based on decision patterns.
+2. Estimate each segment's share of customers (percent of the signals that fit it). Shares must add up to 100.
+3. Make sure at least one segment is skeptical or hard to please, if the data supports it.
+4. For each segment, list 5 review_ids that best represent it.
+
+Return ONLY a JSON object in this exact format:
+{
+  "segments": [
+    {
+      "segment_id": "seg_1",
+      "name": "short memorable name, e.g. Value Hunters",
+      "share_percent": 0,
+      "description": "one or two sentences on how they decide",
+      "top_priorities": ["string"],
+      "common_complaints": ["string"],
+      "price_sensitivity": "high | medium | low",
+      "typical_triggers": ["string"],
+      "typical_dealbreakers": ["string"],
+      "representative_review_ids": ["string"]
+    }
+  ]
+}

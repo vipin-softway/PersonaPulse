@@ -1,0 +1,28 @@
+Participants (JSON):
+{{personas_json}}
+
+Product being discussed:
+{{product_summary}}
+
+Each participant's first private reaction (JSON):
+{{individual_reactions_json}}
+
+Run a focus group of 12 to 16 turns:
+1. Moderator introduces the product.
+2. Each participant gives their first impression.
+3. Moderator probes the biggest disagreement.
+4. Participants react to each other's points.
+5. Moderator asks: "What would make this a must-buy for you?"
+6. Each participant gives a final verdict.
+
+Return ONLY a JSON object in this exact format:
+{
+  "transcript": [
+    {"speaker": "Moderator or persona name", "persona_id": "string or null", "text": "string"}
+  ],
+  "final_verdicts": [
+    {"persona_id": "string", "would_buy": "yes | maybe | no", "changed_mind": true, "reason": "string"}
+  ],
+  "key_tensions": ["main disagreements that came up"],
+  "must_buy_conditions": ["what participants said would make it a must-buy"]
+}

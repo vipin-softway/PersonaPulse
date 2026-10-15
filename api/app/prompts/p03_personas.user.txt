@@ -1,0 +1,44 @@
+Category: {{category}}
+Target market: {{market}}
+
+Segment (JSON):
+{{segment_json}}
+
+Real reviews from customers in this segment (JSON):
+{{representative_reviews_json}}
+
+Demographic mix to follow across personas:
+{{demographic_mix}}
+
+Create exactly {{count}} personas for this segment.
+Rules:
+- Each persona gets 3 to 5 "memories": real review texts from the list above that fit them, copied word for word. Do not invent memories.
+- Spread personas across the demographic mix.
+- Set a realistic price ceiling for this category based on their income and the reviews.
+- About 20 percent of personas should be noticeably more skeptical than the segment average.
+- preferred_language is the language they would naturally use when shopping.
+
+Return ONLY a JSON object in this exact format:
+{
+  "personas": [
+    {
+      "persona_id": "{{segment_id}}_p1",
+      "name": "string",
+      "age": 0,
+      "gender": "string",
+      "city": "string",
+      "city_tier": "metro | tier2 | tier3",
+      "occupation": "string",
+      "monthly_income_band_inr": "string",
+      "segment_id": "string",
+      "segment_name": "string",
+      "priorities": ["string"],
+      "dislikes": ["string"],
+      "price_ceiling_inr": 0,
+      "shopping_habits": "one sentence: where and how they shop, what influences them",
+      "skepticism": "low | medium | high",
+      "preferred_language": "string",
+      "memories": ["exact review text"]
+    }
+  ]
+}

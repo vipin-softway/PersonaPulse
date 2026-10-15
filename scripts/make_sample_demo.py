@@ -116,7 +116,8 @@ def rows_for(variant: str, people: list[dict]) -> list[dict]:
         buy = p["persona_id"] in buyers
         intent = rng.randint(4, 5) if buy else rng.randint(1, 3)
         wtp = max(40, round(rng.gauss(WTP_MEAN[seg] * (0.95 if variant == "v1" else 1), 18) / 5) * 5)
-        rows.append({**p, "variant": variant, "would_buy": buy, "purchase_intent": intent,
+        decision = "yes" if buy else ("maybe" if intent == 3 else "no")
+        rows.append({**p, "variant": variant, "would_buy": decision, "purchase_intent": intent,
                      "willingness_to_pay_inr": wtp,
                      "top_likes": rng.sample(likes, k=min(2, len(likes))),
                      "top_objections": rng.sample(objections, k=1) if (not buy or rng.random() < 0.3) else [],
@@ -130,45 +131,74 @@ def demo() -> dict:
     original = aggregate_variant("original", PRODUCTS["original"], rows_for("original", people), SEGMENTS)
     improved = aggregate_variant("v1", PRODUCTS["v1"], rows_for("v1", people), SEGMENTS)
     original["insights"] = {
-        "headline": "Strong appeal for premium coffee drinkers, but price and pack design hold back everyone else.",
-        "summary": "Most personas liked the idea of a ready-to-drink cold coffee, but students found ₹149 too expensive "
-                   "and older buyers read the can as an energy drink. Premium café lovers were the only clear fans.",
-        "key_findings": [
-            "Value-hunting students are the largest segment and the least likely to buy at ₹149.",
-            "The can design triggers an 'energy drink' association for health-conscious and family buyers.",
-            "Median willingness to pay sits well below the ₹149 price point.",
+        "headline": "Only 3 in 10 AI customers would buy at ₹149, held back by price and an energy-drink look.",
+        "overall_verdict": "launch_with_changes",
+        "best_segments": [
+            {"segment_name": "Premium café lovers", "why": "They value proper coffee strength and see ₹149 as fair for cold brew on the go."},
+            {"segment_name": "Practical family shoppers", "why": "Like having a ready-to-drink option in the fridge for weekends and guests."},
         ],
-        "recommendations": [
-            "Test a smaller pack at ₹99 to bring the price under the student ceiling.",
-            "Redesign the label to look like café coffee and show sugar per serving.",
+        "weakest_segments": [
+            {"segment_name": "Value-hunting students", "why": "The largest segment, but ₹149 is far above what they expect to pay for one drink."},
+            {"segment_name": "Health-conscious professionals", "why": "The can reads as an energy drink and the sugar content is unclear."},
         ],
+        "price_insight": "Median willingness to pay is ₹102, and only 10% would pay ₹149 or more. A price near ₹99 would clear most customers' ceiling.",
+        "top_3_objections": [
+            {"objection": "Too expensive for one drink", "segments_affected": ["Value-hunting students", "Practical family shoppers"]},
+            {"objection": "Looks like an energy drink", "segments_affected": ["Health-conscious professionals", "Practical family shoppers"]},
+            {"objection": "Pack looks generic", "segments_affected": ["Trend-driven Gen Z"]},
+        ],
+        "top_3_strengths": ["Cold coffee taste", "Convenient ready-to-drink format", "Less sugar than café drinks"],
+        "standout_quotes": ["₹149 for one drink? I'd rather get two from the canteen."],
+        "recommended_target_segment": "Value-hunting students, if the price comes down",
+        "caveat": "These are AI-simulated customers; validate the winning variant with a small real-customer test.",
     }
     improved["insights"] = {
-        "headline": "The ₹99 mini pack with a cleaner label roughly doubles purchase intent, led by students.",
-        "summary": "Lowering the price and making the pack look like coffee rather than an energy drink won over students, "
-                   "health-conscious and trend-driven buyers. Premium café lovers cooled slightly on the smaller size.",
-        "key_findings": [
-            "Value-hunting students moved from the weakest to the strongest segment.",
-            "Energy-drink objections disappeared after the label redesign.",
-            "Premium buyers see the smaller bottle as less premium.",
+        "headline": "The ₹99 mini pack doubles purchase intent to 60%, led by students.",
+        "overall_verdict": "launch",
+        "best_segments": [
+            {"segment_name": "Value-hunting students", "why": "₹99 fits their budget and the 200 ml size suits a single serving."},
+            {"segment_name": "Health-conscious professionals", "why": "The clean label showing sugar per serving removed the energy-drink concern."},
         ],
-        "recommendations": [
-            "Launch the ₹99 mini as the main SKU; keep the 300 ml can for premium channels.",
-            "Offer a zero-sugar variant for health-conscious buyers.",
+        "weakest_segments": [
+            {"segment_name": "Premium café lovers", "why": "The smaller bottle feels less premium to them."},
         ],
+        "price_insight": "Two thirds of AI customers would pay ₹99 or more, with a median of ₹110, so there is a little headroom.",
+        "top_3_objections": [
+            {"objection": "Smaller pack feels less premium", "segments_affected": ["Premium café lovers"]},
+            {"objection": "Too small to share", "segments_affected": ["Practical family shoppers"]},
+            {"objection": "Want a no-sugar option", "segments_affected": ["Health-conscious professionals"]},
+        ],
+        "top_3_strengths": ["Affordable price", "Right size for one person", "Clean, café-style label"],
+        "standout_quotes": ["₹99 for a proper cold coffee? I'd buy it after class."],
+        "recommended_target_segment": "Value-hunting students",
+        "caveat": "These are AI-simulated customers; validate with a small real-customer test before scaling.",
     }
     suggestions = [
-        {"variant_id": "v1", "title": "Smaller ₹99 pack with a café-style label",
+        {"variant_id": "v1", "title": "Smaller pack at ₹99 with a café-style label",
          "changes": ["Price ₹149 → ₹99", "300 ml can → 200 ml bottle", "Clean label showing sugar per serving"],
-         "rationale": "Brings price under students' ceiling and removes the energy-drink association.",
-         "product": PRODUCTS["v1"]},
-        {"variant_id": "v2", "title": "Same can, student combo pricing",
-         "changes": ["2-pack for ₹249", "Campus-focused messaging"],
-         "rationale": "Keeps the premium can while lowering the per-drink price for students.",
-         "product": {**PRODUCTS["original"], "name": "BrewChill Cold Coffee 2-pack", "price_inr": 249, "pack_size": "2 × 300 ml cans"}},
+         "objections_addressed": ["Too expensive for one drink", "Looks like an energy drink"],
+         "expected_effect": "Students and health-conscious buyers should respond better: lower price and a coffee-like look.",
+         "risk": "Premium café lovers may see the smaller bottle as less premium.",
+         "updated_product": {"product_name": PRODUCTS["v1"]["name"], "product_description": PRODUCTS["v1"]["description"],
+                             "price_inr": 99, "pack_size": "200 ml bottle", "channel": "Quick commerce"},
+         "imagen_prompt": "Clean product packshot of a slim 200 ml glass cold coffee bottle, cream and coffee-brown label, sugar per serving shown, soft daylight, white background."},
+        {"variant_id": "v2", "title": "Student 2-pack for ₹249",
+         "changes": ["2 × 300 ml cans for ₹249", "Campus-focused messaging"],
+         "objections_addressed": ["Too expensive for one drink"],
+         "expected_effect": "Lowers the per-drink price for students while keeping the premium can.",
+         "risk": "Still looks like an energy drink to health-conscious buyers.",
+         "updated_product": {"product_name": "BrewChill Cold Coffee 2-pack", "product_description": PRODUCTS["original"]["description"],
+                             "price_inr": 249, "pack_size": "2 × 300 ml cans", "channel": "Quick commerce"},
+         "imagen_prompt": None},
     ]
     return build_test_result("demo", [original, improved], created_at="2026-10-17T19:30:00Z",
                              is_demo=True, is_placeholder=True, suggestions=suggestions)
+
+
+def correlation(xs: list[float], ys: list[float]) -> float:
+    from statistics import correlation as pearson
+
+    return pearson(xs, ys)
 
 
 def backtest() -> dict:
@@ -192,7 +222,8 @@ def backtest() -> dict:
         "category": "Electronics accessories",
         "n_holdout": len(rows),
         "baseline_description": "Category average rating of the products the personas were built from",
-        "metrics": {"mae_model": mae("predicted_rating"), "mae_baseline": mae("baseline_rating")},
+        "metrics": {"mae_model": mae("predicted_rating"), "mae_baseline": mae("baseline_rating"),
+                    "correlation": round(correlation([r["predicted_rating"] for r in rows], [r["actual_rating"] for r in rows]), 2)},
         "products": rows,
     }
 

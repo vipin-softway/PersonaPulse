@@ -6,7 +6,8 @@
   "baseline_description": "Category average rating of the products the personas were built from",
   "metrics": {
     "mae_model": 0.085,
-    "mae_baseline": 0.2
+    "mae_baseline": 0.2,
+    "correlation": 0.92
   },
   "products": [
     {

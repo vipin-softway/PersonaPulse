@@ -28,17 +28,21 @@ TABLES: dict[str, tuple[str, list[bigquery.SchemaField]]] = {
         F("loaded_at", T),
     ]),
     "review_signals": ("Prompt 1 output: what each review's author cares about.", [
-        F("review_id", S, REQ), F("product_id", S), F("signals", J), F("price_sensitivity", S),
+        F("review_id", S, REQ), F("product_id", S), F("signals", J, description="Full Prompt 1 signal object"),
+        F("price_sensitivity", S), F("sentiment", S), F("usage_context", S),
         F("model", S), F("created_at", T),
     ]),
     "segments": ("Prompt 2 output: customer segments and their share of the market.", [
-        F("segment_id", S, REQ), F("name", S), F("description", S), F("share", FL),
-        F("profile", J), F("model", S), F("created_at", T),
+        F("segment_id", S, REQ), F("name", S), F("description", S),
+        F("share", FL, description="share_percent / 100"), F("price_sensitivity", S),
+        F("profile", J, description="Full Prompt 2 segment object"), F("model", S), F("created_at", T),
     ]),
     "personas": ("Prompt 3 output: individual AI customers grounded in real reviews.", [
-        F("persona_id", S, REQ), F("segment_id", S, REQ), F("name", S), F("age", I), F("city", S),
-        F("income_band", S), F("profile", J, description="Full persona JSON incl. priorities, dislikes, price ceiling"),
-        F("memory_review_ids", S, REP), F("is_live", B, description="Included in live tests (capped at MAX_LIVE_PERSONAS)"),
+        F("persona_id", S, REQ), F("segment_id", S, REQ), F("segment_name", S), F("name", S), F("age", I),
+        F("gender", S), F("city", S), F("city_tier", S), F("occupation", S), F("monthly_income_band_inr", S),
+        F("price_ceiling_inr", FL), F("skepticism", S), F("preferred_language", S),
+        F("profile", J, description="Full Prompt 3 persona object incl. memories (sent to Prompts 4 and 8)"),
+        F("is_live", B, description="Included in live tests (capped at MAX_LIVE_PERSONAS)"),
         F("model", S), F("created_at", T),
     ]),
     "tests": ("One row per tested product variant ('original', 'v1', ...).", [
@@ -47,18 +51,22 @@ TABLES: dict[str, tuple[str, list[bigquery.SchemaField]]] = {
     ]),
     "simulation_results": ("Prompt 4 output: one persona's reaction to one variant.", [
         F("test_id", S, REQ), F("variant", S, REQ), F("persona_id", S, REQ), F("segment_id", S),
-        F("purchase_intent", FL), F("would_buy", B), F("willingness_to_pay_inr", FL),
+        F("purchase_intent", FL, description="1-5"), F("would_buy", S, description="yes | maybe | no"),
+        F("willingness_to_pay_inr", FL),
         F("top_likes", S, REP), F("top_objections", S, REP), F("main_reason", S), F("quote", S),
-        F("created_at", T),
+        F("first_impression", S), F("what_would_change_my_mind", S), F("created_at", T),
     ]),
-    "insights": ("Prompt 6 (summary) and Prompt 7 (improvement suggestions) output.", [
-        F("test_id", S, REQ), F("variant", S), F("kind", S, description="'summary' or 'suggestions'"),
+    "insights": ("Prompt 6 (summary), 7 (suggestions) and optional 5 (focus group) output.", [
+        F("test_id", S, REQ), F("variant", S), F("kind", S, description="'summary' | 'suggestions' | 'focus_group'"),
         F("payload", J), F("model", S), F("created_at", T),
     ]),
     "backtest_results": ("Prompt 8 output: predicted vs. actual ratings on hidden products.", [
         F("run_id", S, REQ), F("product_id", S, REQ), F("product_name", S), F("price_inr", FL),
         F("predicted_rating", FL), F("actual_rating", FL), F("baseline_rating", FL),
-        F("predicted_complaints", J), F("actual_complaints", J), F("n_personas", I), F("created_at", T),
+        F("predicted_complaints", J, description="Top predicted complaints with counts"),
+        F("actual_complaints", J, description="Top real complaints (real reviews through Prompt 1)"),
+        F("complaint_hits", I, description="How many of the top 3 real complaints appear in the top 5 predicted"),
+        F("n_personas", I), F("created_at", T),
     ]),
 }
 

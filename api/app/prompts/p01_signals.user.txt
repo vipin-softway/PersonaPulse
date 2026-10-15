@@ -1,0 +1,32 @@
+Product category: {{category}}
+
+Reviews (JSON):
+{{reviews_json}}
+
+For EACH review, extract:
+- review_id: copy from input
+- priorities: what the customer cares about, from this list only: price, value_for_money, quality, durability, performance, design, comfort, taste, health, brand, convenience, delivery, packaging, customer_service, features, eco_friendly
+- likes: short phrases of what they liked (max 3)
+- complaints: short phrases of what they disliked (max 3)
+- usage_context: one of daily_use, gift, work, travel, family, fitness, student, other, or null
+- price_sensitivity: high, medium, low, or null (high = mentions price, discounts, or "not worth it")
+- sentiment: positive, mixed, or negative
+- purchase_trigger: what made them buy if stated (e.g. discount, recommendation, social media, brand trust), or null
+- dealbreaker: the one issue that would stop them buying again, or null
+
+Return ONLY a JSON object in this exact format:
+{
+  "signals": [
+    {
+      "review_id": "string",
+      "priorities": ["string"],
+      "likes": ["string"],
+      "complaints": ["string"],
+      "usage_context": "string or null",
+      "price_sensitivity": "high | medium | low | null",
+      "sentiment": "positive | mixed | negative",
+      "purchase_trigger": "string or null",
+      "dealbreaker": "string or null"
+    }
+  ]
+}

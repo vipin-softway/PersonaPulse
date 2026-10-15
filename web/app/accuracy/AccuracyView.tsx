@@ -17,7 +17,7 @@ export default function AccuracyView() {
   if (error) return <ErrorBox message={error} />;
   if (!data) return <Spinner label="Loading back-test…" />;
 
-  const { mae_model, mae_baseline } = data.metrics;
+  const { mae_model, mae_baseline, correlation } = data.metrics;
   const better = mae_baseline > 0 ? Math.round((1 - mae_model / mae_baseline) * 100) : 0;
   const baseline = data.products[0]?.baseline_rating ?? 0;
 
@@ -34,10 +34,11 @@ export default function AccuracyView() {
       </div>
       {data.is_placeholder && <PlaceholderNotice what="back-test" />}
 
-      <div className="grid gap-4 sm:grid-cols-3">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <StatTile label="PersonaPulse error (MAE)" value={mae_model.toFixed(2)} detail="stars off, on average" />
         <StatTile label="Baseline error (MAE)" value={mae_baseline.toFixed(2)} detail={data.baseline_description} />
         <StatTile label="Improvement over baseline" value={`${better}%`} detail="lower prediction error" />
+        <StatTile label="Correlation" value={correlation != null ? correlation.toFixed(2) : "–"} detail="predicted vs. actual, across hidden products" />
       </div>
 
       <Card title="Predicted vs. actual rating" subtitle="Each dot is a hidden product. Closer to the dashed diagonal is better.">

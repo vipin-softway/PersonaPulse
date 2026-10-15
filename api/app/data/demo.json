@@ -17,6 +17,7 @@
       "n_personas": 30,
       "overall": {
         "would_buy_pct": 30.0,
+        "maybe_pct": 16.7,
         "avg_intent": 2.57,
         "avg_wtp_inr": 106.33
       },
@@ -27,8 +28,11 @@
           "share": 0.3,
           "n": 9,
           "would_buy_pct": 11.1,
+          "maybe_pct": 22.2,
+          "no_pct": 66.7,
           "avg_intent": 2,
-          "avg_wtp_inr": 82.78
+          "avg_wtp_inr": 82.78,
+          "median_wtp_inr": 75
         },
         {
           "segment_id": "seg_health",
@@ -36,8 +40,11 @@
           "share": 0.22,
           "n": 7,
           "would_buy_pct": 28.6,
+          "maybe_pct": 28.6,
+          "no_pct": 42.9,
           "avg_intent": 2.57,
-          "avg_wtp_inr": 114.29
+          "avg_wtp_inr": 114.29,
+          "median_wtp_inr": 110
         },
         {
           "segment_id": "seg_trend",
@@ -45,8 +52,11 @@
           "share": 0.2,
           "n": 6,
           "would_buy_pct": 33.3,
+          "maybe_pct": 0.0,
+          "no_pct": 66.7,
           "avg_intent": 2.5,
-          "avg_wtp_inr": 105
+          "avg_wtp_inr": 105,
+          "median_wtp_inr": 98
         },
         {
           "segment_id": "seg_family",
@@ -54,8 +64,11 @@
           "share": 0.16,
           "n": 5,
           "would_buy_pct": 40.0,
+          "maybe_pct": 20.0,
+          "no_pct": 40.0,
           "avg_intent": 3.2,
-          "avg_wtp_inr": 112
+          "avg_wtp_inr": 112,
+          "median_wtp_inr": 120
         },
         {
           "segment_id": "seg_premium",
@@ -63,8 +76,11 @@
           "share": 0.12,
           "n": 3,
           "would_buy_pct": 66.7,
+          "maybe_pct": 0.0,
+          "no_pct": 33.3,
           "avg_intent": 3.33,
-          "avg_wtp_inr": 151.67
+          "avg_wtp_inr": 151.67,
+          "median_wtp_inr": 155
         }
       ],
       "price": {
@@ -138,22 +154,22 @@
           "pct": 30.0
         },
         {
-          "text": "Real coffee",
-          "count": 7,
-          "pct": 23.3
-        },
-        {
           "text": "Less sugar than café drinks",
           "count": 7,
           "pct": 23.3
         },
         {
-          "text": "Bold flavour",
+          "text": "Real coffee",
+          "count": 7,
+          "pct": 23.3
+        },
+        {
+          "text": "Instagram-worthy idea",
           "count": 6,
           "pct": 20.0
         },
         {
-          "text": "Instagram-worthy idea",
+          "text": "Bold flavour",
           "count": 6,
           "pct": 20.0
         }
@@ -165,7 +181,7 @@
           "age": 23,
           "city": "Bengaluru",
           "segment_name": "Value-hunting students",
-          "would_buy": true,
+          "would_buy": "yes",
           "purchase_intent": 5,
           "main_reason": "Cold coffee taste",
           "quote": "If it tastes like café cold coffee, ₹149 is still cheaper than a café."
@@ -176,7 +192,7 @@
           "age": 27,
           "city": "Indore",
           "segment_name": "Health-conscious professionals",
-          "would_buy": true,
+          "would_buy": "yes",
           "purchase_intent": 5,
           "main_reason": "Real coffee",
           "quote": "Fine as an occasional treat if the label is honest about sugar."
@@ -187,7 +203,7 @@
           "age": 40,
           "city": "Pune",
           "segment_name": "Practical family shoppers",
-          "would_buy": true,
+          "would_buy": "yes",
           "purchase_intent": 5,
           "main_reason": "Ready to drink",
           "quote": "Handy to keep in the fridge for weekends."
@@ -198,7 +214,7 @@
           "age": 34,
           "city": "Mumbai",
           "segment_name": "Premium café lovers",
-          "would_buy": true,
+          "would_buy": "yes",
           "purchase_intent": 5,
           "main_reason": "Proper coffee strength",
           "quote": "Good enough when I can't get to my café, and ₹149 is fair."
@@ -209,7 +225,7 @@
           "age": 19,
           "city": "Bengaluru",
           "segment_name": "Value-hunting students",
-          "would_buy": false,
+          "would_buy": "no",
           "purchase_intent": 1,
           "main_reason": "Too expensive for a student",
           "quote": "₹149 for one drink? I'd rather get two from the canteen."
@@ -220,7 +236,7 @@
           "age": 33,
           "city": "Mumbai",
           "segment_name": "Health-conscious professionals",
-          "would_buy": false,
+          "would_buy": "no",
           "purchase_intent": 1,
           "main_reason": "Looks like an energy drink",
           "quote": "The can design screams energy drink. I don't trust what's inside."
@@ -231,7 +247,7 @@
           "age": 19,
           "city": "Bengaluru",
           "segment_name": "Trend-driven Gen Z",
-          "would_buy": false,
+          "would_buy": "no",
           "purchase_intent": 1,
           "main_reason": "Pack looks generic",
           "quote": "Looks like every other energy drink, nothing to post about."
@@ -242,24 +258,68 @@
           "age": 38,
           "city": "Hyderabad",
           "segment_name": "Premium café lovers",
-          "would_buy": false,
+          "would_buy": "no",
           "purchase_intent": 1,
           "main_reason": "Not as good as fresh brew",
           "quote": "Bottled coffee never matches a fresh pour."
         }
       ],
       "insights": {
-        "headline": "Strong appeal for premium coffee drinkers, but price and pack design hold back everyone else.",
-        "summary": "Most personas liked the idea of a ready-to-drink cold coffee, but students found ₹149 too expensive and older buyers read the can as an energy drink. Premium café lovers were the only clear fans.",
-        "key_findings": [
-          "Value-hunting students are the largest segment and the least likely to buy at ₹149.",
-          "The can design triggers an 'energy drink' association for health-conscious and family buyers.",
-          "Median willingness to pay sits well below the ₹149 price point."
+        "headline": "Only 3 in 10 AI customers would buy at ₹149, held back by price and an energy-drink look.",
+        "overall_verdict": "launch_with_changes",
+        "best_segments": [
+          {
+            "segment_name": "Premium café lovers",
+            "why": "They value proper coffee strength and see ₹149 as fair for cold brew on the go."
+          },
+          {
+            "segment_name": "Practical family shoppers",
+            "why": "Like having a ready-to-drink option in the fridge for weekends and guests."
+          }
         ],
-        "recommendations": [
-          "Test a smaller pack at ₹99 to bring the price under the student ceiling.",
-          "Redesign the label to look like café coffee and show sugar per serving."
-        ]
+        "weakest_segments": [
+          {
+            "segment_name": "Value-hunting students",
+            "why": "The largest segment, but ₹149 is far above what they expect to pay for one drink."
+          },
+          {
+            "segment_name": "Health-conscious professionals",
+            "why": "The can reads as an energy drink and the sugar content is unclear."
+          }
+        ],
+        "price_insight": "Median willingness to pay is ₹102, and only 10% would pay ₹149 or more. A price near ₹99 would clear most customers' ceiling.",
+        "top_3_objections": [
+          {
+            "objection": "Too expensive for one drink",
+            "segments_affected": [
+              "Value-hunting students",
+              "Practical family shoppers"
+            ]
+          },
+          {
+            "objection": "Looks like an energy drink",
+            "segments_affected": [
+              "Health-conscious professionals",
+              "Practical family shoppers"
+            ]
+          },
+          {
+            "objection": "Pack looks generic",
+            "segments_affected": [
+              "Trend-driven Gen Z"
+            ]
+          }
+        ],
+        "top_3_strengths": [
+          "Cold coffee taste",
+          "Convenient ready-to-drink format",
+          "Less sugar than café drinks"
+        ],
+        "standout_quotes": [
+          "₹149 for one drink? I'd rather get two from the canteen."
+        ],
+        "recommended_target_segment": "Value-hunting students, if the price comes down",
+        "caveat": "These are AI-simulated customers; validate the winning variant with a small real-customer test."
       }
     },
     {
@@ -274,6 +334,7 @@
       "n_personas": 30,
       "overall": {
         "would_buy_pct": 60.0,
+        "maybe_pct": 20.0,
         "avg_intent": 3.6,
         "avg_wtp_inr": 108.83
       },
@@ -284,8 +345,11 @@
           "share": 0.3,
           "n": 9,
           "would_buy_pct": 77.8,
+          "maybe_pct": 11.1,
+          "no_pct": 11.1,
           "avg_intent": 4,
-          "avg_wtp_inr": 86.67
+          "avg_wtp_inr": 86.67,
+          "median_wtp_inr": 90
         },
         {
           "segment_id": "seg_health",
@@ -293,8 +357,11 @@
           "share": 0.22,
           "n": 7,
           "would_buy_pct": 57.1,
+          "maybe_pct": 14.3,
+          "no_pct": 28.6,
           "avg_intent": 3.29,
-          "avg_wtp_inr": 130.71
+          "avg_wtp_inr": 130.71,
+          "median_wtp_inr": 140
         },
         {
           "segment_id": "seg_trend",
@@ -302,8 +369,11 @@
           "share": 0.2,
           "n": 6,
           "would_buy_pct": 50.0,
+          "maybe_pct": 0.0,
+          "no_pct": 50.0,
           "avg_intent": 3,
-          "avg_wtp_inr": 102.5
+          "avg_wtp_inr": 102.5,
+          "median_wtp_inr": 102
         },
         {
           "segment_id": "seg_family",
@@ -311,8 +381,11 @@
           "share": 0.16,
           "n": 5,
           "would_buy_pct": 60.0,
+          "maybe_pct": 40.0,
+          "no_pct": 0.0,
           "avg_intent": 4.2,
-          "avg_wtp_inr": 108
+          "avg_wtp_inr": 108,
+          "median_wtp_inr": 120
         },
         {
           "segment_id": "seg_premium",
@@ -320,8 +393,11 @@
           "share": 0.12,
           "n": 3,
           "would_buy_pct": 33.3,
+          "maybe_pct": 66.7,
+          "no_pct": 0.0,
           "avg_intent": 3.33,
-          "avg_wtp_inr": 138.33
+          "avg_wtp_inr": 138.33,
+          "median_wtp_inr": 135
         }
       ],
       "price": {
@@ -390,22 +466,22 @@
       ],
       "top_likes": [
         {
-          "text": "Cold coffee taste",
-          "count": 7,
-          "pct": 23.3
-        },
-        {
           "text": "Right size for one person",
           "count": 7,
           "pct": 23.3
         },
         {
-          "text": "Clean aesthetic",
+          "text": "Cold coffee taste",
+          "count": 7,
+          "pct": 23.3
+        },
+        {
+          "text": "Affordable to try",
           "count": 6,
           "pct": 20.0
         },
         {
-          "text": "Affordable to try",
+          "text": "Clean aesthetic",
           "count": 6,
           "pct": 20.0
         },
@@ -427,7 +503,7 @@
           "age": 23,
           "city": "Bengaluru",
           "segment_name": "Value-hunting students",
-          "would_buy": true,
+          "would_buy": "yes",
           "purchase_intent": 5,
           "main_reason": "₹99 is affordable",
           "quote": "₹99 for a proper cold coffee? I'd buy it after class."
@@ -438,7 +514,7 @@
           "age": 39,
           "city": "Chennai",
           "segment_name": "Health-conscious professionals",
-          "would_buy": true,
+          "would_buy": "yes",
           "purchase_intent": 5,
           "main_reason": "Clean label",
           "quote": "Cleaner design looks like a coffee, not a stimulant."
@@ -449,7 +525,7 @@
           "age": 24,
           "city": "Bengaluru",
           "segment_name": "Trend-driven Gen Z",
-          "would_buy": true,
+          "would_buy": "yes",
           "purchase_intent": 5,
           "main_reason": "Clean aesthetic",
           "quote": "The new pack actually looks nice in a photo."
@@ -460,10 +536,21 @@
           "age": 40,
           "city": "Pune",
           "segment_name": "Practical family shoppers",
-          "would_buy": true,
+          "would_buy": "yes",
           "purchase_intent": 5,
           "main_reason": "Better value",
           "quote": "At ₹99 I can pick a few for the fridge."
+        },
+        {
+          "persona_id": "p024",
+          "persona_name": "Revathi",
+          "age": 35,
+          "city": "Kochi",
+          "segment_name": "Practical family shoppers",
+          "would_buy": "maybe",
+          "purchase_intent": 3,
+          "main_reason": "Small pack for sharing",
+          "quote": "Too small to share with the family."
         },
         {
           "persona_id": "p003",
@@ -471,7 +558,7 @@
           "age": 19,
           "city": "Bengaluru",
           "segment_name": "Value-hunting students",
-          "would_buy": false,
+          "would_buy": "no",
           "purchase_intent": 1,
           "main_reason": "Still want discounts",
           "quote": "Would wait for a combo offer."
@@ -482,7 +569,7 @@
           "age": 31,
           "city": "Pune",
           "segment_name": "Health-conscious professionals",
-          "would_buy": false,
+          "would_buy": "no",
           "purchase_intent": 1,
           "main_reason": "Want a no-sugar option",
           "quote": "I'd still want a zero-sugar version."
@@ -493,71 +580,109 @@
           "age": 21,
           "city": "Hyderabad",
           "segment_name": "Trend-driven Gen Z",
-          "would_buy": false,
+          "would_buy": "no",
           "purchase_intent": 1,
           "main_reason": "Not unique enough",
           "quote": "Cute pack, but I'm not sure it's special."
-        },
-        {
-          "persona_id": "p024",
-          "persona_name": "Revathi",
-          "age": 35,
-          "city": "Kochi",
-          "segment_name": "Practical family shoppers",
-          "would_buy": false,
-          "purchase_intent": 3,
-          "main_reason": "Small pack for sharing",
-          "quote": "Too small to share with the family."
         }
       ],
       "insights": {
-        "headline": "The ₹99 mini pack with a cleaner label roughly doubles purchase intent, led by students.",
-        "summary": "Lowering the price and making the pack look like coffee rather than an energy drink won over students, health-conscious and trend-driven buyers. Premium café lovers cooled slightly on the smaller size.",
-        "key_findings": [
-          "Value-hunting students moved from the weakest to the strongest segment.",
-          "Energy-drink objections disappeared after the label redesign.",
-          "Premium buyers see the smaller bottle as less premium."
+        "headline": "The ₹99 mini pack doubles purchase intent to 60%, led by students.",
+        "overall_verdict": "launch",
+        "best_segments": [
+          {
+            "segment_name": "Value-hunting students",
+            "why": "₹99 fits their budget and the 200 ml size suits a single serving."
+          },
+          {
+            "segment_name": "Health-conscious professionals",
+            "why": "The clean label showing sugar per serving removed the energy-drink concern."
+          }
         ],
-        "recommendations": [
-          "Launch the ₹99 mini as the main SKU; keep the 300 ml can for premium channels.",
-          "Offer a zero-sugar variant for health-conscious buyers."
-        ]
+        "weakest_segments": [
+          {
+            "segment_name": "Premium café lovers",
+            "why": "The smaller bottle feels less premium to them."
+          }
+        ],
+        "price_insight": "Two thirds of AI customers would pay ₹99 or more, with a median of ₹110, so there is a little headroom.",
+        "top_3_objections": [
+          {
+            "objection": "Smaller pack feels less premium",
+            "segments_affected": [
+              "Premium café lovers"
+            ]
+          },
+          {
+            "objection": "Too small to share",
+            "segments_affected": [
+              "Practical family shoppers"
+            ]
+          },
+          {
+            "objection": "Want a no-sugar option",
+            "segments_affected": [
+              "Health-conscious professionals"
+            ]
+          }
+        ],
+        "top_3_strengths": [
+          "Affordable price",
+          "Right size for one person",
+          "Clean, café-style label"
+        ],
+        "standout_quotes": [
+          "₹99 for a proper cold coffee? I'd buy it after class."
+        ],
+        "recommended_target_segment": "Value-hunting students",
+        "caveat": "These are AI-simulated customers; validate with a small real-customer test before scaling."
       }
     }
   ],
   "suggestions": [
     {
       "variant_id": "v1",
-      "title": "Smaller ₹99 pack with a café-style label",
+      "title": "Smaller pack at ₹99 with a café-style label",
       "changes": [
         "Price ₹149 → ₹99",
         "300 ml can → 200 ml bottle",
         "Clean label showing sugar per serving"
       ],
-      "rationale": "Brings price under students' ceiling and removes the energy-drink association.",
-      "product": {
-        "name": "BrewChill Cold Coffee (Mini)",
-        "description": "Same Arabica cold coffee in a 200 ml bottle with a clean, café-style label showing sugar per serving.",
+      "objections_addressed": [
+        "Too expensive for one drink",
+        "Looks like an energy drink"
+      ],
+      "expected_effect": "Students and health-conscious buyers should respond better: lower price and a coffee-like look.",
+      "risk": "Premium café lovers may see the smaller bottle as less premium.",
+      "updated_product": {
+        "product_name": "BrewChill Cold Coffee (Mini)",
+        "product_description": "Same Arabica cold coffee in a 200 ml bottle with a clean, café-style label showing sugar per serving.",
         "price_inr": 99,
         "pack_size": "200 ml bottle",
         "channel": "Quick commerce"
-      }
+      },
+      "imagen_prompt": "Clean product packshot of a slim 200 ml glass cold coffee bottle, cream and coffee-brown label, sugar per serving shown, soft daylight, white background."
     },
     {
       "variant_id": "v2",
-      "title": "Same can, student combo pricing",
+      "title": "Student 2-pack for ₹249",
       "changes": [
-        "2-pack for ₹249",
+        "2 × 300 ml cans for ₹249",
         "Campus-focused messaging"
       ],
-      "rationale": "Keeps the premium can while lowering the per-drink price for students.",
-      "product": {
-        "name": "BrewChill Cold Coffee 2-pack",
-        "description": "Ready-to-drink cold coffee made with Arabica, in a slim 300 ml can.",
+      "objections_addressed": [
+        "Too expensive for one drink"
+      ],
+      "expected_effect": "Lowers the per-drink price for students while keeping the premium can.",
+      "risk": "Still looks like an energy drink to health-conscious buyers.",
+      "updated_product": {
+        "product_name": "BrewChill Cold Coffee 2-pack",
+        "product_description": "Ready-to-drink cold coffee made with Arabica, in a slim 300 ml can.",
         "price_inr": 249,
         "pack_size": "2 × 300 ml cans",
         "channel": "Quick commerce"
-      }
+      },
+      "imagen_prompt": null
     }
   ]
 }

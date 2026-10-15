@@ -60,8 +60,9 @@ export function SegmentIntentChart({ segments }: { segments: SegmentResult[] }) 
               return (
                 <TipBox>
                   <p className="font-medium text-slate-900">{s.segment_name}</p>
-                  <p>{s.would_buy_pct}% would buy ({s.n} personas)</p>
-                  <p>Avg. willingness to pay {inr(s.avg_wtp_inr)}</p>
+                  <p>{Math.round(s.would_buy_pct)}% yes · {Math.round(s.maybe_pct)}% maybe · {Math.round(s.no_pct)}% no</p>
+                  <p>{s.n} AI customers</p>
+                  <p>Median willingness to pay {inr(s.median_wtp_inr)}</p>
                 </TipBox>
               );
             }}

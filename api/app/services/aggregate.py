@@ -3,8 +3,9 @@
 Pure functions, no I/O: the same code aggregates live tests (rows from
 BigQuery) and builds the bundled demo, so both look identical in the UI.
 
-Input row fields mirror the `simulation_results` table, plus persona/segment
-display fields joined in: persona_name, age, city, segment_name.
+Input row fields mirror the `simulation_results` table (Prompt 4 output), plus
+persona/segment display fields joined in: persona_name, age, city, segment_name.
+`would_buy` is "yes" | "maybe" | "no"; headline "would buy" means "yes".
 """
 
 from __future__ import annotations
@@ -15,6 +16,24 @@ from typing import Any, Iterable
 
 TOP_N = 6
 MAX_QUOTES = 8
+
+
+def would_buy(r: dict) -> str:
+    v = r.get("would_buy")
+    if isinstance(v, bool):
+        return "yes" if v else "no"
+    v = str(v or "").strip().lower()
+    return v if v in ("yes", "maybe", "no") else "no"
+
+
+def _mix(rows: list[dict]) -> dict:
+    n = len(rows)
+    return {k: _pct(sum(would_buy(r) == k for r in rows), n) for k in ("yes", "maybe", "no")}
+
+
+def _median(values: Iterable[float | None]) -> float | None:
+    vals = [v for v in values if v is not None]
+    return round(median(vals)) if vals else None
 
 
 def _pct(n: int, d: int) -> float:
@@ -40,8 +59,8 @@ def _top(rows: list[dict], field: str) -> list[dict]:
 
 def _quotes(rows: list[dict]) -> list[dict]:
     """A balanced mix: half buyers, half non-buyers, spread across segments, no repeated quotes."""
-    buyers = sorted((r for r in rows if r.get("would_buy")), key=lambda r: -(r.get("purchase_intent") or 0))
-    others = sorted((r for r in rows if not r.get("would_buy")), key=lambda r: r.get("purchase_intent") or 0)
+    buyers = sorted((r for r in rows if would_buy(r) == "yes"), key=lambda r: -(r.get("purchase_intent") or 0))
+    others = sorted((r for r in rows if would_buy(r) != "yes"), key=lambda r: r.get("purchase_intent") or 0)
     picked: list[dict] = []
     seen_quotes: set[str] = set()
 
@@ -64,7 +83,7 @@ def _quotes(rows: list[dict]) -> list[dict]:
     # Top up from whichever group still has distinct quotes.
     take(buyers, MAX_QUOTES, 2)
     take(others, MAX_QUOTES, 2)
-    picked.sort(key=lambda r: not r.get("would_buy"))
+    picked.sort(key=lambda r: ("yes", "maybe", "no").index(would_buy(r)))
     return [
         {
             "persona_id": r.get("persona_id"),
@@ -72,7 +91,7 @@ def _quotes(rows: list[dict]) -> list[dict]:
             "age": r.get("age"),
             "city": r.get("city"),
             "segment_name": r.get("segment_name"),
-            "would_buy": bool(r.get("would_buy")),
+            "would_buy": would_buy(r),
             "purchase_intent": r.get("purchase_intent"),
             "main_reason": r.get("main_reason"),
             "quote": r.get("quote"),
@@ -118,9 +137,12 @@ def aggregate_variant(variant: str, product: dict, rows: list[dict], segments: l
                 "segment_name": s["name"],
                 "share": s.get("share"),
                 "n": len(srows),
-                "would_buy_pct": _pct(sum(bool(r.get("would_buy")) for r in srows), len(srows)),
+                "would_buy_pct": _mix(srows)["yes"],
+                "maybe_pct": _mix(srows)["maybe"],
+                "no_pct": _mix(srows)["no"],
                 "avg_intent": _avg(r.get("purchase_intent") for r in srows),
                 "avg_wtp_inr": _avg(r.get("willingness_to_pay_inr") for r in srows),
+                "median_wtp_inr": _median(r.get("willingness_to_pay_inr") for r in srows),
             }
         )
 
@@ -129,7 +151,8 @@ def aggregate_variant(variant: str, product: dict, rows: list[dict], segments: l
         "product": product,
         "n_personas": n,
         "overall": {
-            "would_buy_pct": _pct(sum(bool(r.get("would_buy")) for r in rows), n),
+            "would_buy_pct": _mix(rows)["yes"],
+            "maybe_pct": _mix(rows)["maybe"],
             "avg_intent": _avg(r.get("purchase_intent") for r in rows),
             "avg_wtp_inr": _avg(r.get("willingness_to_pay_inr") for r in rows),
         },
@@ -138,7 +161,7 @@ def aggregate_variant(variant: str, product: dict, rows: list[dict], segments: l
         "top_objections": _top(rows, "top_objections"),
         "top_likes": _top(rows, "top_likes"),
         "quotes": _quotes(rows),
-        "insights": None,
+        "insights": None,  # Prompt 6 output
     }
 
 
@@ -149,7 +172,7 @@ def build_test_result(
     created_at: str,
     is_demo: bool = False,
     is_placeholder: bool = False,
-    suggestions: list[dict] | None = None,
+    suggestions: list[dict] | None = None,  # Prompt 7 "variants"
 ) -> dict:
     return {
         "test_id": test_id,

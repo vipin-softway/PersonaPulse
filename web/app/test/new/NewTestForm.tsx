@@ -42,6 +42,7 @@ export default function NewTestForm() {
       price_inr: Number(f.get("price_inr")),
       pack_size: String(f.get("pack_size")).trim(),
       channel: String(f.get("channel")),
+      competitors: String(f.get("competitors") ?? "").trim() || undefined,
       ...(image && { image_base64: image.base64, image_mime: image.mime }),
     };
     setError(null);
@@ -89,6 +90,11 @@ export default function NewTestForm() {
         <select name="channel" required defaultValue={CHANNELS[0]} className={field}>
           {CHANNELS.map((c) => <option key={c}>{c}</option>)}
         </select>
+      </label>
+
+      <label className="block text-sm font-medium text-slate-800">
+        Similar products customers know <span className="font-normal text-slate-500">(optional)</span>
+        <input name="competitors" maxLength={200} placeholder="e.g. Café cold coffee ₹180, canned cold brew ₹150" className={field} />
       </label>
 
       <div className="text-sm font-medium text-slate-800">

@@ -1,0 +1,20 @@
+YOUR PERSONA (JSON):
+{{persona_json}}
+
+You bought this {{category}} product and have used it for a few weeks:
+- Name: {{product_name}}
+- Description: {{product_description}}
+- Price paid: ₹{{price_inr}}
+
+Based on what this kind of product usually delivers at this price, and your own standards, write the review you would post.
+
+Return ONLY a JSON object in this exact format:
+{
+  "persona_id": "string",
+  "predicted_rating": 1,
+  "predicted_likes": ["string"],
+  "predicted_complaints": ["string"],
+  "review_text": "2 to 3 sentences in the persona's voice"
+}
+
+predicted_rating is 1 to 5 stars.

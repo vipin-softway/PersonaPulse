@@ -14,10 +14,15 @@ export type SegmentResult = {
   segment_name: string;
   share: number | null;
   n: number;
-  would_buy_pct: number;
+  would_buy_pct: number; // % answering "yes"
+  maybe_pct: number;
+  no_pct: number;
   avg_intent: number | null;
   avg_wtp_inr: number | null;
+  median_wtp_inr: number | null;
 };
+
+export type WouldBuy = "yes" | "maybe" | "no";
 
 export type CountedText = { text: string; count: number; pct: number };
 
@@ -27,17 +32,24 @@ export type Quote = {
   age: number | null;
   city: string | null;
   segment_name: string;
-  would_buy: boolean;
+  would_buy: WouldBuy;
   purchase_intent: number | null;
   main_reason: string | null;
   quote: string;
 };
 
+// Prompt 6 output.
 export type Insights = {
   headline: string;
-  summary: string;
-  key_findings: string[];
-  recommendations: string[];
+  overall_verdict: "launch" | "launch_with_changes" | "rethink";
+  best_segments: { segment_name: string; why: string }[];
+  weakest_segments: { segment_name: string; why: string }[];
+  price_insight: string;
+  top_3_objections: { objection: string; segments_affected: string[] }[];
+  top_3_strengths: string[];
+  standout_quotes: string[];
+  recommended_target_segment: string;
+  caveat: string;
 };
 
 export type PriceInsight = {
@@ -51,7 +63,7 @@ export type VariantResult = {
   variant: string;
   product: Product;
   n_personas: number;
-  overall: { would_buy_pct: number; avg_intent: number | null; avg_wtp_inr: number | null };
+  overall: { would_buy_pct: number; maybe_pct: number; avg_intent: number | null; avg_wtp_inr: number | null };
   segments: SegmentResult[];
   price: PriceInsight;
   top_objections: CountedText[];
@@ -60,12 +72,22 @@ export type VariantResult = {
   insights: Insights | null;
 };
 
+// One of Prompt 7's "variants".
 export type Suggestion = {
   variant_id: string;
   title: string;
   changes: string[];
-  rationale: string;
-  product: Product;
+  objections_addressed: string[];
+  expected_effect: string;
+  risk: string;
+  updated_product: {
+    product_name: string;
+    product_description: string;
+    price_inr: number;
+    pack_size: string;
+    channel: string;
+  };
+  imagen_prompt: string | null;
 };
 
 export type TestResult = {
@@ -84,6 +106,7 @@ export type NewTestInput = {
   price_inr: number;
   pack_size: string;
   channel: string;
+  competitors?: string;
   image_base64?: string;
   image_mime?: string;
 };
@@ -103,6 +126,6 @@ export type Backtest = {
   category: string;
   n_holdout: number;
   baseline_description: string;
-  metrics: { mae_model: number; mae_baseline: number };
+  metrics: { mae_model: number; mae_baseline: number; correlation?: number | null };
   products: BacktestProduct[];
 };

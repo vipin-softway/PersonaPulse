@@ -1,0 +1,29 @@
+YOUR PERSONA (JSON):
+{{persona_json}}
+
+You are scrolling while shopping and come across this new product:
+- Name: {{product_name}}
+- Description: {{product_description}}
+- Price: ₹{{price_inr}}
+- Pack size: {{pack_size}}
+- Where you see it: {{channel}}
+- Similar products you know: {{competitors}}
+- Packaging or ad image: attached (if provided)
+
+Think as this persona: Does this fit your needs and budget? How does it compare to what you buy now? Does anything in your past experiences make you trust or distrust it?
+
+Return ONLY a JSON object in this exact format:
+{
+  "persona_id": "string",
+  "first_impression": "one short sentence, in the persona's voice",
+  "purchase_intent": 1,
+  "would_buy": "yes | maybe | no",
+  "willingness_to_pay_inr": 0,
+  "top_likes": ["string"],
+  "top_objections": ["string"],
+  "main_reason": "the single biggest reason for the decision",
+  "what_would_change_my_mind": "string or null",
+  "quote": "1 to 2 sentences in the persona's voice and preferred language, with English translation in brackets if not English"
+}
+
+purchase_intent scale: 1 = definitely not, 2 = probably not, 3 = unsure, 4 = probably yes, 5 = definitely yes.

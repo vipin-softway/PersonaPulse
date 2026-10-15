@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { improveTest } from "@/lib/api";
-import type { CountedText, Quote, Suggestion, TestResult, VariantResult } from "@/lib/types";
+import type { CountedText, Insights, Quote, Suggestion, TestResult, VariantResult } from "@/lib/types";
 import { ComparisonChart, PriceChart, SegmentIntentChart } from "./charts";
 import ProgressPanel from "./ProgressPanel";
 import { AiBadge, Card, ErrorBox, PlaceholderNotice, StatTile, inr } from "./ui";
@@ -66,7 +66,11 @@ function VariantView({ v }: { v: VariantResult }) {
   return (
     <div className="space-y-6">
       <div className="grid gap-4 sm:grid-cols-3">
-        <StatTile label="Would buy" value={`${Math.round(v.overall.would_buy_pct)}%`} detail={`of ${v.n_personas} AI customers`} />
+        <StatTile
+          label="Would buy"
+          value={`${Math.round(v.overall.would_buy_pct)}%`}
+          detail={`+${Math.round(v.overall.maybe_pct)}% maybe · of ${v.n_personas} AI customers`}
+        />
         <StatTile
           label="Median willingness to pay"
           value={inr(p.median_wtp_inr)}
@@ -79,29 +83,10 @@ function VariantView({ v }: { v: VariantResult }) {
         />
       </div>
 
-      {v.insights && (
-        <Card title="AI insights summary">
-          <p className="text-lg font-medium text-slate-900">{v.insights.headline}</p>
-          <p className="mt-2 text-slate-700">{v.insights.summary}</p>
-          <div className="mt-4 grid gap-6 md:grid-cols-2">
-            <div>
-              <h3 className="text-sm font-semibold text-slate-900">Key findings</h3>
-              <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-slate-700">
-                {v.insights.key_findings.map((f) => <li key={f}>{f}</li>)}
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-sm font-semibold text-slate-900">Recommendations</h3>
-              <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-slate-700">
-                {v.insights.recommendations.map((f) => <li key={f}>{f}</li>)}
-              </ul>
-            </div>
-          </div>
-        </Card>
-      )}
+      {v.insights && <InsightsCard insights={v.insights} />}
 
       <div className="grid gap-6 lg:grid-cols-5">
-        <Card title="Purchase intent by segment" subtitle="Share of each segment's AI customers who would buy" className="lg:col-span-3">
+        <Card title="Purchase intent by segment" subtitle="Share of each segment's AI customers who answered “yes, I'd buy”" className="lg:col-span-3">
           <SegmentIntentChart segments={v.segments} />
         </Card>
         <Card title="Price insight" subtitle="What each AI customer would pay" className="lg:col-span-2">
@@ -114,6 +99,7 @@ function VariantView({ v }: { v: VariantResult }) {
               )}
             </p>
           )}
+          {v.insights?.price_insight && <p className="mt-2 text-sm text-slate-600">{v.insights.price_insight}</p>}
         </Card>
       </div>
 
@@ -131,6 +117,67 @@ function VariantView({ v }: { v: VariantResult }) {
           {v.quotes.map((q) => <QuoteCard key={q.persona_id} q={q} />)}
         </div>
       </Card>
+    </div>
+  );
+}
+
+const VERDICT: Record<Insights["overall_verdict"], { label: string; cls: string }> = {
+  launch: { label: "Launch", cls: "bg-emerald-100 text-emerald-800" },
+  launch_with_changes: { label: "Launch with changes", cls: "bg-amber-100 text-amber-800" },
+  rethink: { label: "Rethink", cls: "bg-rose-100 text-rose-800" },
+};
+
+function InsightsCard({ insights: i }: { insights: Insights }) {
+  const verdict = VERDICT[i.overall_verdict] ?? VERDICT.launch_with_changes;
+  return (
+    <Card title="AI insights summary">
+      <div className="flex flex-wrap items-start gap-3">
+        <span className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${verdict.cls}`}>{verdict.label}</span>
+        <p className="flex-1 text-lg font-medium text-slate-900">{i.headline}</p>
+      </div>
+
+      <div className="mt-5 grid gap-6 md:grid-cols-2">
+        <SegmentNotes title="Most likely to buy" items={i.best_segments} tone="text-emerald-700" />
+        <SegmentNotes title="Least likely to buy" items={i.weakest_segments} tone="text-rose-700" />
+        <div>
+          <h3 className="text-sm font-semibold text-slate-900">Top objections</h3>
+          <ul className="mt-2 space-y-1.5 text-sm text-slate-700">
+            {i.top_3_objections.map((o) => (
+              <li key={o.objection}>
+                {o.objection}
+                {o.segments_affected.length > 0 && <span className="text-slate-500"> · {o.segments_affected.join(", ")}</span>}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h3 className="text-sm font-semibold text-slate-900">Strengths</h3>
+          <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-slate-700">
+            {i.top_3_strengths.map((x) => <li key={x}>{x}</li>)}
+          </ul>
+        </div>
+      </div>
+
+      <p className="mt-5 rounded-lg bg-indigo-50 px-4 py-3 text-sm text-indigo-900">
+        <strong>Recommended target:</strong> {i.recommended_target_segment}
+      </p>
+      <p className="mt-3 text-xs text-slate-500">{i.caveat}</p>
+    </Card>
+  );
+}
+
+function SegmentNotes({ title, items, tone }: { title: string; items: { segment_name: string; why: string }[]; tone: string }) {
+  return (
+    <div>
+      <h3 className="text-sm font-semibold text-slate-900">{title}</h3>
+      <ul className="mt-2 space-y-2 text-sm">
+        {items.map((x) => (
+          <li key={x.segment_name}>
+            <span className={`font-medium ${tone}`}>{x.segment_name}</span>
+            <span className="text-slate-700">: {x.why}</span>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
@@ -156,15 +203,17 @@ function ThemeList({ items, tone, empty }: { items: CountedText[]; tone: "rose" 
   );
 }
 
+const BADGE = {
+  yes: { label: "✓ Would buy", cls: "bg-emerald-100 text-emerald-800" },
+  maybe: { label: "? Maybe", cls: "bg-amber-100 text-amber-800" },
+  no: { label: "✕ Wouldn't buy", cls: "bg-rose-100 text-rose-800" },
+} as const;
+
 function QuoteCard({ q }: { q: Quote }) {
   return (
     <figure className="flex h-full flex-col rounded-lg border border-slate-200 bg-slate-50 p-4">
-      <span
-        className={`self-start rounded-full px-2 py-0.5 text-xs font-medium ${
-          q.would_buy ? "bg-emerald-100 text-emerald-800" : "bg-rose-100 text-rose-800"
-        }`}
-      >
-        {q.would_buy ? "✓ Would buy" : "✕ Wouldn't buy"}
+      <span className={`self-start rounded-full px-2 py-0.5 text-xs font-medium ${BADGE[q.would_buy].cls}`}>
+        {BADGE[q.would_buy].label}
       </span>
       <blockquote className="mt-3 flex-1 text-sm text-slate-800">“{q.quote}”</blockquote>
       <figcaption className="mt-3 text-xs text-slate-500">
@@ -221,16 +270,29 @@ function ImproveSection({
     <div className="space-y-6">
       {test.suggestions.length > 0 && (
         <Card title="Improve & retest" subtitle="Suggested variants based on the objections above. Retest one on the same AI customers.">
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {test.suggestions.map((s) => {
               const done = test.variants.some((v) => v.variant === s.variant_id);
               return (
                 <div key={s.variant_id} className="flex flex-col rounded-lg border border-slate-200 p-4">
                   <p className="font-medium text-slate-900">{s.title}</p>
+                  <p className="mt-0.5 text-sm text-slate-500">
+                    {inr(s.updated_product.price_inr)} · {s.updated_product.pack_size}
+                  </p>
                   <ul className="mt-2 space-y-1 text-sm text-slate-700">
                     {s.changes.map((c) => <li key={c}>• {c}</li>)}
                   </ul>
-                  <p className="mt-2 text-sm text-slate-500">{s.rationale}</p>
+                  {s.objections_addressed.length > 0 && (
+                    <p className="mt-2 text-sm text-slate-600">
+                      <span className="font-medium text-slate-800">Addresses:</span> {s.objections_addressed.join("; ")}
+                    </p>
+                  )}
+                  <p className="mt-1 text-sm text-slate-600">
+                    <span className="font-medium text-slate-800">Expected:</span> {s.expected_effect}
+                  </p>
+                  <p className="mt-1 text-sm text-slate-600">
+                    <span className="font-medium text-slate-800">Risk:</span> {s.risk}
+                  </p>
                   <button
                     onClick={() => retest(s)}
                     disabled={running !== null}

@@ -1,0 +1,33 @@
+Product tested:
+{{product_summary}}
+
+Results by segment (JSON):
+{{segment_stats_json}}
+
+Most common objections (JSON):
+{{top_objections_json}}
+
+Most common likes (JSON):
+{{top_likes_json}}
+
+Sample quotes (JSON):
+{{sample_quotes_json}}
+
+Focus group summary (JSON, may be empty):
+{{focus_group_json}}
+
+Write a launch insights report.
+
+Return ONLY a JSON object in this exact format:
+{
+  "headline": "one sentence verdict with the key number",
+  "overall_verdict": "launch | launch_with_changes | rethink",
+  "best_segments": [{"segment_name": "string", "why": "string"}],
+  "weakest_segments": [{"segment_name": "string", "why": "string"}],
+  "price_insight": "what the willingness-to-pay data says about the price",
+  "top_3_objections": [{"objection": "string", "segments_affected": ["string"]}],
+  "top_3_strengths": ["string"],
+  "standout_quotes": ["string"],
+  "recommended_target_segment": "string",
+  "caveat": "one sentence reminding this is a simulation to validate with real customers"
+}
