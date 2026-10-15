@@ -174,6 +174,7 @@ def build_test_result(
     is_demo: bool = False,
     is_placeholder: bool = False,
     suggestions: list[dict] | None = None,  # Prompt 7 "variants"
+    run: dict | None = None,  # {mode: live|saved_demo, run_at, personas, gemini_calls, duration_s, model}
 ) -> dict:
     return {
         "test_id": test_id,
@@ -182,6 +183,7 @@ def build_test_result(
         "created_at": created_at,
         "is_demo": is_demo,
         "is_placeholder": is_placeholder,
+        "run": run,
         "variants": variants,
         "suggestions": suggestions or [],
     }

@@ -90,6 +90,16 @@ export type Suggestion = {
   imagen_prompt: string | null;
 };
 
+// How a result was produced, shown on the results page so judges can see it ran live.
+export type RunInfo = {
+  mode: "live" | "saved_demo";
+  run_at: string; // ISO time the simulation ran
+  personas: number;
+  gemini_calls?: number | null;
+  duration_s?: number | null;
+  model?: string | null;
+};
+
 export type TestResult = {
   test_id: string;
   panel?: string; // customer panel id, see lib/panels.ts
@@ -97,6 +107,7 @@ export type TestResult = {
   created_at: string;
   is_demo: boolean;
   is_placeholder: boolean;
+  run?: RunInfo;
   variants: VariantResult[];
   suggestions: Suggestion[];
 };

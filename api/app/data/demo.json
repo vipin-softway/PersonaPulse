@@ -5,6 +5,14 @@
   "created_at": "2026-10-17T19:30:00Z",
   "is_demo": true,
   "is_placeholder": true,
+  "run": {
+    "mode": "saved_demo",
+    "run_at": "2026-10-17T19:30:00Z",
+    "personas": 30,
+    "gemini_calls": null,
+    "duration_s": null,
+    "model": null
+  },
   "variants": [
     {
       "variant": "original",
@@ -155,12 +163,12 @@
           "pct": 30.0
         },
         {
-          "text": "Bend-tested claim",
+          "text": "Nylon braiding",
           "count": 7,
           "pct": 23.3
         },
         {
-          "text": "Nylon braiding",
+          "text": "Bend-tested claim",
           "count": 7,
           "pct": 23.3
         },
@@ -476,12 +484,12 @@
           "pct": 23.3
         },
         {
-          "text": "₹449 is fair",
+          "text": "Warranty included",
           "count": 6,
           "pct": 20.0
         },
         {
-          "text": "Warranty included",
+          "text": "₹449 is fair",
           "count": 6,
           "pct": 20.0
         },
@@ -491,7 +499,7 @@
           "pct": 20.0
         },
         {
-          "text": "65W laptop charging",
+          "text": "Good price",
           "count": 6,
           "pct": 20.0
         }

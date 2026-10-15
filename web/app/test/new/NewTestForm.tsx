@@ -43,12 +43,21 @@ export default function NewTestForm() {
   const [running, setRunning] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [image, setImage] = useState<{ base64: string; mime: string; preview: string } | null>(null);
-  const [preset, setPreset] = useState<Example | null>(null);
   // ?panel=home from the home page's panel cards preselects that panel.
-  const panelParam = useSearchParams().get("panel");
-  const fromUrl = PANELS.find((p) => p.id === panelParam)?.id;
+  const params = useSearchParams();
+  const fromUrl = PANELS.find((p) => p.id === params.get("panel"))?.id;
   const [panel, setPanel] = useState<PanelId>(fromUrl ?? PANELS[0].id);
   const [panelPicked, setPanelPicked] = useState(Boolean(fromUrl)); // stop auto-suggesting once a panel is chosen
+  // "Run this demo live yourself" links here with the demo product in the URL.
+  const [preset, setPreset] = useState<Example | null>(() =>
+    params.get("name")
+      ? {
+          label: "From demo", panel: (fromUrl ?? PANELS[0].id), name: params.get("name") ?? "",
+          description: params.get("description") ?? "", price_inr: Number(params.get("price_inr")) || 0,
+          pack_size: params.get("pack_size") ?? "", channel: params.get("channel") ?? "", competitors: params.get("competitors") ?? "",
+        }
+      : null,
+  );
 
   function applyExample(ex: Example) {
     setPreset(ex);

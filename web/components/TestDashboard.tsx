@@ -1,8 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { improveTest } from "@/lib/api";
-import type { CountedText, Insights, Quote, Suggestion, TestResult, VariantResult } from "@/lib/types";
+import type { CountedText, Insights, Quote, RunInfo, Suggestion, TestResult, VariantResult } from "@/lib/types";
 import { ComparisonChart, PriceChart, SegmentIntentChart } from "./charts";
 import ProgressPanel from "./ProgressPanel";
 import { panelById } from "@/lib/panels";
@@ -46,6 +47,7 @@ export default function TestDashboard({ initial }: { initial: TestResult }) {
 }
 
 function TestHeader({ test, v }: { test: TestResult; v: VariantResult }) {
+  const original = test.variants[0]?.product ?? v.product;
   return (
     <div className="flex flex-col gap-2">
       <div className="flex flex-wrap items-center gap-2">
@@ -60,7 +62,56 @@ function TestHeader({ test, v }: { test: TestResult; v: VariantResult }) {
         Tested on <strong className="font-medium text-slate-800">{v.n_personas} {panelById(test.panel).shoppers.toLowerCase()}</strong>
       </p>
       {v.product.description && <p className="max-w-3xl text-slate-700">{v.product.description}</p>}
+      {test.run && <RunDetails run={test.run} testId={test.test_id} />}
+      {test.is_demo && (
+        <div className="mt-2 flex flex-col gap-3 rounded-lg border border-indigo-200 bg-indigo-50 p-4 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-sm text-indigo-900">
+            This demo was saved so it loads instantly. Run the same product live to see the AI customers react right now.
+          </p>
+          <Link
+            href={`/test/new?${new URLSearchParams({
+              panel: test.panel ?? "accessories",
+              name: original.name,
+              description: original.description,
+              price_inr: String(original.price_inr),
+              pack_size: original.pack_size,
+              channel: original.channel,
+            })}`}
+            className="shrink-0 rounded-lg bg-indigo-600 px-4 py-2 text-center text-sm font-medium text-white hover:bg-indigo-500"
+          >
+            Run this demo live yourself
+          </Link>
+        </div>
+      )}
     </div>
+  );
+}
+
+function ago(iso: string): string {
+  const s = Math.max(0, (Date.now() - new Date(iso).getTime()) / 1000);
+  if (s < 90) return "just now";
+  if (s < 3600) return `${Math.round(s / 60)} min ago`;
+  if (s < 86400) return `${Math.round(s / 3600)} h ago`;
+  return new Date(iso).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" });
+}
+
+/** Proof of how the result was produced: live now, or a saved demo run. */
+function RunDetails({ run, testId }: { run: RunInfo; testId: string }) {
+  const live = run.mode === "live";
+  const parts = [
+    live
+      ? `Run live ${ago(run.run_at)}`
+      : `Saved demo · run on ${new Date(run.run_at).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}`,
+    `${run.personas} AI customers`,
+    run.gemini_calls ? `${run.gemini_calls} Gemini calls` : null,
+    run.duration_s ? `${Math.round(run.duration_s)} s` : null,
+    live ? `test ${testId.slice(0, 8)}` : null,
+  ].filter(Boolean);
+  return (
+    <p className="flex flex-wrap items-center gap-2 text-xs text-slate-500">
+      <span className={`h-2 w-2 rounded-full ${live ? "bg-emerald-500" : "bg-slate-400"}`} aria-hidden />
+      {parts.join(" · ")}
+    </p>
   );
 }
 

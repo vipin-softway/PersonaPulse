@@ -194,6 +194,8 @@ def demo() -> dict:
          "imagen_prompt": None},
     ]
     return build_test_result("demo", [original, improved], created_at="2026-10-17T19:30:00Z", panel="accessories",
+                             run={"mode": "saved_demo", "run_at": "2026-10-17T19:30:00Z", "personas": 30,
+                                  "gemini_calls": None, "duration_s": None, "model": None},
                              is_demo=True, is_placeholder=True, suggestions=suggestions)
 
 
