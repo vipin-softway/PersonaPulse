@@ -1,0 +1,39 @@
+# --- Secrets: never commit ---
+.env
+.env.local
+.env.*.local
+.env.production
+.env.development
+*.pem
+*.key
+credentials*.json
+*credentials*.json
+service-account*.json
+*-sa.json
+*-key.json
+application_default_credentials.json
+gha-creds-*.json
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# --- Node / Next.js ---
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+npm-debug.log*
+
+# --- Data (load into BigQuery; don't commit raw dumps) ---
+data/raw/
+
+# --- OS / editor ---
+.DS_Store
+.idea/
+.vscode/
