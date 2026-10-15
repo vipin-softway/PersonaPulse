@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import NewTestForm from "./NewTestForm";
 
 export default function NewTestPage() {
@@ -12,7 +13,9 @@ export default function NewTestPage() {
         Results are most reliable for products in one of these categories.
       </p>
       <div className="mt-6">
-        <NewTestForm />
+        <Suspense>
+          <NewTestForm />
+        </Suspense>
       </div>
     </main>
   );

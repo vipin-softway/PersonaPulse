@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import ProgressPanel from "@/components/ProgressPanel";
 import { ErrorBox } from "@/components/ui";
@@ -44,8 +44,11 @@ export default function NewTestForm() {
   const [error, setError] = useState<string | null>(null);
   const [image, setImage] = useState<{ base64: string; mime: string; preview: string } | null>(null);
   const [preset, setPreset] = useState<Example | null>(null);
-  const [panel, setPanel] = useState<PanelId>(PANELS[0].id);
-  const [panelPicked, setPanelPicked] = useState(false); // stop auto-suggesting once the user chooses
+  // ?panel=home from the home page's panel cards preselects that panel.
+  const panelParam = useSearchParams().get("panel");
+  const fromUrl = PANELS.find((p) => p.id === panelParam)?.id;
+  const [panel, setPanel] = useState<PanelId>(fromUrl ?? PANELS[0].id);
+  const [panelPicked, setPanelPicked] = useState(Boolean(fromUrl)); // stop auto-suggesting once a panel is chosen
 
   function applyExample(ex: Example) {
     setPreset(ex);
