@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { SiteHeader } from "@/components/ui";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,6 +23,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col bg-slate-50 text-slate-900">
+        <SiteHeader />
         {children}
         <footer className="mt-auto border-t border-slate-200 py-4 text-center text-xs text-slate-500">
           All results are <strong>AI-simulated customers</strong>. Personas are built from public product review data.

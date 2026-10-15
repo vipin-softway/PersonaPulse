@@ -1,0 +1,93 @@
+{
+  "label": "AI-simulated customers",
+  "is_placeholder": true,
+  "category": "Electronics accessories",
+  "n_holdout": 10,
+  "baseline_description": "Category average rating of the products the personas were built from",
+  "metrics": {
+    "mae_model": 0.085,
+    "mae_baseline": 0.2
+  },
+  "products": [
+    {
+      "product_id": "h00",
+      "product_name": "USB-C fast charger 20W",
+      "price_inr": 499,
+      "actual_rating": 4.2,
+      "predicted_rating": 4.16,
+      "baseline_rating": 4.0
+    },
+    {
+      "product_id": "h01",
+      "product_name": "Braided Lightning cable 1m",
+      "price_inr": 299,
+      "actual_rating": 4.0,
+      "predicted_rating": 4.08,
+      "baseline_rating": 4.0
+    },
+    {
+      "product_id": "h02",
+      "product_name": "Wireless earbuds (budget)",
+      "price_inr": 999,
+      "actual_rating": 3.6,
+      "predicted_rating": 3.56,
+      "baseline_rating": 4.0
+    },
+    {
+      "product_id": "h03",
+      "product_name": "Laptop stand aluminium",
+      "price_inr": 1299,
+      "actual_rating": 4.3,
+      "predicted_rating": 4.25,
+      "baseline_rating": 4.0
+    },
+    {
+      "product_id": "h04",
+      "product_name": "Power bank 10000mAh",
+      "price_inr": 899,
+      "actual_rating": 4.1,
+      "predicted_rating": 3.95,
+      "baseline_rating": 4.0
+    },
+    {
+      "product_id": "h05",
+      "product_name": "Smartwatch strap silicone",
+      "price_inr": 199,
+      "actual_rating": 3.8,
+      "predicted_rating": 3.77,
+      "baseline_rating": 4.0
+    },
+    {
+      "product_id": "h06",
+      "product_name": "Bluetooth speaker mini",
+      "price_inr": 1499,
+      "actual_rating": 3.9,
+      "predicted_rating": 4.08,
+      "baseline_rating": 4.0
+    },
+    {
+      "product_id": "h07",
+      "product_name": "HDMI cable 2m",
+      "price_inr": 349,
+      "actual_rating": 4.2,
+      "predicted_rating": 4.27,
+      "baseline_rating": 4.0
+    },
+    {
+      "product_id": "h08",
+      "product_name": "Wired mouse ergonomic",
+      "price_inr": 449,
+      "actual_rating": 4.0,
+      "predicted_rating": 4.17,
+      "baseline_rating": 4.0
+    },
+    {
+      "product_id": "h09",
+      "product_name": "Phone tripod with remote",
+      "price_inr": 699,
+      "actual_rating": 3.5,
+      "predicted_rating": 3.54,
+      "baseline_rating": 4.0
+    }
+  ]
+}

@@ -1,3 +1,5 @@
+import type { Backtest, NewTestInput, TestResult } from "./types";
+
 // NEXT_PUBLIC_API_URL is inlined at build time (see Dockerfile build arg).
 export const API_URL = (process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080").replace(/\/$/, "");
 
@@ -17,6 +19,16 @@ export class ApiError extends Error {
   }
 }
 
+function friendlyMessage(status: number, body: { detail?: unknown; error?: unknown }): string {
+  // Our API sends human-readable `detail`/`error` strings for 429 and 5xx; FastAPI defaults are not.
+  const msg = typeof body?.detail === "string" ? body.detail : typeof body?.error === "string" ? body.error : "";
+  if (status === 429) return msg || "You're going a bit fast. Please wait a minute and try again.";
+  if (status === 404) return "We couldn't find that. It may not be available yet.";
+  if (status === 422) return "Some of the details look invalid. Please check the form and try again.";
+  if (status >= 500) return msg || "Something went wrong on our side. Please try again in a moment.";
+  return msg && msg !== "Not Found" ? msg : `Request failed (${status}).`;
+}
+
 /** Fetch JSON from the API with a timeout and a friendly error message. */
 export async function apiFetch<T>(path: string, init: RequestInit & { timeoutMs?: number } = {}): Promise<T> {
   const { timeoutMs = 15000, ...rest } = init;
@@ -29,9 +41,7 @@ export async function apiFetch<T>(path: string, init: RequestInit & { timeoutMs?
       signal: controller.signal,
     });
     const body = await res.json().catch(() => ({}));
-    if (!res.ok) {
-      throw new ApiError(body?.detail || body?.error || `Request failed (${res.status})`, res.status);
-    }
+    if (!res.ok) throw new ApiError(friendlyMessage(res.status, body), res.status);
     return body as T;
   } catch (e) {
     if (e instanceof ApiError) throw e;
@@ -43,3 +53,23 @@ export async function apiFetch<T>(path: string, init: RequestInit & { timeoutMs?
     clearTimeout(timer);
   }
 }
+
+// --- Endpoints ---------------------------------------------------------------
+
+// Live simulations call Gemini for ~30 personas, so allow well over a minute.
+const LIVE_TIMEOUT_MS = 120_000;
+
+export const getTest = (id: string) =>
+  id === "demo" ? apiFetch<TestResult>("/demo", { timeoutMs: 20000 }) : apiFetch<TestResult>(`/tests/${encodeURIComponent(id)}`, { timeoutMs: 20000 });
+
+export const createTest = (input: NewTestInput) =>
+  apiFetch<TestResult>("/tests", { method: "POST", body: JSON.stringify(input), timeoutMs: LIVE_TIMEOUT_MS });
+
+export const improveTest = (id: string, variantId: string) =>
+  apiFetch<TestResult>(`/tests/${encodeURIComponent(id)}/improve`, {
+    method: "POST",
+    body: JSON.stringify({ variant_id: variantId }),
+    timeoutMs: LIVE_TIMEOUT_MS,
+  });
+
+export const getBacktest = () => apiFetch<Backtest>("/backtest", { timeoutMs: 20000 });
