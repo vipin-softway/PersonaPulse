@@ -69,6 +69,10 @@ python build_segments.py          # Prompt 2, one Pro call per panel
 python build_personas.py          # Prompt 3, 100 personas per panel, 30 per panel flagged for live tests
 ```
 
+`extract_signals.py --engine bigquery` runs Prompt 1 inside BigQuery with **BigQuery AI**
+(`AI.GENERATE_TEXT` on a remote Gemini model; one-time setup: `scripts/setup_bqai.sh`). Failed
+batches fall back to direct Vertex AI calls. Every signal records which engine produced it.
+
 Every script takes `--dry-run` to print what it would send without calling Gemini, and
 `--panel <id>` to run one panel only.
 

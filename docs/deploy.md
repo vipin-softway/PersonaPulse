@@ -27,6 +27,23 @@ done
 
 # BigQuery dataset
 bq --location=US mk --dataset $PROJECT_ID:personapulse
+
+# Cloud Storage: private bucket for uploaded product images (no public access)
+export BUCKET=$PROJECT_ID-personapulse-images
+gcloud storage buckets create gs://$BUCKET --location=$REGION \
+  --uniform-bucket-level-access --public-access-prevention
+gcloud storage buckets add-iam-policy-binding gs://$BUCKET \
+  --member=serviceAccount:$API_SA --role=roles/storage.objectAdmin
+```
+
+### BigQuery AI (Prompt 1 inside BigQuery)
+
+Creates a Vertex AI connection and a remote Gemini model, then runs Prompt 1 for one panel with
+`AI.GENERATE_TEXT`:
+
+```bash
+cd scripts && GCP_PROJECT=$PROJECT_ID ./setup_bqai.sh
+python extract_signals.py --engine bigquery --panel home
 ```
 
 ## 1. Deploy the API
@@ -39,7 +56,7 @@ gcloud run deploy personapulse-api \
   --allow-unauthenticated \
   --min-instances 0 --max-instances 3 \
   --concurrency 20 --timeout 300 --memory 1Gi --cpu 1 \
-  --set-env-vars GCP_PROJECT=$PROJECT_ID,GCP_LOCATION=$REGION,BQ_DATASET=personapulse,GEMINI_FLASH_MODEL=gemini-2.5-flash,GEMINI_PRO_MODEL=gemini-2.5-pro,MAX_LIVE_PERSONAS=30,ALLOWED_ORIGINS=http://localhost:3000
+  --set-env-vars GCP_PROJECT=$PROJECT_ID,GCP_LOCATION=$REGION,BQ_DATASET=personapulse,GCS_BUCKET=$BUCKET,GEMINI_FLASH_MODEL=gemini-2.5-flash,GEMINI_PRO_MODEL=gemini-2.5-pro,MAX_LIVE_PERSONAS=30,ALLOWED_ORIGINS=http://localhost:3000
 
 export API_URL=$(gcloud run services describe personapulse-api --region $REGION --format='value(status.url)')
 curl $API_URL/health
@@ -91,6 +108,10 @@ gcloud billing budgets create --billing-account=YOUR_BILLING_ACCOUNT_ID \
 ```
 
 ## Troubleshooting
+
+- **Gemini can't read an uploaded image (`gs://` permission error)**: grant the Vertex AI service agent
+  (`service-PROJECT_NUMBER@gcp-sa-aiplatform.iam.gserviceaccount.com`) `roles/storage.objectViewer` on the bucket.
+- **`AI.GENERATE_TEXT` permission or "connection" errors**: rerun `setup_bqai.sh`; IAM grants can take a few minutes to apply.
 
 - **`--allow-unauthenticated` fails with an org policy error**: the org enforces Domain Restricted Sharing. An org admin must allow `allUsers` for this project, or judges can't open the link.
 - **`--source` build fails with a permission error**: grant the Cloud Build service account (`PROJECT_NUMBER-compute@developer.gserviceaccount.com` on newer projects) `roles/run.builder`.

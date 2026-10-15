@@ -26,6 +26,7 @@ class Settings:
     gcp_project: str = field(default_factory=lambda: os.getenv("GCP_PROJECT", ""))
     gcp_location: str = field(default_factory=lambda: os.getenv("GCP_LOCATION", "us-central1"))
     bq_dataset: str = field(default_factory=lambda: os.getenv("BQ_DATASET", "personapulse"))
+    gcs_bucket: str = field(default_factory=lambda: os.getenv("GCS_BUCKET", ""))  # product images; empty = off
     gemini_flash_model: str = field(
         default_factory=lambda: os.getenv("GEMINI_FLASH_MODEL", "gemini-2.5-flash")
     )

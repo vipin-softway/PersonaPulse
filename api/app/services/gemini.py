@@ -37,6 +37,11 @@ def _sem() -> asyncio.Semaphore:
     return _semaphore
 
 
+def image_part(gcs_uri: str, mime: str) -> types.Part:
+    """Reference a Cloud Storage image so Gemini reads it directly (no bytes in the request)."""
+    return types.Part.from_uri(file_uri=gcs_uri, mime_type=mime)
+
+
 def _parse_json(text: str | None) -> Any:
     if not text:
         raise ValueError("empty response")
