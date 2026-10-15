@@ -130,6 +130,7 @@ def main() -> None:
     hidden = {h["product_id"] for h in holdouts}
     reviews["is_holdout"] = reviews.product_id.isin(hidden)
     reviews["loaded_at"] = datetime.now(timezone.utc).isoformat()
+    reviews["rating_count"] = reviews["rating_count"].astype("Int64")  # NaN made it float; BigQuery wants INT64
     stats.update(holdout_products=len(hidden), holdout_reviews=int(reviews.is_holdout.sum()),
                  training_reviews=int((~reviews.is_holdout).sum()))
 
