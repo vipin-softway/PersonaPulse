@@ -27,7 +27,7 @@ export default function AccuracyView() {
         <AiBadge />
         <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">How accurate are the AI customers?</h1>
         <p className="max-w-3xl text-slate-700">
-          We hid {data.n_holdout} {data.category.toLowerCase()} products, built personas only from reviews of the other products,
+          We hid {data.n_holdout} products from the {data.category.toLowerCase()} category, built personas only from reviews of the other products,
           then asked the personas to rate the hidden ones as if they were new launches. Here is how their predictions compare
           with the products&apos; real average ratings.
         </p>
