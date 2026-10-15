@@ -92,6 +92,7 @@ export type Suggestion = {
 
 export type TestResult = {
   test_id: string;
+  panel?: string; // customer panel id, see lib/panels.ts
   label: string;
   created_at: string;
   is_demo: boolean;
@@ -106,6 +107,7 @@ export type NewTestInput = {
   price_inr: number;
   pack_size: string;
   channel: string;
+  panel: string;
   competitors?: string;
   image_base64?: string;
   image_mime?: string;

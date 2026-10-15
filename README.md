@@ -64,15 +64,19 @@ python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 python create_tables.py           # dataset + 8 tables (needs billing + ADC)
 python load_reviews.py            # split packed reviews, pick 10 hidden back-test products, load reviews_raw
-python extract_signals.py         # Prompt 1, ~110 Flash calls, resumable
-python build_segments.py          # Prompt 2, one Pro call
-python build_personas.py          # Prompt 3, ~100 personas, 30 flagged for live tests
+python extract_signals.py         # Prompt 1, ~340 Flash calls across all panels, resumable
+python build_segments.py          # Prompt 2, one Pro call per panel
+python build_personas.py          # Prompt 3, 100 personas per panel, 30 per panel flagged for live tests
 ```
 
-Every script takes `--dry-run` to print what it would send without calling Gemini.
-Category: electronics accessories (USB cables, earphones, chargers, mice, ...). Reviewer names and
-IDs are dropped on load. Hidden back-test products are listed in `scripts/holdout_products.json`
-and never reach persona building.
+Every script takes `--dry-run` to print what it would send without calling Gemini, and
+`--panel <id>` to run one panel only.
+
+**Customer panels** (`api/app/panels.py`): each product is tested on the crowd built from its
+category's reviews: `accessories` (cables, chargers, earphones, mice), `home` (fans, heaters,
+kitchen appliances) and `electronics` (smartwatches, TVs, phones, speakers). Reviewer names and
+IDs are dropped on load. The back-test hides 10 accessories products, listed in
+`scripts/holdout_products.json`; they never reach persona building.
 
 ## Deploy
 

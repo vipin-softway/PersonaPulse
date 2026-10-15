@@ -21,7 +21,8 @@ REQ, REP = "REQUIRED", "REPEATED"
 
 TABLES: dict[str, tuple[str, list[bigquery.SchemaField]]] = {
     "reviews_raw": ("One row per review, cleaned from the Kaggle Amazon Sales dataset.", [
-        F("review_id", S, REQ), F("product_id", S, REQ), F("product_name", S), F("category", S),
+        F("review_id", S, REQ), F("panel", S, description="Customer panel id (api/app/panels.py)"),
+        F("product_id", S, REQ), F("product_name", S), F("category", S),
         F("price_inr", FL), F("list_price_inr", FL),
         F("product_rating", FL, description="Product's average Amazon rating (the dataset has no per-review rating)"),
         F("rating_count", I),
@@ -30,17 +31,17 @@ TABLES: dict[str, tuple[str, list[bigquery.SchemaField]]] = {
         F("loaded_at", T),
     ]),
     "review_signals": ("Prompt 1 output: what each review's author cares about.", [
-        F("review_id", S, REQ), F("product_id", S), F("signals", J, description="Full Prompt 1 signal object"),
+        F("review_id", S, REQ), F("panel", S), F("product_id", S), F("signals", J, description="Full Prompt 1 signal object"),
         F("price_sensitivity", S), F("sentiment", S), F("usage_context", S),
         F("model", S), F("created_at", T),
     ]),
     "segments": ("Prompt 2 output: customer segments and their share of the market.", [
-        F("segment_id", S, REQ), F("name", S), F("description", S),
+        F("segment_id", S, REQ), F("panel", S), F("name", S), F("description", S),
         F("share", FL, description="share_percent / 100"), F("price_sensitivity", S),
         F("profile", J, description="Full Prompt 2 segment object"), F("model", S), F("created_at", T),
     ]),
     "personas": ("Prompt 3 output: individual AI customers grounded in real reviews.", [
-        F("persona_id", S, REQ), F("segment_id", S, REQ), F("segment_name", S), F("name", S), F("age", I),
+        F("persona_id", S, REQ), F("panel", S), F("segment_id", S, REQ), F("segment_name", S), F("name", S), F("age", I),
         F("gender", S), F("city", S), F("city_tier", S), F("occupation", S), F("monthly_income_band_inr", S),
         F("price_ceiling_inr", FL), F("skepticism", S), F("preferred_language", S),
         F("profile", J, description="Full Prompt 3 persona object incl. memories (sent to Prompts 4 and 8)"),
@@ -48,7 +49,7 @@ TABLES: dict[str, tuple[str, list[bigquery.SchemaField]]] = {
         F("model", S), F("created_at", T),
     ]),
     "tests": ("One row per tested product variant ('original', 'v1', ...).", [
-        F("test_id", S, REQ), F("variant", S, REQ), F("product", J), F("parent_variant", S),
+        F("test_id", S, REQ), F("variant", S, REQ), F("panel", S), F("product", J), F("parent_variant", S),
         F("status", S), F("n_personas", I), F("is_demo", B), F("client_ip_hash", S), F("created_at", T),
     ]),
     "simulation_results": ("Prompt 4 output: one persona's reaction to one variant.", [
@@ -96,8 +97,17 @@ def main() -> None:
         t.description = desc
         if name in ("simulation_results", "tests", "insights"):
             t.time_partitioning = bigquery.TimePartitioning(field="created_at")
-        client.create_table(t, exists_ok=True)
-        print(f"  table {name} ready")
+        existing = client.create_table(t, exists_ok=True)
+        # Tables created by an older version of this script: append any new (nullable) columns.
+        have = {f.name for f in existing.schema}
+        missing = [f for f in schema if f.name not in have]
+        if missing:
+            existing.schema = list(existing.schema) + [
+                bigquery.SchemaField(f.name, f.field_type, "NULLABLE" if f.mode == "REQUIRED" else f.mode, description=f.description)
+                for f in missing
+            ]
+            client.update_table(existing, ["schema"])
+        print(f"  table {name} ready{f' (added {", ".join(f.name for f in missing)})' if missing else ''}")
 
 
 if __name__ == "__main__":

@@ -2,8 +2,9 @@
 
 Each CSV row is one product with up to 8 reviews packed into comma-joined
 cells (review_id, review_title, review_content). We split them back into
-individual reviews, keep one category pool (electronics accessories), hide
-N products for the back-test, and drop reviewer names/IDs (not needed, PII).
+individual reviews, tag each with a customer panel (see api/app/panels.py),
+hide N accessories products for the back-test, and drop reviewer names/IDs
+(not needed, PII).
 
     python load_reviews.py --dry-run     # clean + pick hold-outs, write files only
     python load_reviews.py               # ...and load into BigQuery reviews_raw
@@ -23,19 +24,13 @@ from datetime import datetime, timezone
 import pandas as pd
 
 from common import ROOT
+from app.panels import PANELS, assign
 
 RAW = ROOT / "data" / "raw" / "amazon.csv"
 PROCESSED = ROOT / "data" / "processed" / "reviews.csv"
 HOLDOUT_FILE = ROOT / "scripts" / "holdout_products.json"
 
-CATEGORY_NAME = "electronics accessories"
-# (level-1, level-2) category pairs in the pool, minus leaves that are not accessories.
-POOL = {
-    ("Computers&Accessories", "Accessories&Peripherals"),
-    ("Electronics", "Mobiles&Accessories"),
-    ("Electronics", "Headphones,Earbuds&Accessories"),
-}
-EXCLUDE_LEAVES = {"Smartphones", "BasicMobiles"}
+BACKTEST_PANEL = "accessories"
 
 # Reviews are joined with "," and no space; commas inside a review are usually followed by a space.
 JOIN = re.compile(r",(?! )")
@@ -61,10 +56,8 @@ def split_reviews(text: str, n: int) -> list[str] | None:
 
 def clean(df: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
     stats = {"csv_rows": len(df)}
-    levels = df["category"].str.split("|")
-    df = df[[(l[0], l[1]) in POOL and l[-1] not in EXCLUDE_LEAVES for l in levels]]
-    df = df.drop_duplicates("product_id")
-    stats["pool_products"] = len(df)
+    df = df.assign(panel=df["category"].map(assign)).dropna(subset=["panel"]).drop_duplicates("product_id")
+    stats["products_by_panel"] = df.panel.value_counts().to_dict()
 
     rows, skipped = [], 0
     for p in df.itertuples(index=False):
@@ -81,6 +74,7 @@ def clean(df: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
                 continue
             rows.append({
                 "review_id": rid.strip(),
+                "panel": p.panel,
                 "product_id": p.product_id,
                 "product_name": str(p.product_name)[:200],
                 "category": str(p.category).split("|")[-1],
@@ -93,14 +87,15 @@ def clean(df: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
                 "review_content": content[:2000],
             })
     out = pd.DataFrame(rows).drop_duplicates("review_id")
-    stats.update(products_skipped_unsplittable=skipped, reviews=len(out), products_with_reviews=out.product_id.nunique())
+    stats.update(products_skipped_unsplittable=skipped, reviews=len(out),
+                 reviews_by_panel=out.panel.value_counts().to_dict())
     return out, stats
 
 
 def pick_holdouts(reviews: pd.DataFrame, n: int, seed: int) -> list[dict]:
     """Hide n well-rated-count products spread across the rating range, so the back-test isn't trivial."""
     products = (
-        reviews.groupby("product_id")
+        reviews[reviews.panel == BACKTEST_PANEL].groupby("product_id")
         .agg(product_name=("product_name", "first"), category=("category", "first"), price_inr=("price_inr", "first"),
              product_rating=("product_rating", "first"), rating_count=("rating_count", "first"),
              about_product=("about_product", "first"))
@@ -132,11 +127,11 @@ def main() -> None:
     reviews["loaded_at"] = datetime.now(timezone.utc).isoformat()
     reviews["rating_count"] = reviews["rating_count"].astype("Int64")  # NaN made it float; BigQuery wants INT64
     stats.update(holdout_products=len(hidden), holdout_reviews=int(reviews.is_holdout.sum()),
-                 training_reviews=int((~reviews.is_holdout).sum()))
+                 training_reviews_by_panel=reviews[~reviews.is_holdout].panel.value_counts().to_dict())
 
     PROCESSED.parent.mkdir(parents=True, exist_ok=True)
     reviews.to_csv(PROCESSED, index=False)
-    HOLDOUT_FILE.write_text(json.dumps({"category": CATEGORY_NAME, "products": holdouts}, ensure_ascii=False, indent=2) + "\n",
+    HOLDOUT_FILE.write_text(json.dumps({"panel": BACKTEST_PANEL, "category": PANELS[BACKTEST_PANEL]["category"], "products": holdouts}, ensure_ascii=False, indent=2) + "\n",
                             encoding="utf-8")
     print(json.dumps(stats, indent=2))
     print(f"Wrote {PROCESSED.relative_to(ROOT)} and {HOLDOUT_FILE.relative_to(ROOT)}")

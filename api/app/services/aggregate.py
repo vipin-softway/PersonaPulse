@@ -170,12 +170,14 @@ def build_test_result(
     variants: list[dict[str, Any]],
     *,
     created_at: str,
+    panel: str,
     is_demo: bool = False,
     is_placeholder: bool = False,
     suggestions: list[dict] | None = None,  # Prompt 7 "variants"
 ) -> dict:
     return {
         "test_id": test_id,
+        "panel": panel,
         "label": "AI-simulated customers",
         "created_at": created_at,
         "is_demo": is_demo,

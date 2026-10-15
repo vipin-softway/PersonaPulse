@@ -193,7 +193,7 @@ def demo() -> dict:
                              "price_inr": 999, "pack_size": "1 cable + 1 adapter", "channel": "E-commerce marketplace"},
          "imagen_prompt": None},
     ]
-    return build_test_result("demo", [original, improved], created_at="2026-10-17T19:30:00Z",
+    return build_test_result("demo", [original, improved], created_at="2026-10-17T19:30:00Z", panel="accessories",
                              is_demo=True, is_placeholder=True, suggestions=suggestions)
 
 

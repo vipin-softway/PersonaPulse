@@ -5,6 +5,7 @@ import { improveTest } from "@/lib/api";
 import type { CountedText, Insights, Quote, Suggestion, TestResult, VariantResult } from "@/lib/types";
 import { ComparisonChart, PriceChart, SegmentIntentChart } from "./charts";
 import ProgressPanel from "./ProgressPanel";
+import { panelById } from "@/lib/panels";
 import { AiBadge, Card, ErrorBox, PlaceholderNotice, StatTile, inr } from "./ui";
 
 const variantLabel = (v: VariantResult) => (v.variant === "original" ? "Original" : `Variant ${v.variant.toUpperCase()}`);
@@ -53,7 +54,10 @@ function TestHeader({ test, v }: { test: TestResult; v: VariantResult }) {
       </div>
       <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">{v.product.name}</h1>
       <p className="text-sm text-slate-600">
-        {inr(v.product.price_inr)} · {v.product.pack_size} · {v.product.channel} · tested on {v.n_personas} AI customers
+        {inr(v.product.price_inr)} · {v.product.pack_size} · {v.product.channel}
+      </p>
+      <p className="text-sm text-slate-600">
+        Tested on <strong className="font-medium text-slate-800">{v.n_personas} {panelById(test.panel).shoppers.toLowerCase()}</strong>
       </p>
       {v.product.description && <p className="max-w-3xl text-slate-700">{v.product.description}</p>}
     </div>

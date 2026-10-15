@@ -1,5 +1,6 @@
 {
   "test_id": "demo",
+  "panel": "accessories",
   "label": "AI-simulated customers",
   "created_at": "2026-10-17T19:30:00Z",
   "is_demo": true,
@@ -144,12 +145,12 @@
       ],
       "top_likes": [
         {
-          "text": "Long 2 m length",
+          "text": "Braided build",
           "count": 9,
           "pct": 30.0
         },
         {
-          "text": "Braided build",
+          "text": "Long 2 m length",
           "count": 9,
           "pct": 30.0
         },
@@ -164,12 +165,12 @@
           "pct": 23.3
         },
         {
-          "text": "One cable for phone and laptop",
+          "text": "65W laptop charging",
           "count": 6,
           "pct": 20.0
         },
         {
-          "text": "65W laptop charging",
+          "text": "One cable for phone and laptop",
           "count": 6,
           "pct": 20.0
         }
@@ -490,7 +491,7 @@
           "pct": 20.0
         },
         {
-          "text": "Good price",
+          "text": "65W laptop charging",
           "count": 6,
           "pct": 20.0
         }

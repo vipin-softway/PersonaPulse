@@ -7,8 +7,12 @@ be copied from the supplied reviews (invented ones are dropped), and it
 reports age/skepticism spread. MAX_LIVE_PERSONAS personas, spread across
 segments, are flagged is_live for live tests.
 
+Runs once per customer panel (~100 personas each) and saves
+data/processed/personas_<panel>.json, then loads all panels into BigQuery.
+
     python build_personas.py --dry-run           # show allocation + first prompt
-    python build_personas.py --total 100
+    python build_personas.py                     # all panels, 100 personas each
+    python build_personas.py --panel home        # one panel (others' saved files are kept)
 """
 
 from __future__ import annotations
@@ -25,8 +29,8 @@ from datetime import datetime, timezone
 import pandas as pd
 
 from common import PROCESSED, call_prompt, load_json_to_bq, preview_prompt
+from app.panels import PANELS
 
-CATEGORY = "electronics accessories"
 MARKET = "urban and semi-urban India"
 DEMOGRAPHIC_MIX = "age 18-24: 30%, 25-34: 35%, 35-49: 25%, 50+: 10%; metro 50%, tier-2 35%, tier-3 15%"
 EXTRA_REVIEWS = 12
@@ -95,7 +99,7 @@ CHUNK = 12  # personas per Gemini call: long JSON replies are more likely to be 
 async def _generate(seg: dict, count: int, reviews: list[dict]) -> tuple[list[dict], bool]:
     data, ok = await call_prompt(
         "p03_personas", fallback={"personas": []}, timeout_s=600,
-        category=CATEGORY, market=MARKET, segment_json=json.dumps(seg, ensure_ascii=False),
+        category=PANELS[seg["panel"]]["category"], market=MARKET, segment_json=json.dumps(seg, ensure_ascii=False),
         representative_reviews_json=json.dumps(reviews, ensure_ascii=False), demographic_mix=DEMOGRAPHIC_MIX,
         count=count, segment_id=seg["segment_id"],
     )
@@ -110,7 +114,7 @@ async def build_segment(seg: dict, count: int, reviews: list[dict]) -> list[dict
     out = []
     for i, p in enumerate(personas, start=1):
         p["persona_id"] = f"{seg['segment_id']}_p{i}"  # renumber across chunks
-        p["segment_id"], p["segment_name"] = seg["segment_id"], seg["name"]
+        p["segment_id"], p["segment_name"], p["panel"] = seg["segment_id"], seg["name"], seg["panel"]
         p["memories_claimed"] = len(p.get("memories") or [])
         p["memories"] = grounded(p.get("memories"), texts)
         out.append(p)
@@ -120,12 +124,12 @@ async def build_segment(seg: dict, count: int, reviews: list[dict]) -> list[dict
     return out
 
 
-def report(personas: list[dict]) -> None:
+def report(panel: str, personas: list[dict]) -> None:
     claimed = sum(p["memories_claimed"] for p in personas)
     kept = sum(len(p["memories"]) for p in personas)
     ages = pd.Series([p.get("age") for p in personas if isinstance(p.get("age"), (int, float))])
     bands = pd.cut(ages, [0, 24, 34, 49, 120], labels=["18-24", "25-34", "35-49", "50+"]).value_counts(normalize=True)
-    print("\nRealism check")
+    print(f"\nRealism check [{panel}]")
     print(f"  personas: {len(personas)}  live: {sum(bool(p.get('is_live')) for p in personas)}")
     print(f"  memories grounded in real reviews: {kept}/{claimed} ({100 * kept / max(claimed, 1):.0f}%)"
           f"; personas with <3 grounded memories: {sum(len(p['memories']) < 3 for p in personas)}")
@@ -134,63 +138,85 @@ def report(personas: list[dict]) -> None:
     print("  city tier: " + ", ".join(f"{k} {v}" for k, v in Counter(p.get("city_tier") for p in personas).most_common()))
 
 
-async def main() -> None:
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--total", type=int, default=100)
-    ap.add_argument("--live", type=int, default=int(os.environ.get("MAX_LIVE_PERSONAS", 30)))
-    ap.add_argument("--seed", type=int, default=7)
-    ap.add_argument("--dry-run", action="store_true")
-    ap.add_argument("--no-bq", action="store_true")
-    args = ap.parse_args()
-
-    segments = json.loads((PROCESSED / "segments.json").read_text(encoding="utf-8"))
-    signals = [json.loads(l) for l in (PROCESSED / "signals.jsonl").read_text(encoding="utf-8").splitlines()]
-    reviews = pd.read_csv(PROCESSED / "reviews.csv")
-    reviews = reviews[~reviews.is_holdout]  # hidden back-test products never reach personas
-    text_of = {r.review_id: (f"{r.review_title}. {r.review_content}" if isinstance(r.review_title, str) else r.review_content)[:MAX_REVIEW_CHARS]
-               for r in reviews.itertuples(index=False)}
-
+async def build_panel(panel: str, signals: list[dict], text_of: dict[str, str], args) -> None:
+    f = PROCESSED / f"segments_{panel}.json"
+    if not f.exists():
+        print(f"[{panel}] no segments yet; run build_segments.py first")
+        return
+    segments = json.loads(f.read_text(encoding="utf-8"))
+    signals = [s for s in signals if s.get("panel") == panel]
     counts = allocate(args.total, {s["segment_id"]: s["share_percent"] for s in segments}, minimum=3)
     used: set[str] = set()
     plan = [(s, counts[s["segment_id"]], segment_reviews(s, signals, text_of, used)) for s in segments]
     for s, n, revs in plan:
-        print(f"  {s['segment_id']} {s['share_percent']:5.1f}% -> {n:3d} personas, {len(revs)} reviews  {s['name']}")
+        print(f"  {s['segment_id']:18} {s['share_percent']:5.1f}% -> {n:3d} personas, {len(revs)} reviews  {s['name']}")
 
     if args.dry_run:
         s, n, revs = plan[0]
-        print(preview_prompt("p03_personas", category=CATEGORY, market=MARKET, segment_json=json.dumps(s, ensure_ascii=False),
+        print(preview_prompt("p03_personas", category=PANELS[panel]["category"], market=MARKET,
+                             segment_json=json.dumps(s, ensure_ascii=False),
                              representative_reviews_json=json.dumps(revs[:2], ensure_ascii=False),
-                             demographic_mix=DEMOGRAPHIC_MIX, count=n, segment_id=s["segment_id"]))
+                             demographic_mix=DEMOGRAPHIC_MIX, count=n, segment_id=s["segment_id"])[:1500] + "\n...")
         return
 
     personas = [p for group in await asyncio.gather(*(build_segment(s, n, r) for s, n, r in plan)) for p in group]
     pick_live(personas, args.live, args.seed)
-    report(personas)
-    (PROCESSED / "personas.json").write_text(json.dumps(personas, ensure_ascii=False, indent=2), encoding="utf-8")
+    report(panel, personas)
+    (PROCESSED / f"personas_{panel}.json").write_text(json.dumps(personas, ensure_ascii=False, indent=2), encoding="utf-8")
 
-    if args.no_bq:
-        return
-    from app.config import get_settings
 
-    now, model = datetime.now(timezone.utc).isoformat(), get_settings().gemini_pro_model
-
+def bq_rows(personas: list[dict], model: str, now: str) -> list[dict]:
     def num(v):
-        return pd.to_numeric(v, errors="coerce") if v is not None else None
+        v = pd.to_numeric(v, errors="coerce") if v is not None else None
+        return None if v is None or pd.isna(v) else v
 
     rows = []
     for p in personas:
         profile = {k: v for k, v in p.items() if k not in ("memories_claimed", "is_live")}
         age, ceiling = num(p.get("age")), num(p.get("price_ceiling_inr"))
         rows.append({
-            "persona_id": p["persona_id"], "segment_id": p["segment_id"], "segment_name": p["segment_name"],
-            "name": p.get("name"), "age": None if pd.isna(age) else int(age), "gender": p.get("gender"),
+            "persona_id": p["persona_id"], "panel": p["panel"], "segment_id": p["segment_id"], "segment_name": p["segment_name"],
+            "name": p.get("name"), "age": None if age is None else int(age), "gender": p.get("gender"),
             "city": p.get("city"), "city_tier": p.get("city_tier"), "occupation": p.get("occupation"),
             "monthly_income_band_inr": p.get("monthly_income_band_inr"),
-            "price_ceiling_inr": None if pd.isna(ceiling) else float(ceiling),
+            "price_ceiling_inr": None if ceiling is None else float(ceiling),
             "skepticism": p.get("skepticism"), "preferred_language": p.get("preferred_language"),
             "profile": profile, "is_live": bool(p.get("is_live")), "model": model, "created_at": now,
         })
-    load_json_to_bq("personas", rows)
+    return rows
+
+
+async def main() -> None:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--panel", choices=list(PANELS), help="only this panel (default: all)")
+    ap.add_argument("--total", type=int, default=100, help="personas per panel")
+    ap.add_argument("--live", type=int, default=int(os.environ.get("MAX_LIVE_PERSONAS", 30)), help="live personas per panel")
+    ap.add_argument("--seed", type=int, default=7)
+    ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--no-bq", action="store_true")
+    args = ap.parse_args()
+
+    signals = [json.loads(l) for l in (PROCESSED / "signals.jsonl").read_text(encoding="utf-8").splitlines()]
+    reviews = pd.read_csv(PROCESSED / "reviews.csv")
+    reviews = reviews[~reviews.is_holdout]  # hidden back-test products never reach personas
+    text_of = {r.review_id: (f"{r.review_title}. {r.review_content}" if isinstance(r.review_title, str) else r.review_content)[:MAX_REVIEW_CHARS]
+               for r in reviews.itertuples(index=False)}
+
+    panels = [args.panel] if args.panel else list(PANELS)
+    await asyncio.gather(*(build_panel(p, signals, text_of, args) for p in panels))
+    if args.dry_run or args.no_bq:
+        return
+
+    # Load every panel's saved personas together (the BigQuery load replaces the table).
+    from app.config import get_settings
+
+    now, model = datetime.now(timezone.utc).isoformat(), get_settings().gemini_pro_model
+    personas = []
+    for p in PANELS:
+        f = PROCESSED / f"personas_{p}.json"
+        if f.exists():
+            personas += json.loads(f.read_text(encoding="utf-8"))
+    load_json_to_bq("personas", bq_rows(personas, model, now))
 
 
 if __name__ == "__main__":
