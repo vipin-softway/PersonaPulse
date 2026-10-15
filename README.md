@@ -17,7 +17,7 @@ docs/     prompts.md, architecture.md, deploy.md
 
 ## Run locally
 
-Prereqs: Python 3.11, Node 22, gcloud CLI.
+Prereqs: Python 3.11+ (Cloud Run uses 3.11; 3.15 also works locally), Node 22, gcloud CLI.
 
 ```bash
 gcloud auth application-default login   # ADC; no API keys anywhere
@@ -28,7 +28,7 @@ API (http://localhost:8080):
 
 ```bash
 cd api
-python3.11 -m venv .venv && source .venv/bin/activate
+python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 set -a; source ../.env; set +a
 uvicorn app.main:app --reload --port 8080
@@ -58,7 +58,7 @@ BigQuery calls, and the UI labels them as sample data. They get replaced with re
 
 ```bash
 cd scripts
-python3.11 -m venv .venv && source .venv/bin/activate
+python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 python create_tables.py --print   # preview schemas
 python create_tables.py           # create dataset + tables (needs billing + ADC)
