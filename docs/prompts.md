@@ -2,7 +2,7 @@
 
 Oct 15, 2026 · @Vipin
 
-Eight copy-ready prompts that run the PersonaPulse pipeline, in the order the code calls them.
+Nine copy-ready prompts that run the PersonaPulse pipeline, in the order the code calls them.
 
 > This file is the source of truth. `python3 scripts/sync_prompts.py` copies each fenced
 > System instruction / User prompt block verbatim into `api/app/prompts/`. Edit prompts here,
@@ -24,6 +24,7 @@ Pipeline order: 1 Extract signals → 2 Find segments → 3 Generate personas �
 | 6 Insights summary | Gemini Pro | 0.3 | Once per test |
 | 7 Improvement | Gemini Pro | 0.6 | Once per test |
 | 8 Back-test | Gemini Flash | 0.2 | One per persona per hidden product |
+| 9 Product lookup | Gemini Flash + Google Search grounding | 0.2 | On demand, when a seller clicks "Fill from the web" |
 
 Setup notes:
 
@@ -431,3 +432,50 @@ Scoring (in Python or SQL, no prompt needed):
 4. Plot predicted vs. actual rating as a scatter chart with a diagonal line. This is the key slide.
 
 Also run a naive baseline (category average rating for every product). Showing PersonaPulse beats the baseline is far more convincing than the raw error alone.
+
+## Prompt 9: Product lookup with Google Search
+
+Fills in the test form from the web, so a seller can type just a product name. Gemini searches Google for the product as sold in the target market and returns a factual description, the typical price, and the products shoppers compare it with, which then feed Prompt 4 as {{competitors}}. It also picks the best customer panel and says whether the price fits that panel. Added after Prompts 1–8; run with the Google Search tool enabled (grounding), so JSON is requested in the prompt rather than through JSON output mode.
+
+Variables: {{product_query}} (what the seller typed), {{market}} (e.g. "India"), {{panels_json}} (list of panels with id, shoppers, example products and typical price range).
+
+System instruction:
+
+```text
+You are a product research assistant for small businesses. Use Google Search to find accurate, current information about the product a seller names, as it is sold in the target market. Report only what search results show or clearly imply; never invent specifications or prices. If the seller describes a new concept rather than an existing product, describe the closest real equivalent and say so in the notes.
+```
+
+User prompt:
+
+```text
+Product to look up: {{product_query}}
+Target market: {{market}} (all prices in Indian rupees)
+
+Customer panels available (JSON):
+{{panels_json}}
+
+Task:
+1. Identify the product. If several versions exist, pick the most common current base version.
+2. Write a factual description of 1 to 3 sentences, as a shopper would see it on a product page: key specs and features, no marketing hype.
+3. Give the typical current selling price in the target market as a single number in rupees.
+4. Give the typical pack contents or size.
+5. List 3 to 5 similar products shoppers in the target market compare it with, each with its typical price in rupees.
+6. Pick the customer panel whose shoppers best match this product, and judge whether its price fits the range those shoppers usually buy.
+
+Return ONLY a JSON object in this exact format:
+{
+  "found": true,
+  "product_name": "string",
+  "product_description": "string",
+  "price_inr": 0,
+  "pack_size": "string",
+  "channel": "where it is usually bought, e.g. E-commerce marketplace",
+  "competitors": [{"name": "string", "price_inr": 0}],
+  "suggested_panel": "a panel id from the list above",
+  "panel_fit": "good | stretch | poor",
+  "notes": "one sentence: which version was chosen, or why the panel fit is a stretch"
+}
+
+If you cannot identify the product, return {"found": false, "notes": "why"}.
+```
+

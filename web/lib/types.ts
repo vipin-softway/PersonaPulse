@@ -163,3 +163,19 @@ export type Backtest = {
   run_at?: string;
   products: BacktestProduct[];
 };
+
+/** POST /lookup: product details found with Gemini + Google Search (Prompt 9). */
+export type ProductLookup = {
+  found: boolean;
+  notes: string;
+  product_name?: string;
+  product_description?: string;
+  price_inr?: number | null;
+  pack_size?: string;
+  channel?: string;
+  competitors_text?: string;
+  suggested_panel?: string | null;
+  panel_fit?: "good" | "stretch" | "poor" | null;
+  searched?: string[];
+  sources?: { title: string; url: string }[];
+};

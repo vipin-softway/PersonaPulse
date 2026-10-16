@@ -1,0 +1,29 @@
+Product to look up: {{product_query}}
+Target market: {{market}} (all prices in Indian rupees)
+
+Customer panels available (JSON):
+{{panels_json}}
+
+Task:
+1. Identify the product. If several versions exist, pick the most common current base version.
+2. Write a factual description of 1 to 3 sentences, as a shopper would see it on a product page: key specs and features, no marketing hype.
+3. Give the typical current selling price in the target market as a single number in rupees.
+4. Give the typical pack contents or size.
+5. List 3 to 5 similar products shoppers in the target market compare it with, each with its typical price in rupees.
+6. Pick the customer panel whose shoppers best match this product, and judge whether its price fits the range those shoppers usually buy.
+
+Return ONLY a JSON object in this exact format:
+{
+  "found": true,
+  "product_name": "string",
+  "product_description": "string",
+  "price_inr": 0,
+  "pack_size": "string",
+  "channel": "where it is usually bought, e.g. E-commerce marketplace",
+  "competitors": [{"name": "string", "price_inr": 0}],
+  "suggested_panel": "a panel id from the list above",
+  "panel_fit": "good | stretch | poor",
+  "notes": "one sentence: which version was chosen, or why the panel fit is a stretch"
+}
+
+If you cannot identify the product, return {"found": false, "notes": "why"}.

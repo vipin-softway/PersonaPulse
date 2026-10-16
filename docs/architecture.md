@@ -25,6 +25,7 @@ flowchart LR
     W -->|"REST / JSON"| A["personapulse-api<br/>FastAPI"]
     A -->|"Prompt 4 × 30 in parallel"| GF["Gemini Flash<br/>Vertex AI"]
     A -->|"Prompts 6 and 7"| GP["Gemini Pro<br/>Vertex AI"]
+    A -->|"Prompt 9 lookup"| GS["Gemini Flash +<br/>Google Search grounding"]
     A -->|"objection themes"| EM["Vertex AI<br/>text embeddings"]
     A <-->|"tests, results, insights"| BQ[("BigQuery")]
     A <-->|"product images"| GCS[("Cloud Storage<br/>private bucket")]
@@ -38,7 +39,7 @@ flowchart LR
 
 | Service | Role |
 |---|---|
-| **Gemini on Vertex AI** | All 8 prompts. `gemini-3.8-flash` for high-volume calls (signals, reactions, back-test), `gemini-3.1-pro-preview` for reasoning (segments, personas, insights, improvements), `gemini-2.5-pro` as automatic fallback |
+| **Gemini on Vertex AI** | All 9 prompts. Prompt 9 (product lookup) uses Grounding with Google Search, low thinking, ~5–15 s. `gemini-3.8-flash` for high-volume calls (signals, reactions, back-test), `gemini-3.1-pro-preview` for reasoning (segments, personas, insights, improvements), `gemini-2.5-pro` as automatic fallback |
 | **BigQuery** | Every table: reviews, signals, segments, personas, tests, per-persona results, insights, back-test |
 | **BigQuery AI** | Prompt 1 for the home & kitchen panel runs inside BigQuery: `AI.GENERATE_TEXT` on a remote Gemini model (2,673 reviews in 54 s) |
 | **Vertex AI text embeddings** | `text-embedding-005` groups each test's free-text objections and likes into themes |
@@ -60,6 +61,11 @@ flowchart LR
    polls and shows it about 20 s later.
 6. **Improve & retest** (`POST /tests/{id}/improve`): Prompt 7 proposes up to 3 variants; retesting one reruns
    steps 3–5 on the same 30 personas and adds a side-by-side comparison.
+
+**Fill from the web** (`POST /lookup`, before a test): Prompt 9 on Gemini Flash with the Google Search tool finds an
+existing product's description, India price, pack, channel and competitors, and suggests a panel. Grounded calls don't
+use JSON output mode, so the prompt asks for JSON and the reply is parsed and validated; 45 s limit, one retry, results
+cached for an hour, rate-limited like tests. The searches Gemini ran are shown under the form.
 
 ## Guardrails (the hard rules)
 

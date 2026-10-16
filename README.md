@@ -20,9 +20,11 @@ No login needed.
 
 ## What it does
 
-1. **Describe a product**: name, description, price in ₹, pack size, channel, optional packaging image. Or click an example.
+1. **Describe a product**: name, description, price in ₹, pack size, channel, optional packaging image. Or click an example,
+   or type an existing product's name and **Fill from the web** (Gemini with Google Search grounding finds its price,
+   specs and competitors).
 2. **Pick who tests it**: one of three shopper panels (electronics accessories, home & kitchen, consumer electronics),
-   each built only from real reviews in that category.
+   each built only from real reviews in that category. A warning appears if your price is outside the panel's usual range.
 3. **30 AI customers react independently, live on Gemini**: would they buy, at what price, what they like, what puts them off.
 4. **See results by segment**: purchase intent, willingness to pay vs your price, objection themes, quotes, and an
    AI launch report (verdict, best and weakest segments, price insight).
@@ -69,6 +71,7 @@ flowchart LR
     W --> A["FastAPI API"]
     A -->|"Prompt 4 × 30 parallel"| GF["Gemini Flash"]
     A -->|"Prompts 6, 7"| GP["Gemini Pro"]
+    A -->|"Prompt 9 product lookup"| GS["Gemini Flash +<br/>Google Search grounding"]
     A -->|"themes"| EM["Vertex AI embeddings"]
     A <--> BQ[("BigQuery")]
     A <--> GCS[("Cloud Storage")]
@@ -78,7 +81,7 @@ flowchart LR
 
 Details, the request lifecycle and the data model: [docs/architecture.md](docs/architecture.md).
 
-**Google Cloud:** Gemini on Vertex AI · BigQuery · BigQuery AI (`AI.GENERATE_TEXT`) · Vertex AI text embeddings ·
+**Google Cloud:** Gemini on Vertex AI (with Grounding with Google Search) · BigQuery · BigQuery AI (`AI.GENERATE_TEXT`) · Vertex AI text embeddings ·
 Cloud Storage · Cloud Run · Cloud Build · Artifact Registry · IAM service accounts.
 
 ## How the AI customers are built
@@ -102,7 +105,7 @@ api/      FastAPI (Python 3.11): routers/, services/ (gemini, simulate, insights
 web/      Next.js (App Router, TypeScript, Tailwind, Recharts)
 scripts/  one-time jobs: load_reviews, extract_signals (P1), build_segments (P2), build_personas (P3),
           run_backtest (P8), save_demo, dedupe_names, create_tables, setup_bqai.sh, sync_prompts
-docs/     prompts.md (all 8 prompts), architecture.md, deploy.md
+docs/     prompts.md (all 9 prompts), architecture.md, deploy.md
 ```
 
 ## Run locally
@@ -158,7 +161,7 @@ Every script takes `--dry-run`, which prints the exact prompt it would send.
 
 ## Prompts
 
-All Gemini prompts live in [docs/prompts.md](docs/prompts.md) (Prompts 1–8). `python3 scripts/sync_prompts.py`
+All Gemini prompts live in [docs/prompts.md](docs/prompts.md) (Prompts 1–9). `python3 scripts/sync_prompts.py`
 copies them verbatim into `api/app/prompts/` (`--check` verifies they match). Prompt 5 (focus group) is included
 but not used in this version.
 

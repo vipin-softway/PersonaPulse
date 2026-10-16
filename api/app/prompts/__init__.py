@@ -23,6 +23,7 @@ CONFIG: dict[str, tuple[str, float]] = {
     "p06_insights": ("pro", 0.3),
     "p07_improve": ("pro", 0.6),
     "p08_backtest": ("flash", 0.2),
+    "p09_lookup": ("flash", 0.2),  # run with Google Search grounding (see services/lookup.py)
 }
 _VAR = re.compile(r"\{\{\s*(\w+)\s*\}\}")
 

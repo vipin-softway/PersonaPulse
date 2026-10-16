@@ -6,21 +6,27 @@ shoppers and a cable by accessory shoppers. Keep ids in sync with web/lib/panels
 
 from __future__ import annotations
 
-PANELS: dict[str, dict[str, str]] = {
+PANELS: dict[str, dict] = {
     "accessories": {
         "label": "Electronics accessories",
         "shoppers": "Electronics-accessory shoppers",
         "category": "electronics accessories",  # {{category}} in Prompts 1-3 and 8
+        "examples": "cables, chargers, earphones, mice, power banks",
+        "price_p10": 169, "price_p90": 1565,  # middle 80% of training-product prices (reviews_raw)
     },
     "home": {
         "label": "Home & kitchen appliances",
         "shoppers": "Home & kitchen shoppers",
         "category": "home and kitchen appliances",
+        "examples": "fans, heaters, water heaters, mixers, kettles, irons, purifiers",
+        "price_p10": 279, "price_p90": 5999,
     },
     "electronics": {
         "label": "Consumer electronics",
         "shoppers": "Consumer-electronics shoppers",
         "category": "consumer electronics",
+        "examples": "smartwatches, smartphones, TVs, speakers",
+        "price_p10": 1049, "price_p90": 28999,
     },
 }
 DEFAULT_PANEL = "accessories"

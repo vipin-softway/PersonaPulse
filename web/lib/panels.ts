@@ -1,8 +1,9 @@
-// Customer panels. Keep ids in sync with api/app/panels.py.
+// Customer panels. Keep ids and price ranges in sync with api/app/panels.py
+// (price_p10-p90: middle 80% of the prices of the products the panel was built from).
 export const PANELS = [
-  { id: "accessories", label: "Electronics accessories", shoppers: "Electronics-accessory shoppers", examples: "cables, chargers, earphones, mice" },
-  { id: "home", label: "Home & kitchen appliances", shoppers: "Home & kitchen shoppers", examples: "fans, coolers, heaters, mixers, kettles" },
-  { id: "electronics", label: "Consumer electronics", shoppers: "Consumer-electronics shoppers", examples: "smartwatches, TVs, phones, speakers" },
+  { id: "accessories", label: "Electronics accessories", shoppers: "Electronics-accessory shoppers", examples: "cables, chargers, earphones, mice", price_p10: 169, price_p90: 1565 },
+  { id: "home", label: "Home & kitchen appliances", shoppers: "Home & kitchen shoppers", examples: "fans, coolers, heaters, mixers, kettles", price_p10: 279, price_p90: 5999 },
+  { id: "electronics", label: "Consumer electronics", shoppers: "Consumer-electronics shoppers", examples: "smartwatches, TVs, phones, speakers", price_p10: 1049, price_p90: 28999 },
 ] as const;
 
 export type PanelId = (typeof PANELS)[number]["id"];
@@ -14,7 +15,7 @@ export const panelById = (id?: string | null) => PANELS.find((p) => p.id === id)
 const KEYWORDS: [PanelId, RegExp][] = [
   ["accessories", /\b(cable|charger|charging brick|adapter|earbuds?|earphones?|headphones?|headset|tws|neckband|mouse|mice|keyboard|power ?bank|hub|dongle|case|cover|screen (guard|protector)|tempered glass|stand|holder|mount|tripod|selfie stick|pendrive|memory card|sd card|remote)s?\b/i],
   ["home", /\b(fan|air ?cooler|cooler|heater|geyser|kettle|mixer|grinder|blender|juicer|iron|toaster|sandwich|induction|cooktop|purifier|vacuum|ac|air ?conditioner|humidifier|chopper|egg boiler|appliance)s?\b/i],
-  ["electronics", /\b(tv|television|smart ?watch|watch|smart ?phone|phone|mobile|speaker|soundbar|projector|camera|tablet|laptop|monitor|fitness band)s?\b/i],
+  ["electronics", /\b(tv|television|smart ?watch|watch|smart ?phone|phone|mobile|speaker|soundbar|projector|camera|tablet|ipad|iphone|galaxy|pixel|oneplus|laptop|notebook|mac|macbook|monitor|fitness band)s?\b/i],
 ];
 
 const match = (text: string) => KEYWORDS.find(([, re]) => re.test(text))?.[0];

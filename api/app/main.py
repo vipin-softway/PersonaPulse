@@ -7,7 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
 from app.config import get_settings
-from app.routers import backtest, demo, health, tests
+from app.routers import backtest, demo, health, lookup, tests
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
 log = logging.getLogger("personapulse")
@@ -66,3 +66,4 @@ app.include_router(health.router)
 app.include_router(demo.router)
 app.include_router(backtest.router)
 app.include_router(tests.router)
+app.include_router(lookup.router)

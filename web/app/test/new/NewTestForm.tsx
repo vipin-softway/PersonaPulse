@@ -1,12 +1,12 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import ProgressPanel from "@/components/ProgressPanel";
 import { ErrorBox } from "@/components/ui";
-import { createTest } from "@/lib/api";
-import { PANELS, suggestPanel, type PanelId } from "@/lib/panels";
-import type { NewTestInput } from "@/lib/types";
+import { createTest, lookupProduct } from "@/lib/api";
+import { PANELS, panelById, suggestPanel, type PanelId } from "@/lib/panels";
+import type { NewTestInput, ProductLookup } from "@/lib/types";
 
 const CHANNELS = ["E-commerce marketplace", "Quick commerce", "D2C website", "Electronics store", "Local retail store", "Instagram / social ads"];
 const MAX_IMAGE_BYTES = 3 * 1024 * 1024;
@@ -36,6 +36,19 @@ const EXAMPLES: Example[] = [
   },
 ];
 
+// Map the free-text channel from the web lookup onto the form's options.
+function toChannel(text = ""): string {
+  const t = text.toLowerCase();
+  if (/quick|blinkit|zepto|instamart/.test(t)) return "Quick commerce";
+  if (/instagram|social/.test(t)) return "Instagram / social ads";
+  if (/d2c|brand('s)? (own )?(web)?site|official (web)?site|direct/.test(t)) return "D2C website";
+  if (/croma|reliance digital|vijay sales|electronics (store|retail)|apple store/.test(t)) return "Electronics store";
+  if (/local|offline|retail|kirana|shop/.test(t)) return "Local retail store";
+  return CHANNELS[0];
+}
+
+const inr = (n: number) => `₹${n.toLocaleString("en-IN")}`;
+
 const field = "mt-1 block w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-900 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200";
 
 export default function NewTestForm() {
@@ -49,6 +62,9 @@ export default function NewTestForm() {
   const [panel, setPanel] = useState<PanelId>(fromUrl ?? PANELS[0].id);
   const [panelPicked, setPanelPicked] = useState(Boolean(fromUrl)); // stop auto-suggesting once a panel is chosen
   // "Run this demo live yourself" links here with the demo product in the URL.
+  const [formKey, setFormKey] = useState(0); // bumped to remount the form with a new preset
+  const nameRef = useRef<HTMLInputElement>(null);
+  const [lookup, setLookup] = useState<{ loading: boolean; error?: string; result?: ProductLookup }>({ loading: false });
   const [preset, setPreset] = useState<Example | null>(() =>
     params.get("name")
       ? {
@@ -58,17 +74,42 @@ export default function NewTestForm() {
         }
       : null,
   );
+  const [price, setPrice] = useState<number>(preset?.price_inr ?? 0);
 
   function applyExample(ex: Example) {
     setPreset(ex);
+    setPrice(ex.price_inr);
     setPanel(ex.panel);
     setPanelPicked(false);
     setError(null);
+    setLookup({ loading: false });
+    setFormKey((k) => k + 1);
+  }
+
+  async function onLookup() {
+    const query = nameRef.current?.value.trim() ?? "";
+    if (query.length < 2) return setLookup({ loading: false, error: "Type a product name first, e.g. MacBook Pro M4 or boAt Airdopes 141." });
+    setLookup({ loading: true });
+    try {
+      const r = await lookupProduct(query);
+      if (!r.found) return setLookup({ loading: false, result: r });
+      const ex: Example = {
+        label: "From the web",
+        panel: PANELS.find((p) => p.id === r.suggested_panel)?.id ?? suggestPanel(r.product_name ?? query, r.product_description),
+        name: r.product_name ?? query, description: r.product_description ?? "", price_inr: Math.round(r.price_inr ?? 0) || 0,
+        pack_size: r.pack_size ?? "1 unit", channel: toChannel(r.channel), competitors: r.competitors_text ?? "",
+      };
+      applyExample(ex);
+      setLookup({ loading: false, result: r });
+    } catch (err) {
+      setLookup({ loading: false, error: err instanceof Error ? err.message : "We couldn't search the web right now. Please fill in the details yourself." });
+    }
   }
 
   function onTyping(e: React.FormEvent<HTMLFormElement>) {
-    if (panelPicked) return;
     const f = new FormData(e.currentTarget);
+    setPrice(Number(f.get("price_inr")) || 0);
+    if (panelPicked) return;
     setPanel(suggestPanel(String(f.get("name") ?? ""), String(f.get("description") ?? "")));
   }
 
@@ -123,15 +164,43 @@ export default function NewTestForm() {
         </button>
       ))}
     </div>
-    {/* key: remount with the example's values when one is picked. */}
-    <form key={preset?.label ?? "blank"} onSubmit={onSubmit} onInput={onTyping} hidden={running}
+    {/* key: remount with the example's (or web lookup's) values when one is picked. */}
+    <form key={formKey} onSubmit={onSubmit} onInput={onTyping} hidden={running}
       className="space-y-5 rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
       {error && <ErrorBox message={error} />}
 
-      <label className="block text-sm font-medium text-slate-800">
-        Product name
-        <input name="name" required maxLength={80} defaultValue={preset?.name} placeholder="e.g. WeaveCharge 65W USB-C Cable" className={field} />
-      </label>
+      <div>
+        <label htmlFor="name" className="block text-sm font-medium text-slate-800">Product name</label>
+        <div className="mt-1 flex flex-col gap-2 sm:flex-row">
+          <input id="name" name="name" ref={nameRef} required maxLength={80} defaultValue={preset?.name} placeholder="e.g. WeaveCharge 65W USB-C Cable"
+            className={field.replace("mt-1 ", "")} />
+          <button type="button" onClick={onLookup} disabled={lookup.loading}
+            className="shrink-0 rounded-lg border border-indigo-200 bg-indigo-50 px-3 py-2 text-sm font-medium text-indigo-700 hover:bg-indigo-100 disabled:cursor-wait disabled:opacity-70">
+            {lookup.loading ? "Searching the web…" : "Fill from the web"}
+          </button>
+        </div>
+        <p className="mt-1 text-xs text-slate-500">Testing an existing product? Type its name and Gemini fills in the details with Google Search.</p>
+        {lookup.error && <p className="mt-2 text-sm text-rose-700">{lookup.error}</p>}
+        {lookup.result && !lookup.result.found && (
+          <p className="mt-2 rounded-lg bg-slate-50 p-3 text-sm text-slate-700">{lookup.result.notes || "We couldn't identify that product."} Please fill in the details yourself.</p>
+        )}
+        {lookup.result?.found && (
+          <div className="mt-2 rounded-lg bg-indigo-50/60 p-3 text-xs text-slate-700 ring-1 ring-indigo-100">
+            <p className="font-medium text-slate-800">Filled from Google Search. Check the details before running the test.</p>
+            {lookup.result.notes && <p className="mt-1">{lookup.result.notes}</p>}
+            {!!lookup.result.searched?.length && <p className="mt-1 text-slate-500">Searched: {lookup.result.searched.join(" · ")}</p>}
+            {!!lookup.result.sources?.length && (
+              <p className="mt-1 text-slate-500">Sources:{" "}
+                {lookup.result.sources.map((src, i) => (
+                  <a key={src.url} href={src.url} target="_blank" rel="noopener noreferrer" className="underline hover:text-indigo-700">
+                    {src.title}{i < lookup.result!.sources!.length - 1 ? ", " : ""}
+                  </a>
+                ))}
+              </p>
+            )}
+          </div>
+        )}
+      </div>
 
       <label className="block text-sm font-medium text-slate-800">
         Description
@@ -171,6 +240,12 @@ export default function NewTestForm() {
             </label>
           ))}
         </div>
+        {price > panelById(panel).price_p90 && (
+          <p className="mt-2 rounded-lg bg-amber-50 p-3 text-sm text-amber-900 ring-1 ring-amber-200">
+            {inr(price)} is above what most products in this panel cost (typically {inr(panelById(panel).price_p10)}–{inr(panelById(panel).price_p90)}).
+            These shoppers will likely find it expensive, so read the results as how this crowd reacts, not as a forecast for premium buyers.
+          </p>
+        )}
       </fieldset>
 
       <label className="block text-sm font-medium text-slate-800">

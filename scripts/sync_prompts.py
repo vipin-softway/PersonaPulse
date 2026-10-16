@@ -28,6 +28,7 @@ NAMES = {
     6: "p06_insights",
     7: "p07_improve",
     8: "p08_backtest",
+    9: "p09_lookup",
 }
 
 SECTION = re.compile(r"^## Prompt (\d+):.*?$(.*?)(?=^## |\Z)", re.M | re.S)

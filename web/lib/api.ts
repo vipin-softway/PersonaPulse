@@ -1,4 +1,4 @@
-import type { Backtest, NewTestInput, TestResult } from "./types";
+import type { Backtest, NewTestInput, ProductLookup, TestResult } from "./types";
 
 // NEXT_PUBLIC_API_URL is inlined at build time (see Dockerfile build arg).
 export const API_URL = (process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080").replace(/\/$/, "");
@@ -78,5 +78,9 @@ export const suggestImprovements = (id: string, constraints?: string) =>
     body: JSON.stringify({ constraints: constraints?.trim() || undefined }),
     timeoutMs: LIVE_TIMEOUT_MS,
   });
+
+// One Gemini call with Google Search grounding, usually 5-15 s.
+export const lookupProduct = (query: string) =>
+  apiFetch<ProductLookup>("/lookup", { method: "POST", body: JSON.stringify({ query }), timeoutMs: 60_000 });
 
 export const getBacktest = () => apiFetch<Backtest>("/backtest", { timeoutMs: 20000 });
