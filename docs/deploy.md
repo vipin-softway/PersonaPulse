@@ -56,7 +56,7 @@ gcloud run deploy personapulse-api \
   --allow-unauthenticated \
   --min-instances 0 --max-instances 3 \
   --concurrency 20 --timeout 300 --memory 1Gi --cpu 1 \
-  --set-env-vars GCP_PROJECT=$PROJECT_ID,GCP_LOCATION=$REGION,BQ_DATASET=personapulse,GCS_BUCKET=$BUCKET,GEMINI_FLASH_MODEL=gemini-2.5-flash,GEMINI_PRO_MODEL=gemini-2.5-pro,MAX_LIVE_PERSONAS=30,ALLOWED_ORIGINS=http://localhost:3000
+  --set-env-vars GCP_PROJECT=$PROJECT_ID,GCP_LOCATION=global,BQ_DATASET=personapulse,GCS_BUCKET=$BUCKET,GEMINI_FLASH_MODEL=gemini-3.8-flash,GEMINI_PRO_MODEL=gemini-3.1-pro-preview,GEMINI_PRO_FALLBACK_MODEL=gemini-2.5-pro,MAX_LIVE_PERSONAS=30,ALLOWED_ORIGINS=http://localhost:3000
 
 export API_URL=$(gcloud run services describe personapulse-api --region $REGION --format='value(status.url)')
 curl $API_URL/health
@@ -116,4 +116,6 @@ gcloud billing budgets create --billing-account=YOUR_BILLING_ACCOUNT_ID \
 - **`--allow-unauthenticated` fails with an org policy error**: the org enforces Domain Restricted Sharing. An org admin must allow `allUsers` for this project, or judges can't open the link.
 - **`--source` build fails with a permission error**: grant the Cloud Build service account (`PROJECT_NUMBER-compute@developer.gserviceaccount.com` on newer projects) `roles/run.builder`.
 - **Home page shows "Can't reach the PersonaPulse API"**: check `ALLOWED_ORIGINS` on the API matches `$WEB_URL` exactly (no trailing slash), and that the web image was built with the right `_API_URL`.
-- **Gemini 404 / model not found**: set `GEMINI_FLASH_MODEL` / `GEMINI_PRO_MODEL` to a model available in `$REGION` (check Vertex AI Model Garden).
+- **Gemini 404 / model not found**: the newest Gemini models are served from the `global` location
+  (`GCP_LOCATION=global`), not `us-central1`. If a preview Pro model is withdrawn or rate-limited, calls
+  fall back to `GEMINI_PRO_FALLBACK_MODEL` automatically.

@@ -7,7 +7,7 @@ set -euo pipefail
 PROJECT="${GCP_PROJECT:?set GCP_PROJECT}"
 DATASET="${BQ_DATASET:-personapulse}"
 LOCATION="${BQ_LOCATION:-US}"
-MODEL_ENDPOINT="${GEMINI_FLASH_MODEL:-gemini-2.5-flash}"
+MODEL_ENDPOINT="${BQAI_MODEL:-gemini-2.5-flash}"
 CONN="vertex_conn"
 
 echo "Creating connection ${LOCATION}.${CONN} (ignore 'already exists')"
