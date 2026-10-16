@@ -44,6 +44,15 @@ def _num(v: Any) -> float | None:
     return f if f > 0 else None
 
 
+def _short(text: str, n: int) -> str:
+    """Trim to n chars at a natural break ("1 unit (13.6-inch laptop ...)" -> "1 unit")."""
+    text = " ".join(text.split())
+    if len(text) <= n:
+        return text
+    head = text.split(" (")[0].split(", ")[0]
+    return head if 0 < len(head) <= n else text[:n].rsplit(" ", 1)[0]
+
+
 def _clean(d: Any) -> dict | None:
     if not isinstance(d, dict):
         return None
@@ -62,7 +71,7 @@ def _clean(d: Any) -> dict | None:
         "product_name": str(d["product_name"]).strip()[:80],
         "product_description": str(d.get("product_description") or "").strip()[:600],
         "price_inr": _num(d.get("price_inr")),
-        "pack_size": str(d.get("pack_size") or "").strip()[:60] or "1 unit",
+        "pack_size": _short(str(d.get("pack_size") or ""), 60) or "1 unit",
         "channel": str(d.get("channel") or "").strip()[:60],
         "competitors": comps,
         "competitors_text": ", ".join(

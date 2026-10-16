@@ -89,6 +89,13 @@ function TestHeader({ test, v }: { test: TestResult; v: VariantResult }) {
       </p>
       {v.product.description && <p className="max-w-3xl text-slate-700">{v.product.description}</p>}
       {test.run && <RunDetails run={test.run} testId={test.test_id} />}
+      {v.product.price_inr > panelById(test.panel).price_p90 && (
+        <p className="max-w-3xl rounded-lg bg-amber-50 p-3 text-sm text-amber-900 ring-1 ring-amber-200">
+          <strong className="font-medium">Outside this panel&apos;s price range.</strong> These shoppers were built from reviews of products
+          mostly priced {inr(panelById(test.panel).price_p10)}–{inr(panelById(test.panel).price_p90)}, so a low score at {inr(v.product.price_inr)} mostly
+          says this crowd won&apos;t stretch to it. Premium buyers aren&apos;t in the review data yet; treat this as a mass-market check.
+        </p>
+      )}
       {test.is_demo && (
         <div className="mt-2 flex flex-col gap-3 rounded-lg border border-indigo-200 bg-indigo-50 p-4 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-sm text-indigo-900">
@@ -159,8 +166,8 @@ function VariantView({ v }: { v: VariantResult }) {
         />
         <StatTile
           label="Strongest segment"
-          value={best ? `${Math.round(best.would_buy_pct)}%` : "–"}
-          detail={best?.segment_name}
+          value={best && best.would_buy_pct > 0 ? `${Math.round(best.would_buy_pct)}%` : "None"}
+          detail={best && best.would_buy_pct > 0 ? best.segment_name : "No segment would buy at this price"}
         />
       </div>
 
