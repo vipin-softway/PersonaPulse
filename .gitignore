@@ -38,3 +38,6 @@ data/processed/
 .DS_Store
 .idea/
 .vscode/
+
+# Video work files (large)
+video_drafts/
