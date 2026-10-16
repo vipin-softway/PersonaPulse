@@ -47,8 +47,8 @@ const STEPS: { title: string; body: string; tech: string[] }[] = [
   { title: "Real shopper reviews", body: "6,800+ Amazon India reviews, cleaned and stored, grouped into three category panels.", tech: ["BigQuery"] },
   { title: "What drives each buyer", body: "Every review becomes structured signals: priorities, complaints, price sensitivity, dealbreakers.", tech: ["BigQuery AI", "Gemini Flash"] },
   { title: "Segments and AI customers", body: "Gemini finds how each panel decides to buy, then creates personas whose memories are real reviews.", tech: ["Gemini Pro"] },
-  { title: "Your product, tested live", body: "Each AI customer reacts on its own, in parallel: buy or not, at what price, and why.", tech: ["Gemini on Vertex AI", "Cloud Run", "Cloud Storage"] },
-  { title: "Insights and a better version", body: "A plain-English report, then concrete changes you can retest in one click.", tech: ["Gemini Pro", "BigQuery"] },
+  { title: "Your product, tested live", body: "Optionally filled in from Google Search, then each AI customer reacts in parallel: buy or not, at what price, and why.", tech: ["Gemini on Vertex AI", "Google Search grounding", "Cloud Run", "Cloud Storage"] },
+  { title: "Insights and a better version", body: "Objections grouped into themes, a plain-English report, then concrete changes you can retest in one click.", tech: ["Gemini Pro", "Vertex AI embeddings", "BigQuery"] },
 ];
 
 export default function Home() {
