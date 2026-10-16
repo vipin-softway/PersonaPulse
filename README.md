@@ -14,6 +14,7 @@ Google Cloud AI Builder Cup 2026 · Retail & Commerce track
 | **Live app** | https://personapulse-web-402218972178.us-central1.run.app |
 | Demo test (instant) | https://personapulse-web-402218972178.us-central1.run.app/test/demo |
 | Accuracy back-test | https://personapulse-web-402218972178.us-central1.run.app/accuracy |
+| **Demo video** (3:32) | https://youtu.be/MPtW9e8ojuU |
 | API health | https://personapulse-api-402218972178.us-central1.run.app/health |
 
 No login needed.
