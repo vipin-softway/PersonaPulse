@@ -10,7 +10,7 @@ const STEPS = [
 ];
 
 /** Time-based progress for a 20–60 s simulation. It's an estimate; the request finishes when it finishes. */
-export default function ProgressPanel({ personas, title = "Running your test" }: { personas: number; title?: string }) {
+export default function ProgressPanel({ personas, title = "Running your test", onCancel }: { personas: number; title?: string; onCancel?: () => void }) {
   const [elapsed, setElapsed] = useState(0);
 
   useEffect(() => {
@@ -52,6 +52,11 @@ export default function ProgressPanel({ personas, title = "Running your test" }:
           </li>
         ))}
       </ol>
+      {onCancel && (
+        <button type="button" onClick={onCancel} className="mt-5 text-sm font-medium text-slate-500 underline hover:text-slate-800">
+          Cancel and edit the product
+        </button>
+      )}
     </div>
   );
 }

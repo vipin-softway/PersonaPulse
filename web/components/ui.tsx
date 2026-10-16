@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
+import NewTestLink from "./NewTestLink";
 
 export const CHART = {
   // Categorical slots 1–2 from the validated reference palette (light surface).
@@ -23,9 +24,9 @@ export function SiteHeader() {
         <div className="flex items-center gap-4 text-sm text-slate-600">
           <Link href="/test/demo" className="hover:text-slate-900">Demo</Link>
           <Link href="/accuracy" className="hover:text-slate-900">Accuracy</Link>
-          <Link href="/test/new" className="rounded-md bg-indigo-600 px-3 py-1.5 font-medium text-white hover:bg-indigo-500">
+          <NewTestLink className="rounded-md bg-indigo-600 px-3 py-1.5 font-medium text-white hover:bg-indigo-500">
             Run a test
-          </Link>
+          </NewTestLink>
         </div>
       </nav>
     </header>

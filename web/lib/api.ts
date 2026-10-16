@@ -31,9 +31,10 @@ function friendlyMessage(status: number, body: { detail?: unknown; error?: unkno
 
 /** Fetch JSON from the API with a timeout and a friendly error message. */
 export async function apiFetch<T>(path: string, init: RequestInit & { timeoutMs?: number } = {}): Promise<T> {
-  const { timeoutMs = 15000, ...rest } = init;
+  const { timeoutMs = 15000, signal, ...rest } = init;
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
+  signal?.addEventListener("abort", () => controller.abort(signal.reason)); // caller cancelled
   try {
     const res = await fetch(`${API_URL}${path}`, {
       ...rest,
@@ -45,6 +46,7 @@ export async function apiFetch<T>(path: string, init: RequestInit & { timeoutMs?
     return body as T;
   } catch (e) {
     if (e instanceof ApiError) throw e;
+    if (signal?.aborted) throw signal.reason ?? e;
     if (e instanceof DOMException && e.name === "AbortError") {
       throw new ApiError("The server took too long to respond. Please try again.");
     }
@@ -62,8 +64,8 @@ const LIVE_TIMEOUT_MS = 150_000;
 export const getTest = (id: string) =>
   id === "demo" ? apiFetch<TestResult>("/demo", { timeoutMs: 20000 }) : apiFetch<TestResult>(`/tests/${encodeURIComponent(id)}`, { timeoutMs: 20000 });
 
-export const createTest = (input: NewTestInput) =>
-  apiFetch<TestResult>("/tests", { method: "POST", body: JSON.stringify(input), timeoutMs: LIVE_TIMEOUT_MS });
+export const createTest = (input: NewTestInput, signal?: AbortSignal) =>
+  apiFetch<TestResult>("/tests", { method: "POST", body: JSON.stringify(input), timeoutMs: LIVE_TIMEOUT_MS, signal });
 
 export const improveTest = (id: string, variantId: string) =>
   apiFetch<TestResult>(`/tests/${encodeURIComponent(id)}/improve`, {

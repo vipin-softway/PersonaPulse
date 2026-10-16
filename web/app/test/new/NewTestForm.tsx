@@ -1,7 +1,8 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { NEW_TEST_EVENT } from "@/components/NewTestLink";
 import ProgressPanel from "@/components/ProgressPanel";
 import { ErrorBox } from "@/components/ui";
 import { createTest, lookupProduct } from "@/lib/api";
@@ -62,6 +63,7 @@ export default function NewTestForm() {
   const [panel, setPanel] = useState<PanelId>(fromUrl ?? PANELS[0].id);
   const [panelPicked, setPanelPicked] = useState(Boolean(fromUrl)); // stop auto-suggesting once a panel is chosen
   // "Run this demo live yourself" links here with the demo product in the URL.
+  const run = useRef<AbortController | null>(null);
   const [formKey, setFormKey] = useState(0); // bumped to remount the form with a new preset
   const nameRef = useRef<HTMLInputElement>(null);
   const [lookup, setLookup] = useState<{ loading: boolean; error?: string; result?: ProductLookup }>({ loading: false });
@@ -113,6 +115,19 @@ export default function NewTestForm() {
     setPanel(suggestPanel(String(f.get("name") ?? ""), String(f.get("description") ?? "")));
   }
 
+  // Stop waiting for a running test and show the form again (the inputs are kept).
+  function cancelRun() {
+    run.current?.abort();
+    run.current = null;
+    setRunning(false);
+  }
+
+  // "Run a test" in the header, clicked while already on this page.
+  useEffect(() => {
+    window.addEventListener(NEW_TEST_EVENT, cancelRun);
+    return () => window.removeEventListener(NEW_TEST_EVENT, cancelRun);
+  }, []);
+
   function onImage(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     setError(null);
@@ -142,10 +157,14 @@ export default function NewTestForm() {
     };
     setError(null);
     setRunning(true);
+    const controller = new AbortController();
+    run.current = controller;
     try {
-      const result = await createTest(input);
+      const result = await createTest(input, controller.signal);
+      if (controller.signal.aborted) return;
       router.push(`/test/${result.test_id}`);
     } catch (err) {
+      if (controller.signal.aborted) return; // cancelled by the user
       setError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
       setRunning(false);
     }
@@ -153,7 +172,7 @@ export default function NewTestForm() {
 
   return (
     <>
-    {running && <ProgressPanel personas={LIVE_PERSONAS} />}
+    {running && <ProgressPanel personas={LIVE_PERSONAS} onCancel={cancelRun} />}
     {/* Kept mounted while running so the inputs survive an error. */}
     <div hidden={running} className="mb-4 flex flex-wrap items-center gap-2 text-sm">
       <span className="text-slate-600">Try an example:</span>
