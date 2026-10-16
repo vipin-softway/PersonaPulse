@@ -6,7 +6,8 @@ export type Product = {
   price_inr: number;
   pack_size: string;
   channel: string;
-  image_url?: string | null;
+  competitors?: string | null;
+  has_image?: boolean;
 };
 
 export type SegmentResult = {

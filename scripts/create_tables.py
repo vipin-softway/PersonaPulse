@@ -51,6 +51,8 @@ TABLES: dict[str, tuple[str, list[bigquery.SchemaField]]] = {
     "tests": ("One row per tested product variant ('original', 'v1', ...).", [
         F("test_id", S, REQ), F("variant", S, REQ), F("panel", S), F("product", J), F("parent_variant", S),
         F("status", S), F("n_personas", I), F("is_demo", B), F("client_ip_hash", S), F("created_at", T),
+        F("run", J, description="How it ran: mode, personas, gemini_calls, duration_s, model"),
+        F("image_uri", S, description="gs:// URI of the uploaded product image, if any"),
     ]),
     "simulation_results": ("Prompt 4 output: one persona's reaction to one variant.", [
         F("test_id", S, REQ), F("variant", S, REQ), F("persona_id", S, REQ), F("segment_id", S),

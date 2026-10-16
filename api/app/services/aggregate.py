@@ -60,7 +60,8 @@ def _top(rows: list[dict], field: str) -> list[dict]:
 def _quotes(rows: list[dict]) -> list[dict]:
     """A balanced mix: half buyers, half non-buyers, spread across segments, no repeated quotes."""
     buyers = sorted((r for r in rows if would_buy(r) == "yes"), key=lambda r: -(r.get("purchase_intent") or 0))
-    others = sorted((r for r in rows if would_buy(r) != "yes"), key=lambda r: r.get("purchase_intent") or 0)
+    # "Maybe" customers first: they explain what would tip them, which is the most useful feedback.
+    others = sorted((r for r in rows if would_buy(r) != "yes"), key=lambda r: -(r.get("purchase_intent") or 0))
     picked: list[dict] = []
     seen_quotes: set[str] = set()
 
@@ -119,8 +120,12 @@ def _price(rows: list[dict], price_inr: float) -> dict:
     }
 
 
-def aggregate_variant(variant: str, product: dict, rows: list[dict], segments: list[dict]) -> dict:
-    """Aggregate one variant's persona rows. `segments` gives id/name/share for ordering."""
+def aggregate_variant(variant: str, product: dict, rows: list[dict], segments: list[dict],
+                      themes: dict | None = None) -> dict:
+    """Aggregate one variant's persona rows. `segments` gives id/name/share for ordering.
+
+    `themes` ({"objections", "likes"} from services/themes.py) replaces exact-text counting when given.
+    """
     n = len(rows)
     by_seg: dict[str, list[dict]] = {}
     for r in rows:
@@ -158,8 +163,8 @@ def aggregate_variant(variant: str, product: dict, rows: list[dict], segments: l
         },
         "segments": seg_out,
         "price": _price(rows, float(product.get("price_inr") or 0)),
-        "top_objections": _top(rows, "top_objections"),
-        "top_likes": _top(rows, "top_likes"),
+        "top_objections": (themes or {}).get("objections") or _top(rows, "top_objections"),
+        "top_likes": (themes or {}).get("likes") or _top(rows, "top_likes"),
         "quotes": _quotes(rows),
         "insights": None,  # Prompt 6 output
     }

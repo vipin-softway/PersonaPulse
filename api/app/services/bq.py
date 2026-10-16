@@ -7,6 +7,7 @@ FastAPI's event loop free.
 from __future__ import annotations
 
 import asyncio
+import json
 from functools import lru_cache
 from typing import Any
 
@@ -36,13 +37,16 @@ async def query(
     return await asyncio.to_thread(_query, sql, params)
 
 
-def _insert(table_name: str, rows: list[dict[str, Any]]) -> None:
+def _insert(table_name: str, rows: list[dict[str, Any]], json_fields: tuple[str, ...]) -> None:
     s = get_settings()
+    # The streaming API takes JSON columns as JSON strings, not nested objects.
+    rows = [{k: (json.dumps(v, ensure_ascii=False) if k in json_fields and v is not None else v) for k, v in r.items()}
+            for r in rows]
     errors = client().insert_rows_json(f"{s.gcp_project}.{s.bq_dataset}.{table_name}", rows)
     if errors:
         raise RuntimeError(f"BigQuery insert into {table_name} failed: {errors[:3]}")
 
 
-async def insert(table_name: str, rows: list[dict[str, Any]]) -> None:
+async def insert(table_name: str, rows: list[dict[str, Any]], json_fields: tuple[str, ...] = ()) -> None:
     if rows:
-        await asyncio.to_thread(_insert, table_name, rows)
+        await asyncio.to_thread(_insert, table_name, rows, json_fields)

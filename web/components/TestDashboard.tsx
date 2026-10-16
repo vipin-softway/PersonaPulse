@@ -6,6 +6,7 @@ import { improveTest } from "@/lib/api";
 import type { CountedText, Insights, Quote, RunInfo, Suggestion, TestResult, VariantResult } from "@/lib/types";
 import { ComparisonChart, PriceChart, SegmentIntentChart } from "./charts";
 import ProgressPanel from "./ProgressPanel";
+import { API_URL } from "@/lib/api";
 import { panelById } from "@/lib/panels";
 import { AiBadge, Card, ErrorBox, PlaceholderNotice, StatTile, inr } from "./ui";
 
@@ -54,7 +55,17 @@ function TestHeader({ test, v }: { test: TestResult; v: VariantResult }) {
         <AiBadge />
         {test.is_demo && <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-600">Demo test</span>}
       </div>
-      <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">{v.product.name}</h1>
+      <div className="flex items-center gap-4">
+        {v.product.has_image && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={`${API_URL}/tests/${test.test_id}/image?variant=${encodeURIComponent(v.variant)}`}
+            alt={`${v.product.name} packaging`}
+            className="h-16 w-16 shrink-0 rounded-lg object-cover ring-1 ring-slate-200"
+          />
+        )}
+        <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">{v.product.name}</h1>
+      </div>
       <p className="text-sm text-slate-600">
         {inr(v.product.price_inr)} · {v.product.pack_size} · {v.product.channel}
       </p>
