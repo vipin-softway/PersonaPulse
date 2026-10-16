@@ -57,7 +57,7 @@ export async function apiFetch<T>(path: string, init: RequestInit & { timeoutMs?
 // --- Endpoints ---------------------------------------------------------------
 
 // Live simulations call Gemini for ~30 personas, so allow well over a minute.
-const LIVE_TIMEOUT_MS = 120_000;
+const LIVE_TIMEOUT_MS = 150_000;
 
 export const getTest = (id: string) =>
   id === "demo" ? apiFetch<TestResult>("/demo", { timeoutMs: 20000 }) : apiFetch<TestResult>(`/tests/${encodeURIComponent(id)}`, { timeoutMs: 20000 });

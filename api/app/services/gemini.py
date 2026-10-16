@@ -126,12 +126,15 @@ async def generate_json(
 
     loop = asyncio.get_running_loop()
     start = loop.time()
-    data, reason = await _call_model(model, contents, config, timeout_s)
+    backup = s.gemini_pro_fallback_model
+    has_backup = model == s.gemini_pro_model and bool(backup) and backup != model
+    # With a fallback available, don't let a slow preview model use the whole budget.
+    first_budget = max(15.0, timeout_s * 0.55) if has_backup else timeout_s
+    data, reason = await _call_model(model, contents, config, first_budget)
     if reason == "ok":
         return data, True
 
-    backup = s.gemini_pro_fallback_model
-    if model == s.gemini_pro_model and backup and backup != model and reason != "invalid_json":
+    if has_backup and reason != "invalid_json":
         left = timeout_s - (loop.time() - start)
         if left > 5:
             log.warning("Falling back from %s to %s (%s)", model, backup, reason)

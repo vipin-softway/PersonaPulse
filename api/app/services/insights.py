@@ -14,7 +14,7 @@ from app.config import get_settings
 from app.prompts import CONFIG, render
 from app.services.gemini import generate_json
 
-PRO_TIMEOUT_S = 60
+PRO_TIMEOUT_S = 85  # primary Pro model gets ~47 s, the fallback the rest
 NO_CONSTRAINTS = "None stated"
 VERDICTS = {"launch", "launch_with_changes", "rethink"}
 
