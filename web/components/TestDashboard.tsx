@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getTest, improveTest, suggestImprovements } from "@/lib/api";
 import type { CountedText, Insights, Quote, RunInfo, Suggestion, TestResult, VariantResult } from "@/lib/types";
 import { ComparisonChart, PriceChart, SegmentIntentChart } from "./charts";
@@ -57,7 +57,7 @@ export default function TestDashboard({ initial }: { initial: TestResult }) {
 
       <VariantView v={v} />
 
-      <ImproveSection test={test} onUpdated={(t, idx) => { setTest(t); setSelected(idx); }} onSelect={setSelected} />
+      <ImproveSection test={test} onUpdated={(t, idx) => { setTest(t); setSelected(idx); }} />
     </div>
   );
 }
@@ -320,11 +320,9 @@ function QuoteCard({ q }: { q: Quote }) {
 function ImproveSection({
   test,
   onUpdated,
-  onSelect,
 }: {
   test: TestResult;
   onUpdated: (t: TestResult, selectIdx: number) => void;
-  onSelect: (idx: number) => void;
 }) {
   const [running, setRunning] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -333,11 +331,19 @@ function ImproveSection({
   const [compareIdx, setCompareIdx] = useState(0);
   const compare = tested[Math.min(compareIdx, tested.length - 1)];
 
+  const comparisonRef = useRef<HTMLDivElement>(null);
+  const [scrollToCompare, setScrollToCompare] = useState(0);
+
+  // Scroll after React has rendered the comparison for the chosen variant.
+  useEffect(() => {
+    if (scrollToCompare) comparisonRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, [scrollToCompare]);
+
   async function retest(s: Suggestion) {
     const existing = test.variants.findIndex((v) => v.variant === s.variant_id);
     if (existing >= 0) {
       setCompareIdx(existing - 1);
-      onSelect(existing);
+      setScrollToCompare((n) => n + 1);
       return;
     }
     setError(null);
@@ -347,6 +353,7 @@ function ImproveSection({
       const idx = updated.variants.findIndex((v) => v.variant === s.variant_id);
       setCompareIdx(Math.max(0, idx - 1));
       onUpdated(updated, Math.max(0, idx));
+      setScrollToCompare((n) => n + 1);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Retest failed. Please try again.");
     } finally {
@@ -421,6 +428,7 @@ function ImproveSection({
       {error && <ErrorBox message={error} />}
 
       {compare && !running && (
+        <div ref={comparisonRef} className="scroll-mt-20">
         <Card title="Side-by-side comparison" subtitle="Same AI customers, original vs. improved variant">
           {tested.length > 1 && (
             <div className="mb-4 flex flex-wrap gap-2">
@@ -439,6 +447,7 @@ function ImproveSection({
           </div>
           <ComparisonChart a={original} b={compare} />
         </Card>
+        </div>
       )}
     </div>
   );
