@@ -84,6 +84,16 @@ Details, the request lifecycle and the data model: [docs/architecture.md](docs/a
 **Google Cloud:** Gemini on Vertex AI (with Grounding with Google Search) · BigQuery · BigQuery AI (`AI.GENERATE_TEXT`) · Vertex AI text embeddings ·
 Cloud Storage · Cloud Run · Cloud Build · Artifact Registry · IAM service accounts.
 
+### Running on Google Cloud
+
+Both services on Cloud Run (us-central1), public, no login:
+
+![Cloud Run services: personapulse-api and personapulse-web](docs/images/cloud-run-services.png)
+
+API traffic in the project. "Agent Platform API" is Vertex AI (Gemini and embeddings); Text-to-Speech is only used for the demo video's voice-over:
+
+![APIs & Services traffic: Vertex AI, Cloud Build, BigQuery, Cloud Run and more](docs/images/apis-dashboard.png)
+
 ## How the AI customers are built
 
 1. **Real reviews**: 6,878 Amazon India reviews (Kaggle "Amazon Sales Dataset") split into three panels. Reviewer names and IDs are dropped.
