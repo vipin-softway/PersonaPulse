@@ -38,8 +38,8 @@ class NewTest(BaseModel):
     channel: str = Field(min_length=2, max_length=60)
     panel: str = "accessories"
     competitors: str | None = Field(default=None, max_length=200)
-    image_base64: str | None = None
-    image_mime: str | None = None  # ignored: the type is read from the file itself
+    image_base64: str | None = Field(default=None, max_length=4_300_000)  # ~3 MB image
+    image_mime: str | None = Field(default=None, max_length=40)  # ignored: the type is read from the file itself
 
     @field_validator("panel")
     @classmethod

@@ -44,7 +44,9 @@ class Settings:
     max_live_personas: int = field(default_factory=lambda: _int("MAX_LIVE_PERSONAS", 30))
     gemini_concurrency: int = field(default_factory=lambda: _int("GEMINI_CONCURRENCY", 30))
     gemini_timeout_s: int = field(default_factory=lambda: _int("GEMINI_TIMEOUT_S", 45))
-    rate_limit_per_min: int = field(default_factory=lambda: _int("RATE_LIMIT_PER_MIN", 5))
+    rate_limit_per_min: int = field(default_factory=lambda: _int("RATE_LIMIT_PER_MIN", 8))
+    # Live runs (tests, suggestions, retests) per instance per day; protects the budget.
+    max_tests_per_day: int = field(default_factory=lambda: _int("MAX_TESTS_PER_DAY", 300))
 
 
 @lru_cache
