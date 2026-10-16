@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
-import { improveTest } from "@/lib/api";
+import { useEffect, useState } from "react";
+import { getTest, improveTest, suggestImprovements } from "@/lib/api";
 import type { CountedText, Insights, Quote, RunInfo, Suggestion, TestResult, VariantResult } from "@/lib/types";
 import { ComparisonChart, PriceChart, SegmentIntentChart } from "./charts";
 import ProgressPanel from "./ProgressPanel";
@@ -16,6 +16,21 @@ export default function TestDashboard({ initial }: { initial: TestResult }) {
   const [test, setTest] = useState(initial);
   const [selected, setSelected] = useState(0);
   const v = test.variants[selected] ?? test.variants[0];
+  const pending = test.variants.some((x) => x.insights_pending);
+
+  // The AI summary is written in the background after results arrive; poll until it lands.
+  useEffect(() => {
+    if (!pending) return;
+    let tries = 0;
+    const id = setInterval(() => {
+      tries += 1;
+      getTest(test.test_id)
+        .then((t) => setTest((cur) => (t.variants.length >= cur.variants.length ? t : cur)))
+        .catch(() => {});
+      if (tries >= 30) clearInterval(id);
+    }, 4000);
+    return () => clearInterval(id);
+  }, [pending, test.test_id]);
 
   return (
     <div className="space-y-6">
@@ -149,7 +164,16 @@ function VariantView({ v }: { v: VariantResult }) {
         />
       </div>
 
-      {v.insights && <InsightsCard insights={v.insights} />}
+      {v.insights ? (
+        <InsightsCard insights={v.insights} />
+      ) : v.insights_pending ? (
+        <Card title="AI insights summary">
+          <div className="flex items-center gap-3 text-sm text-slate-600" role="status">
+            <span className="h-4 w-4 animate-spin rounded-full border-2 border-slate-300 border-t-indigo-600" aria-hidden />
+            Gemini is reading every reaction and writing your launch report. This takes about 20 seconds.
+          </div>
+        </Card>
+      ) : null}
 
       <div className="grid gap-6 lg:grid-cols-5">
         <Card title="Purchase intent by segment" subtitle="Share of each segment's AI customers who answered “yes, I'd buy”" className="lg:col-span-3">
@@ -330,7 +354,10 @@ function ImproveSection({
     }
   }
 
-  if (!test.suggestions.length && !tested.length) return null;
+  if (!test.suggestions.length && !tested.length) {
+    if (test.is_demo) return null;
+    return <SuggestCard test={test} onUpdated={(t) => onUpdated(t, 0)} />;
+  }
 
   return (
     <div className="space-y-6">
@@ -359,13 +386,30 @@ function ImproveSection({
                   <p className="mt-1 text-sm text-slate-600">
                     <span className="font-medium text-slate-800">Risk:</span> {s.risk}
                   </p>
-                  <button
-                    onClick={() => retest(s)}
-                    disabled={running !== null}
-                    className="mt-4 self-start rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-500 disabled:cursor-not-allowed disabled:opacity-50"
-                  >
-                    {done ? "View comparison" : running === s.variant_id ? "Retesting…" : "Retest this variant"}
-                  </button>
+                  {test.is_demo && !done ? (
+                    // The demo is a saved copy, so untested variants are run as a fresh live test instead.
+                    <Link
+                      href={`/test/new?${new URLSearchParams({
+                        panel: test.panel ?? "accessories",
+                        name: s.updated_product.product_name,
+                        description: s.updated_product.product_description,
+                        price_inr: String(s.updated_product.price_inr),
+                        pack_size: s.updated_product.pack_size,
+                        channel: s.updated_product.channel,
+                      })}`}
+                      className="mt-4 self-start rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-500"
+                    >
+                      Test this variant live
+                    </Link>
+                  ) : (
+                    <button
+                      onClick={() => retest(s)}
+                      disabled={running !== null}
+                      className="mt-4 self-start rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-500 disabled:cursor-not-allowed disabled:opacity-50"
+                    >
+                      {done ? "View comparison" : running === s.variant_id ? "Retesting…" : "Retest this variant"}
+                    </button>
+                  )}
                 </div>
               );
             })}
@@ -397,6 +441,43 @@ function ImproveSection({
         </Card>
       )}
     </div>
+  );
+}
+
+function SuggestCard({ test, onUpdated }: { test: TestResult; onUpdated: (t: TestResult) => void }) {
+  const [constraints, setConstraints] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  async function suggest() {
+    setLoading(true);
+    setError(null);
+    try {
+      onUpdated(await suggestImprovements(test.test_id, constraints));
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Couldn't get suggestions. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <Card title="Improve & retest" subtitle="Gemini proposes up to 3 changes that answer the objections above. Retest any of them on the same AI customers.">
+      <label className="block text-sm font-medium text-slate-800">
+        Anything you can&apos;t change? <span className="font-normal text-slate-500">(optional)</span>
+        <input value={constraints} onChange={(e) => setConstraints(e.target.value)} maxLength={300} disabled={loading}
+          placeholder="e.g. minimum price ₹299, must stay a 2 m cable"
+          className="mt-1 block w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200" />
+      </label>
+      <div className="mt-4 flex flex-wrap items-center gap-3">
+        <button onClick={suggest} disabled={loading}
+          className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-500 disabled:cursor-not-allowed disabled:opacity-60">
+          {loading ? "Drafting improvements…" : "Suggest improvements"}
+        </button>
+        {loading && <span className="text-sm text-slate-500">Gemini is working on it. This takes about 20–30 seconds.</span>}
+      </div>
+      {error && <div className="mt-4"><ErrorBox message={error} /></div>}
+    </Card>
   );
 }
 

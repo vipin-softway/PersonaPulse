@@ -23,7 +23,7 @@ function friendlyMessage(status: number, body: { detail?: unknown; error?: unkno
   // Our API sends human-readable `detail`/`error` strings for 429 and 5xx; FastAPI defaults are not.
   const msg = typeof body?.detail === "string" ? body.detail : typeof body?.error === "string" ? body.error : "";
   if (status === 429) return msg || "You're going a bit fast. Please wait a minute and try again.";
-  if (status === 404) return "We couldn't find that. It may not be available yet.";
+  if (status === 404) return msg && msg !== "Not Found" ? msg : "We couldn't find that test. Please refresh the page.";
   if (status === 422) return "Some of the details look invalid. Please check the form and try again.";
   if (status >= 500) return msg || "Something went wrong on our side. Please try again in a moment.";
   return msg && msg !== "Not Found" ? msg : `Request failed (${status}).`;
@@ -69,6 +69,13 @@ export const improveTest = (id: string, variantId: string) =>
   apiFetch<TestResult>(`/tests/${encodeURIComponent(id)}/improve`, {
     method: "POST",
     body: JSON.stringify({ variant_id: variantId }),
+    timeoutMs: LIVE_TIMEOUT_MS,
+  });
+
+export const suggestImprovements = (id: string, constraints?: string) =>
+  apiFetch<TestResult>(`/tests/${encodeURIComponent(id)}/improve`, {
+    method: "POST",
+    body: JSON.stringify({ constraints: constraints?.trim() || undefined }),
     timeoutMs: LIVE_TIMEOUT_MS,
   });
 

@@ -71,6 +71,7 @@ export type VariantResult = {
   top_likes: CountedText[];
   quotes: Quote[];
   insights: Insights | null;
+  insights_pending?: boolean; // Prompt 6 is still running in the background
 };
 
 // One of Prompt 7's "variants".
@@ -132,6 +133,12 @@ export type BacktestProduct = {
   actual_rating: number;
   predicted_rating: number;
   baseline_rating: number;
+  calibrated_rating?: number; // predicted + offset learned on the other hidden products
+  n_personas?: number;
+  predicted_complaints?: CountedText[];
+  actual_complaints?: CountedText[];
+  complaint_hits?: number;
+  complaint_total?: number;
 };
 
 export type Backtest = {
@@ -140,6 +147,19 @@ export type Backtest = {
   category: string;
   n_holdout: number;
   baseline_description: string;
-  metrics: { mae_model: number; mae_baseline: number; correlation?: number | null };
+  metrics: {
+    mae_model: number;
+    mae_baseline: number;
+    correlation?: number | null;
+    complaint_hits?: number; // real top-3 complaints matched in the predicted top 5
+    complaint_total?: number;
+    mae_raw?: number; // before calibration
+    bias?: number; // average predicted minus actual (negative = harsher than real buyers)
+    pairs_correct?: number; // product pairs ordered the same way as real ratings
+    pairs_total?: number;
+  };
+  n_personas?: number;
+  n_predictions?: number;
+  run_at?: string;
   products: BacktestProduct[];
 };

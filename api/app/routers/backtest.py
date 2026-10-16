@@ -7,5 +7,8 @@ router = APIRouter()
 
 @router.get("/backtest")
 async def backtest() -> dict:
-    # Phase 5: read backtest_results from BigQuery first, falling back to this bundle.
-    return fixtures.load("backtest_sample.json")
+    # Real results from scripts/run_backtest.py (bundled, no Gemini calls); the sample only if it hasn't run yet.
+    try:
+        return fixtures.load("backtest.json")
+    except FileNotFoundError:
+        return fixtures.load("backtest_sample.json")

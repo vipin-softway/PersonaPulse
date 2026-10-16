@@ -3,8 +3,10 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { getTest } from "@/lib/api";
-import type { TestResult } from "@/lib/types";
+import type { TestResult, VariantResult } from "@/lib/types";
 import { inr } from "./ui";
+
+const consider = (v: VariantResult) => Math.round(v.overall.would_buy_pct + v.overall.maybe_pct);
 
 /** A miniature of the real demo result, so the hero shows the product rather than describing it. */
 export default function HeroPreview() {
@@ -20,6 +22,7 @@ export default function HeroPreview() {
 
   const a = test.variants[0];
   const b = test.variants[1];
+  const change = b ? test.suggestions.find((x) => x.variant_id === b.variant)?.title : undefined;
   const yes = Math.round((a.overall.would_buy_pct / 100) * a.n_personas);
   const maybe = Math.round((a.overall.maybe_pct / 100) * a.n_personas);
   const dots = Array.from({ length: a.n_personas }, (_, i) => (i < yes ? "yes" : i < yes + maybe ? "maybe" : "no"));
@@ -48,13 +51,14 @@ export default function HeroPreview() {
       </div>
 
       <div className="mt-4 flex items-end gap-3">
-        <p className="text-4xl font-semibold tabular-nums">{Math.round(a.overall.would_buy_pct)}%</p>
-        <p className="pb-1 text-sm text-slate-600">would buy at {inr(a.product.price_inr)}</p>
+        <p className="text-4xl font-semibold tabular-nums">{consider(a)}%</p>
+        <p className="pb-1 text-sm text-slate-600">would buy or consider it at {inr(a.product.price_inr)}</p>
       </div>
       {b && (
         <p className="mt-1 rounded-lg bg-emerald-50 px-3 py-2 text-sm text-emerald-900">
-          After one AI-suggested change (<strong>{inr(b.product.price_inr)}</strong>):{" "}
-          <strong className="tabular-nums">{Math.round(b.overall.would_buy_pct)}%</strong> would buy
+          After one AI-suggested change
+          {change ? <> (<em className="not-italic font-medium">{change}</em>)</> : null}:{" "}
+          <strong className="tabular-nums">{consider(b)}%</strong> at <strong>{inr(b.product.price_inr)}</strong>
         </p>
       )}
 

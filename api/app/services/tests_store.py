@@ -72,6 +72,21 @@ async def save_variant(*, test_id: str, variant: str, panel: str, product: dict,
         log.exception("Saving test %s/%s to BigQuery failed", test_id, variant)
 
 
+async def save_insight(test_id: str, variant: str | None, kind: str, payload: Any, model: str) -> None:
+    try:
+        await bq.insert("insights", [{"test_id": test_id, "variant": variant, "kind": kind, "payload": payload,
+                                      "model": model, "created_at": now_iso()}], json_fields=("payload",))
+    except Exception:  # noqa: BLE001
+        log.exception("Saving %s insight for %s failed", kind, test_id)
+
+
+async def image_uri(test_id: str, variant: str) -> str | None:
+    rows = await bq.query(
+        f"SELECT image_uri FROM {bq.table('tests')} WHERE test_id = @id AND variant = @v AND image_uri IS NOT NULL LIMIT 1",
+        [bigquery.ScalarQueryParameter("id", "STRING", test_id), bigquery.ScalarQueryParameter("v", "STRING", variant)])
+    return rows[0]["image_uri"] if rows else None
+
+
 def _json(v: Any) -> Any:
     return json.loads(v) if isinstance(v, str) else v
 

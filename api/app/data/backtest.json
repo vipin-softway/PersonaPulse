@@ -1,0 +1,585 @@
+{
+  "label": "AI-simulated customers",
+  "is_placeholder": false,
+  "run_id": "6accb076fd88",
+  "run_at": "2026-10-16T05:59:22.117237+00:00",
+  "model": "gemini-3.8-flash",
+  "category": "Electronics accessories",
+  "n_holdout": 10,
+  "n_personas": 100,
+  "n_predictions": 847,
+  "baseline_description": "Average rating of the 513 products the personas were built from (4.11★)",
+  "metrics": {
+    "mae_model": 0.198,
+    "mae_raw": 0.866,
+    "mae_baseline": 0.21,
+    "bias": -0.87,
+    "correlation": 0.69,
+    "pairs_correct": 36,
+    "pairs_total": 43,
+    "complaint_hits": 9,
+    "complaint_total": 30
+  },
+  "products": [
+    {
+      "product_id": "B08CFCK6CW",
+      "product_name": "Boult Audio Truebuds with 30H Playtime, IPX7 Waterproof, Lightning Boult™ Type C Fast Char",
+      "price_inr": 1199.0,
+      "actual_rating": 3.6,
+      "predicted_rating": 2.99,
+      "baseline_rating": 4.11,
+      "n_personas": 81,
+      "predicted_complaints": [
+        {
+          "text": "Mic quality is mediocre for calls",
+          "count": 54,
+          "pct": 66.7
+        },
+        {
+          "text": "Flimsy plastic feel on the case",
+          "count": 40,
+          "pct": 49.4
+        },
+        {
+          "text": "Touch controls are sometimes overly sensitive",
+          "count": 34,
+          "pct": 42.0
+        },
+        {
+          "text": "Price is a bit high",
+          "count": 17,
+          "pct": 21.0
+        },
+        {
+          "text": "Bloated, muddy bass response",
+          "count": 14,
+          "pct": 17.3
+        }
+      ],
+      "actual_complaints": [
+        {
+          "text": "never charges to 100%",
+          "count": 2,
+          "pct": 28.6
+        },
+        {
+          "text": "poor connectivity range",
+          "count": 2,
+          "pct": 28.6
+        },
+        {
+          "text": "call receive not working",
+          "count": 2,
+          "pct": 28.6
+        }
+      ],
+      "complaint_hits": 0,
+      "complaint_total": 3,
+      "calibrated_rating": 3.88
+    },
+    {
+      "product_id": "B0841KQR1Z",
+      "product_name": "Crypo™ Universal Remote Compatible with Tata Sky Universal HD & SD Set top Box (Also Works",
+      "price_inr": 299.0,
+      "actual_rating": 3.8,
+      "predicted_rating": 3.11,
+      "baseline_rating": 4.11,
+      "n_personas": 80,
+      "predicted_complaints": [
+        {
+          "text": "Flimsy plastic build quality",
+          "count": 72,
+          "pct": 90.0
+        },
+        {
+          "text": "Buttons feel mushy and need hard pressing",
+          "count": 36,
+          "pct": 45.0
+        },
+        {
+          "text": "TV pairing setup is finicky",
+          "count": 26,
+          "pct": 32.5
+        },
+        {
+          "text": "No batteries included in the box",
+          "count": 25,
+          "pct": 31.2
+        },
+        {
+          "text": "Flimsy packaging",
+          "count": 16,
+          "pct": 20.0
+        }
+      ],
+      "actual_complaints": [
+        {
+          "text": "fragile",
+          "count": 1,
+          "pct": 20.0
+        },
+        {
+          "text": "not working",
+          "count": 1,
+          "pct": 20.0
+        },
+        {
+          "text": "defective remote",
+          "count": 1,
+          "pct": 20.0
+        }
+      ],
+      "complaint_hits": 0,
+      "complaint_total": 3,
+      "calibrated_rating": 4.0
+    },
+    {
+      "product_id": "B07YWS9SP9",
+      "product_name": "Zebronics, ZEB-NC3300 USB Powered Laptop Cooling Pad with Dual Fan, Dual USB Port and Blue",
+      "price_inr": 599.0,
+      "actual_rating": 4.0,
+      "predicted_rating": 2.89,
+      "baseline_rating": 4.11,
+      "n_personas": 81,
+      "predicted_complaints": [
+        {
+          "text": "Flimsy plastic build quality",
+          "count": 72,
+          "pct": 88.9
+        },
+        {
+          "text": "Weak airflow with minimal cooling impact",
+          "count": 47,
+          "pct": 58.0
+        },
+        {
+          "text": "Tacky blue LEDs cannot be switched off",
+          "count": 19,
+          "pct": 23.5
+        },
+        {
+          "text": "Overpriced at ₹599",
+          "count": 15,
+          "pct": 18.5
+        },
+        {
+          "text": "Negligible temperature drop under gaming load",
+          "count": 14,
+          "pct": 17.3
+        }
+      ],
+      "actual_complaints": [
+        {
+          "text": "Fan speed is little slow",
+          "count": 2,
+          "pct": 28.6
+        },
+        {
+          "text": "0 difference in temperatures on gaming laptop",
+          "count": 2,
+          "pct": 28.6
+        },
+        {
+          "text": "Laptop slips and non slip clips hurt hands",
+          "count": 1,
+          "pct": 14.3
+        }
+      ],
+      "complaint_hits": 1,
+      "complaint_total": 3,
+      "calibrated_rating": 3.73
+    },
+    {
+      "product_id": "B07KY3FNQP",
+      "product_name": "boAt Bassheads 152 in Ear Wired Earphones with Mic(Active Black)",
+      "price_inr": 449.0,
+      "actual_rating": 4.1,
+      "predicted_rating": 3.31,
+      "baseline_rating": 4.11,
+      "n_personas": 86,
+      "predicted_complaints": [
+        {
+          "text": "Audio clarity is compromised by heavy bass",
+          "count": 62,
+          "pct": 72.1
+        },
+        {
+          "text": "Overpriced for basic wired earphones",
+          "count": 39,
+          "pct": 45.3
+        },
+        {
+          "text": "Fragile strain relief near the 3.5mm jack",
+          "count": 16,
+          "pct": 18.6
+        },
+        {
+          "text": "Uncertain about long-term durability",
+          "count": 15,
+          "pct": 17.4
+        },
+        {
+          "text": "Wire joint near the pin feels fragile",
+          "count": 6,
+          "pct": 7.0
+        }
+      ],
+      "actual_complaints": [
+        {
+          "text": "wire is not braided",
+          "count": 2,
+          "pct": 33.3
+        },
+        {
+          "text": "so-so sound quality",
+          "count": 1,
+          "pct": 16.7
+        },
+        {
+          "text": "cannot be used with USB phones",
+          "count": 1,
+          "pct": 16.7
+        }
+      ],
+      "complaint_hits": 1,
+      "complaint_total": 3,
+      "calibrated_rating": 4.18
+    },
+    {
+      "product_id": "B09163Q5CD",
+      "product_name": "Verilux® USB C Hub Multiport Adapter- 6 in 1 Portable Aluminum Type C Hub with 4K HDMI Out",
+      "price_inr": 1187.0,
+      "actual_rating": 4.1,
+      "predicted_rating": 3.15,
+      "baseline_rating": 4.11,
+      "n_personas": 91,
+      "predicted_complaints": [
+        {
+          "text": "Heats up noticeably during extended use",
+          "count": 69,
+          "pct": 75.8
+        },
+        {
+          "text": "Only one USB 3.0 port while two are outdated USB 2.0",
+          "count": 37,
+          "pct": 40.7
+        },
+        {
+          "text": "HDMI output is capped at 30Hz for 4K",
+          "count": 32,
+          "pct": 35.2
+        },
+        {
+          "text": "Attached cable is quite short",
+          "count": 27,
+          "pct": 29.7
+        },
+        {
+          "text": "Price is slightly high",
+          "count": 21,
+          "pct": 23.1
+        }
+      ],
+      "actual_complaints": [
+        {
+          "text": "overpriced",
+          "count": 4,
+          "pct": 50.0
+        },
+        {
+          "text": "Wire length is small",
+          "count": 2,
+          "pct": 25.0
+        },
+        {
+          "text": "Low data transfer speed",
+          "count": 1,
+          "pct": 12.5
+        }
+      ],
+      "complaint_hits": 2,
+      "complaint_total": 3,
+      "calibrated_rating": 4.01
+    },
+    {
+      "product_id": "B09M869Z5V",
+      "product_name": "Portronics MPORT 31C 4-in-1 USB Hub (Type C to 4 USB-A Ports) with Fast Data Transfer",
+      "price_inr": 570.0,
+      "actual_rating": 4.2,
+      "predicted_rating": 3.2,
+      "baseline_rating": 4.11,
+      "n_personas": 90,
+      "predicted_complaints": [
+        {
+          "text": "Only one port is USB 3.0 while the other three are slow 2.0",
+          "count": 84,
+          "pct": 93.3
+        },
+        {
+          "text": "Plastic build feels lightweight and cheap",
+          "count": 39,
+          "pct": 43.3
+        },
+        {
+          "text": "Short, slightly flimsy attached cable",
+          "count": 35,
+          "pct": 38.9
+        },
+        {
+          "text": "A bit expensive at ₹570",
+          "count": 20,
+          "pct": 22.2
+        },
+        {
+          "text": "Heats up during sustained file transfers",
+          "count": 18,
+          "pct": 20.0
+        }
+      ],
+      "actual_complaints": [
+        {
+          "text": "not easy to plug USB",
+          "count": 2,
+          "pct": 25.0
+        },
+        {
+          "text": "price too high",
+          "count": 1,
+          "pct": 12.5
+        },
+        {
+          "text": "cord is too short",
+          "count": 1,
+          "pct": 12.5
+        }
+      ],
+      "complaint_hits": 2,
+      "complaint_total": 3,
+      "calibrated_rating": 4.05
+    },
+    {
+      "product_id": "B0759QMF85",
+      "product_name": "TP-Link AC750 Dual Band Wireless Cable Router, 4 10/100 LAN + 10/100 WAN Ports, Support Gu",
+      "price_inr": 1529.0,
+      "actual_rating": 4.3,
+      "predicted_rating": 3.38,
+      "baseline_rating": 4.11,
+      "n_personas": 86,
+      "predicted_complaints": [
+        {
+          "text": "LAN/WAN ports capped at 10/100 Mbps",
+          "count": 56,
+          "pct": 65.1
+        },
+        {
+          "text": "Flimsy, lightweight plastic build",
+          "count": 47,
+          "pct": 54.7
+        },
+        {
+          "text": "5GHz signal weakens through thick walls",
+          "count": 17,
+          "pct": 19.8
+        },
+        {
+          "text": "Misleading 750 Mbps marketing when physical ports cap at 100 Mbps",
+          "count": 14,
+          "pct": 16.3
+        },
+        {
+          "text": "Bit expensive for my budget",
+          "count": 9,
+          "pct": 10.5
+        }
+      ],
+      "actual_complaints": [
+        {
+          "text": "signal reach could be better",
+          "count": 2,
+          "pct": 33.3
+        },
+        {
+          "text": "non returnable",
+          "count": 1,
+          "pct": 16.7
+        },
+        {
+          "text": "no bandwidth control",
+          "count": 1,
+          "pct": 16.7
+        }
+      ],
+      "complaint_hits": 0,
+      "complaint_total": 3,
+      "calibrated_rating": 4.24
+    },
+    {
+      "product_id": "B08CF3D7QR",
+      "product_name": "Portronics Konnect L POR-1081 Fast Charging 3A Type-C Cable 1.2Meter with Charge & Sync Fu",
+      "price_inr": 154.0,
+      "actual_rating": 4.3,
+      "predicted_rating": 3.82,
+      "baseline_rating": 4.11,
+      "n_personas": 79,
+      "predicted_complaints": [
+        {
+          "text": "Cable is slightly stiff",
+          "count": 34,
+          "pct": 43.0
+        },
+        {
+          "text": "Questionable long-term durability",
+          "count": 27,
+          "pct": 34.2
+        },
+        {
+          "text": "Data transfer speeds are capped at basic USB 2.0 rates",
+          "count": 26,
+          "pct": 32.9
+        },
+        {
+          "text": "Connector housing feels a bit basic",
+          "count": 24,
+          "pct": 30.4
+        },
+        {
+          "text": "Not very fast charging",
+          "count": 15,
+          "pct": 19.0
+        }
+      ],
+      "actual_complaints": [
+        {
+          "text": "not a fast charger",
+          "count": 4,
+          "pct": 50.0
+        },
+        {
+          "text": "doesnt last",
+          "count": 1,
+          "pct": 12.5
+        },
+        {
+          "text": "cable gets twisted over time",
+          "count": 1,
+          "pct": 12.5
+        }
+      ],
+      "complaint_hits": 2,
+      "complaint_total": 3,
+      "calibrated_rating": 4.73
+    },
+    {
+      "product_id": "B08VF8V79P",
+      "product_name": "Samsung Original 25W USB Travel Lightning Adapter for Cellular Phones, Black",
+      "price_inr": 1075.0,
+      "actual_rating": 4.4,
+      "predicted_rating": 3.31,
+      "baseline_rating": 4.11,
+      "n_personas": 88,
+      "predicted_complaints": [
+        {
+          "text": "No charging cable included",
+          "count": 88,
+          "pct": 100.0
+        },
+        {
+          "text": "Overpriced for just an adapter",
+          "count": 34,
+          "pct": 38.6
+        },
+        {
+          "text": "Gets slightly warm during peak charging",
+          "count": 12,
+          "pct": 13.6
+        },
+        {
+          "text": "Misleading product title mentioning Lightning",
+          "count": 12,
+          "pct": 13.6
+        },
+        {
+          "text": "Completely sealed non-repairable casing",
+          "count": 8,
+          "pct": 9.1
+        }
+      ],
+      "actual_complaints": [
+        {
+          "text": "slow charging",
+          "count": 1,
+          "pct": 14.3
+        },
+        {
+          "text": "doesn't come with the cable",
+          "count": 1,
+          "pct": 14.3
+        },
+        {
+          "text": "fake units sold by other sellers",
+          "count": 1,
+          "pct": 14.3
+        }
+      ],
+      "complaint_hits": 1,
+      "complaint_total": 3,
+      "calibrated_rating": 4.15
+    },
+    {
+      "product_id": "B082T6GXS5",
+      "product_name": "AmazonBasics New Release Nylon USB-A to Lightning Cable Cord, MFi Certified Charger for Ap",
+      "price_inr": 999.0,
+      "actual_rating": 4.5,
+      "predicted_rating": 3.48,
+      "baseline_rating": 4.11,
+      "n_personas": 85,
+      "predicted_complaints": [
+        {
+          "text": "Overpriced for a basic USB-A cable",
+          "count": 67,
+          "pct": 78.8
+        },
+        {
+          "text": "Cable is slightly stiff to coil",
+          "count": 30,
+          "pct": 35.3
+        },
+        {
+          "text": "Charging speed is capped due to USB-A interface",
+          "count": 16,
+          "pct": 18.8
+        },
+        {
+          "text": "Transfer speeds capped at standard USB 2.0",
+          "count": 9,
+          "pct": 10.6
+        },
+        {
+          "text": "Simple packaging",
+          "count": 4,
+          "pct": 4.7
+        }
+      ],
+      "actual_complaints": [
+        {
+          "text": "little bit loose",
+          "count": 1,
+          "pct": 12.5
+        },
+        {
+          "text": "no option to cancel",
+          "count": 1,
+          "pct": 12.5
+        },
+        {
+          "text": "not supporting for CarPlay",
+          "count": 1,
+          "pct": 12.5
+        }
+      ],
+      "complaint_hits": 0,
+      "complaint_total": 3,
+      "calibrated_rating": 4.33
+    }
+  ]
+}

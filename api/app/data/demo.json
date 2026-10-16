@@ -2,699 +2,739 @@
   "test_id": "demo",
   "panel": "accessories",
   "label": "AI-simulated customers",
-  "created_at": "2026-10-17T19:30:00Z",
+  "created_at": "2026-10-16T05:39:39.463260+00:00",
   "is_demo": true,
-  "is_placeholder": true,
+  "is_placeholder": false,
   "run": {
+    "duration_s": 36.1,
+    "gemini_calls": 30,
     "mode": "saved_demo",
-    "run_at": "2026-10-17T19:30:00Z",
-    "personas": 30,
-    "gemini_calls": null,
-    "duration_s": null,
-    "model": null
+    "model": "gemini-3.8-flash",
+    "personas": 29,
+    "personas_asked": 30,
+    "run_at": "2026-10-16T05:39:39.463260+00:00"
   },
   "variants": [
     {
       "variant": "original",
       "product": {
-        "name": "WeaveCharge 65W USB-C Cable",
+        "channel": "E-commerce marketplace",
+        "competitors": "Basic USB-C cables ₹199–399, branded braided cables ₹499–999",
         "description": "Nylon-braided USB-C to USB-C cable, 2 m, 65W fast charging for phones and laptops, 10,000-bend tested.",
-        "price_inr": 799,
+        "has_image": false,
+        "name": "WeaveCharge 65W USB-C Cable",
         "pack_size": "1 cable, 2 m",
-        "channel": "E-commerce marketplace"
+        "price_inr": 799.0
       },
-      "n_personas": 30,
+      "n_personas": 29,
       "overall": {
-        "would_buy_pct": 30.0,
-        "maybe_pct": 30.0,
-        "avg_intent": 2.73,
-        "avg_wtp_inr": 560.83
+        "would_buy_pct": 3.4,
+        "maybe_pct": 13.8,
+        "avg_intent": 1.9,
+        "avg_wtp_inr": 416.97
       },
       "segments": [
         {
-          "segment_id": "seg_value",
-          "segment_name": "Value-for-money buyers",
-          "share": 0.3,
-          "n": 9,
-          "would_buy_pct": 11.1,
-          "maybe_pct": 44.4,
-          "no_pct": 44.4,
-          "avg_intent": 2.33,
-          "avg_wtp_inr": 379.44,
-          "median_wtp_inr": 370
+          "segment_id": "accessories_seg_1",
+          "segment_name": "Value & Budget Optimizers",
+          "share": 0.25,
+          "n": 8,
+          "would_buy_pct": 0.0,
+          "maybe_pct": 0.0,
+          "no_pct": 100.0,
+          "avg_intent": 1.0,
+          "avg_wtp_inr": 312.25,
+          "median_wtp_inr": 350
         },
         {
-          "segment_id": "seg_durable",
-          "segment_name": "Durability skeptics",
-          "share": 0.22,
+          "segment_id": "accessories_seg_2",
+          "segment_name": "Quality & Longevity Seekers",
+          "share": 0.25,
           "n": 7,
           "would_buy_pct": 14.3,
-          "maybe_pct": 42.9,
-          "no_pct": 42.9,
-          "avg_intent": 2.43,
-          "avg_wtp_inr": 519.29,
-          "median_wtp_inr": 520
+          "maybe_pct": 28.6,
+          "no_pct": 57.1,
+          "avg_intent": 2.57,
+          "avg_wtp_inr": 521.14,
+          "median_wtp_inr": 500
         },
         {
-          "segment_id": "seg_power",
-          "segment_name": "Fast-charging power users",
-          "share": 0.2,
-          "n": 6,
-          "would_buy_pct": 66.7,
+          "segment_id": "accessories_seg_3",
+          "segment_name": "Performance & Functionality Purists",
+          "share": 0.25,
+          "n": 7,
+          "would_buy_pct": 0.0,
           "maybe_pct": 0.0,
-          "no_pct": 33.3,
-          "avg_intent": 3.5,
-          "avg_wtp_inr": 817.5,
-          "median_wtp_inr": 822
+          "no_pct": 100.0,
+          "avg_intent": 1.86,
+          "avg_wtp_inr": 392.43,
+          "median_wtp_inr": 450
         },
         {
-          "segment_id": "seg_brand",
-          "segment_name": "Brand-trust shoppers",
-          "share": 0.16,
-          "n": 5,
-          "would_buy_pct": 20.0,
-          "maybe_pct": 40.0,
-          "no_pct": 40.0,
-          "avg_intent": 2.4,
-          "avg_wtp_inr": 587,
-          "median_wtp_inr": 585
+          "segment_id": "accessories_seg_4",
+          "segment_name": "Convenience & Portability Prioritizers",
+          "share": 0.15,
+          "n": 4,
+          "would_buy_pct": 0.0,
+          "maybe_pct": 50.0,
+          "no_pct": 50.0,
+          "avg_intent": 2.5,
+          "avg_wtp_inr": 462.5,
+          "median_wtp_inr": 475
         },
         {
-          "segment_id": "seg_gift",
-          "segment_name": "Convenience & gift buyers",
-          "share": 0.12,
+          "segment_id": "accessories_seg_5",
+          "segment_name": "Skeptical Critics",
+          "share": 0.1,
           "n": 3,
-          "would_buy_pct": 66.7,
+          "would_buy_pct": 0.0,
           "maybe_pct": 0.0,
-          "no_pct": 33.3,
-          "avg_intent": 3.67,
-          "avg_wtp_inr": 645,
-          "median_wtp_inr": 645
+          "no_pct": 100.0,
+          "avg_intent": 2.0,
+          "avg_wtp_inr": 449.67,
+          "median_wtp_inr": 450
         }
       ],
       "price": {
         "price_inr": 799.0,
-        "median_wtp_inr": 532,
-        "pct_wtp_at_or_above_price": 16.7,
+        "median_wtp_inr": 450,
+        "pct_wtp_at_or_above_price": 0.0,
         "buckets": [
+          {
+            "from_inr": 0,
+            "to_inr": 159.0,
+            "count": 1
+          },
+          {
+            "from_inr": 159.0,
+            "to_inr": 319.0,
+            "count": 3
+          },
           {
             "from_inr": 319.0,
             "to_inr": 479.0,
-            "count": 9
+            "count": 15
           },
           {
             "from_inr": 479.0,
             "to_inr": 639.0,
-            "count": 13
+            "count": 9
           },
           {
             "from_inr": 639.0,
             "to_inr": 799.0,
-            "count": 3
-          },
-          {
-            "from_inr": 799.0,
-            "to_inr": 959.0,
-            "count": 5
+            "count": 1
           }
         ]
       },
       "top_objections": [
         {
-          "text": "Too expensive for a cable",
-          "count": 5,
-          "pct": 16.7
+          "count": 28,
+          "pct": 96.6,
+          "text": "Priced well above my 500 rupee ceiling"
         },
         {
-          "text": "Cheaper cables do the same job",
-          "count": 4,
-          "pct": 13.3
+          "count": 10,
+          "pct": 34.5,
+          "text": "Unknown brand with no clear local warranty or service support"
         },
         {
-          "text": "Braided cables still fray at the neck",
-          "count": 4,
-          "pct": 13.3
+          "count": 7,
+          "pct": 24.1,
+          "text": "No data transfer speed mentioned"
         },
         {
-          "text": "No warranty mentioned",
           "count": 3,
-          "pct": 10.0
+          "pct": 10.3,
+          "text": "High risk of exaggerated or fake wattage claims"
         },
         {
-          "text": "Want e-marker chip details",
           "count": 3,
-          "pct": 10.0
+          "pct": 10.3,
+          "text": "All cables stop working after some months anyway"
         },
         {
-          "text": "Plain packaging",
           "count": 3,
-          "pct": 10.0
+          "pct": 10.3,
+          "text": "Needs verified customer reviews to confirm it doesn't fray"
         }
       ],
       "top_likes": [
         {
-          "text": "Braided build",
-          "count": 9,
-          "pct": 30.0
+          "count": 26,
+          "pct": 89.7,
+          "text": "2-meter length is convenient"
         },
         {
-          "text": "Long 2 m length",
-          "count": 9,
-          "pct": 30.0
+          "count": 24,
+          "pct": 82.8,
+          "text": "Durable nylon braiding"
         },
         {
-          "text": "Nylon braiding",
-          "count": 7,
-          "pct": 23.3
+          "count": 23,
+          "pct": 79.3,
+          "text": "Supports 65W laptop charging"
         },
         {
-          "text": "Bend-tested claim",
-          "count": 7,
-          "pct": 23.3
+          "count": 1,
+          "pct": 3.4,
+          "text": "10,000-bend rating points to decent longevity"
         },
         {
-          "text": "65W laptop charging",
-          "count": 6,
-          "pct": 20.0
-        },
-        {
-          "text": "One cable for phone and laptop",
-          "count": 6,
-          "pct": 20.0
+          "count": 1,
+          "pct": 3.4,
+          "text": "10,000-bend claim matches my rough fieldwork needs"
         }
       ],
       "quotes": [
         {
-          "persona_id": "p016",
-          "persona_name": "Kavya",
-          "age": 24,
-          "city": "Mumbai",
-          "segment_name": "Fast-charging power users",
-          "would_buy": "yes",
-          "purchase_intent": 5,
-          "main_reason": "65W laptop charging",
-          "quote": "65W on a 2 m cable means I can charge my laptop from the sofa. Worth ₹799."
-        },
-        {
-          "persona_id": "p028",
-          "persona_name": "Shreya",
-          "age": 30,
-          "city": "Bengaluru",
-          "segment_name": "Convenience & gift buyers",
-          "would_buy": "yes",
-          "purchase_intent": 5,
-          "main_reason": "Premium look",
-          "quote": "2 m is great next to the bed."
-        },
-        {
-          "persona_id": "p004",
-          "persona_name": "Ananya",
-          "age": 19,
-          "city": "Kolkata",
-          "segment_name": "Value-for-money buyers",
-          "would_buy": "yes",
-          "purchase_intent": 4,
-          "main_reason": "Braided build",
-          "quote": "If it really lasts two years, ₹799 works out cheaper than buying three ₹299 cables."
-        },
-        {
-          "persona_id": "p009",
-          "persona_name": "Rohan",
-          "age": 26,
-          "city": "Indore",
-          "segment_name": "Durability skeptics",
-          "would_buy": "yes",
-          "purchase_intent": 4,
-          "main_reason": "Nylon braiding",
-          "quote": "The bend test sounds serious. I'll try it."
-        },
-        {
-          "persona_id": "p000",
-          "persona_name": "Priya",
-          "age": 19,
-          "city": "Pune",
-          "segment_name": "Value-for-money buyers",
-          "would_buy": "no",
-          "purchase_intent": 1,
-          "main_reason": "Too expensive for a cable",
-          "quote": "₹799 for a cable? My ₹299 one charges just fine."
-        },
-        {
-          "persona_id": "p012",
-          "persona_name": "Pooja",
-          "age": 40,
-          "city": "Kolkata",
-          "segment_name": "Durability skeptics",
-          "would_buy": "no",
-          "purchase_intent": 1,
-          "main_reason": "No warranty mentioned",
-          "quote": "Every braided cable I bought frayed at the connector within months. No warranty, no deal."
-        },
-        {
-          "persona_id": "p018",
-          "persona_name": "Ishita",
+          "persona_id": "accessories_seg_2_p14",
+          "persona_name": "Sanya Mehra",
           "age": 23,
-          "city": "Bengaluru",
-          "segment_name": "Fast-charging power users",
-          "would_buy": "no",
-          "purchase_intent": 1,
-          "main_reason": "Want e-marker chip details",
-          "quote": "Need to know if it has an e-marker chip before trusting 65W."
+          "city": "Delhi",
+          "segment_name": "Quality & Longevity Seekers",
+          "would_buy": "yes",
+          "purchase_intent": 4.0,
+          "main_reason": "I hate cheap cables that die quickly, and this looks durable enough to last and powerful enough for my laptop.",
+          "quote": "I'm completely done with flimsy cables stopping after a few months, so a solid braided 65W cable is definitely worth it. I just want to check a few verified reviews on Amazon first."
         },
         {
-          "persona_id": "p023",
-          "persona_name": "Imran",
-          "age": 47,
+          "persona_id": "accessories_seg_2_p17",
+          "persona_name": "Vikram Reddy",
+          "age": 28,
           "city": "Bengaluru",
-          "segment_name": "Brand-trust shoppers",
+          "segment_name": "Quality & Longevity Seekers",
+          "would_buy": "maybe",
+          "purchase_intent": 3.0,
+          "main_reason": "I prefer sticking to trusted brands with proven longevity and responsive customer support for my work setup.",
+          "quote": "The 2-meter length and braided build look good for my workspace, but at ₹799 I'd rather buy from a brand I know will honor a replacement if it fails after six months."
+        },
+        {
+          "persona_id": "accessories_seg_4_p10",
+          "persona_name": "Meera Patel",
+          "age": 38,
+          "city": "Surat",
+          "segment_name": "Convenience & Portability Prioritizers",
+          "would_buy": "maybe",
+          "purchase_intent": 3.0,
+          "main_reason": "It offers great convenience and durability, but ₹799 is expensive for a charging cable when reliable alternatives cost less.",
+          "quote": "The 2-meter length would be so convenient for charging while relaxing on the bed, but ₹799 feels a bit much for just a cable unless I know it won't stop working after a few months."
+        },
+        {
+          "persona_id": "accessories_seg_2_p7",
+          "persona_name": "Karan Sharma",
+          "age": 26,
+          "city": "Jaipur",
+          "segment_name": "Quality & Longevity Seekers",
+          "would_buy": "maybe",
+          "purchase_intent": 3.0,
+          "main_reason": "I need proof of long-term durability because daily fieldwork ruins standard cables, and ₹799 is too much to risk without a proven track record.",
+          "quote": "My cables take a beating every day traveling between clinics, and cheap ones always stop working in a month. This looks sturdy enough, but at ₹799 it better actually survive being tossed in my bag every day."
+        },
+        {
+          "persona_id": "accessories_seg_4_p2",
+          "persona_name": "Nithya Menon",
+          "age": 24,
+          "city": "Bengaluru",
+          "segment_name": "Convenience & Portability Prioritizers",
+          "would_buy": "maybe",
+          "purchase_intent": 3.0,
+          "main_reason": "It's practical for portable cafe work, but ₹799 is a bit high when established brands offer similar fast-charging braided cables for less.",
+          "quote": "A 2m fast-charging cable is great when cafe plug points are awkwardly far, but ₹799 is a little steep unless the build quality is truly premium."
+        },
+        {
+          "persona_id": "accessories_seg_3_p14",
+          "persona_name": "Pooja Sharma",
+          "age": 20,
+          "city": "Indore",
+          "segment_name": "Performance & Functionality Purists",
           "would_buy": "no",
-          "purchase_intent": 1,
-          "main_reason": "Unknown brand",
-          "quote": "Never heard of this brand. I'll stick with what I know for ₹100 more."
+          "purchase_intent": 2.0,
+          "main_reason": "I've been burned before by cables claiming fast charging that ended up being slow and overheating, so I wouldn't spend ₹799 without checking detailed user reviews first.",
+          "quote": "I've wasted money on cables before that promised fast charging and just heated up while charging at a crawl. For ₹799, I'd need to see solid proof in the reviews before even considering it."
+        },
+        {
+          "persona_id": "accessories_seg_5_p1",
+          "persona_name": "Pradip Ghosh",
+          "age": 21,
+          "city": "Delhi",
+          "segment_name": "Skeptical Critics",
+          "would_buy": "no",
+          "purchase_intent": 2.0,
+          "main_reason": "I do not trust an unknown brand charging premium prices on claims of 65W fast charging without proven reliability.",
+          "quote": "At ₹799, this unknown brand is asking for branded prices. I've already been burned once by fake specs online, so there's no way I'm buying this without solid proof."
+        },
+        {
+          "persona_id": "accessories_seg_3_p18",
+          "persona_name": "Rajeshwari Gupta",
+          "age": 27,
+          "city": "Mumbai",
+          "segment_name": "Performance & Functionality Purists",
+          "would_buy": "no",
+          "purchase_intent": 2.0,
+          "main_reason": "I refuse to risk damaging my iPhone or iPad with an uncertified, unknown third-party cable just to save a few hundred rupees.",
+          "quote": "It looks tough enough, but where is the MFi certification? I'm not frying my phone's battery with an unverified cable just for 65W charging."
         }
       ],
       "insights": {
-        "headline": "Only 3 in 10 AI customers would buy at ₹799: price and durability doubts hold back the biggest segments.",
-        "overall_verdict": "launch_with_changes",
         "best_segments": [
           {
-            "segment_name": "Fast-charging power users",
-            "why": "65W laptop charging on a 2 m cable solves a real problem for them, and ₹799 feels fair."
+            "segment_name": "Quality & Longevity Seekers",
+            "why": "This was the only segment to show any definitive purchase intent (14.3% yes, 28.6% maybe), driven by the nylon braiding and 65W charging, though they still demand a price closer to ₹500."
           },
           {
-            "segment_name": "Convenience & gift buyers",
-            "why": "The premium look and long cable appeal; price matters less for an occasional purchase."
+            "segment_name": "Convenience & Portability Prioritizers",
+            "why": "While none said 'yes', 50% said 'maybe', as they highly value the 2-meter length for awkward plug placements, provided the brand can prove its reliability."
           }
         ],
-        "weakest_segments": [
-          {
-            "segment_name": "Value-for-money buyers",
-            "why": "The largest segment, but they compare against ₹299 cables that already work."
-          },
-          {
-            "segment_name": "Durability skeptics",
-            "why": "Past braided cables frayed at the connector, and there is no warranty to back the bend-test claim."
-          }
+        "caveat": "This report is based on simulated consumer data and should be validated through real-world market testing.",
+        "headline": "With 96.6% of respondents rejecting the ₹799 price tag, this cable faces insurmountable resistance without a major price correction.",
+        "overall_verdict": "rethink",
+        "price_insight": "At ₹799, the product is priced nearly 60% higher than the highest median willingness-to-pay (₹500). 96.6% of users explicitly cited the price as a dealbreaker, indicating the cable must be repriced under ₹500 to be viable in this highly commoditized market.",
+        "recommended_target_segment": "Quality & Longevity Seekers",
+        "standout_quotes": [
+          "Why spend ₹799 on a braided wire? A ₹300 cable carries the exact same current without wasting money on fancy marketing.",
+          "If you don't even specify whether this pushes USB 3.2 speeds or just plain old 480 Mbps, I'm not spending ₹799 on it. I need proper throughput, not just basic power delivery.",
+          "At ₹799, they claim 10,000 bends, but what happens after six months when it suddenly stops charging? Without a proven track record or guaranteed warranty support, this is just another use-and-throw gamble."
         ],
-        "price_insight": "Median willingness to pay is well below ₹799, and only power users regularly go above it. A price under ₹500 would clear most customers' ceiling.",
         "top_3_objections": [
           {
-            "objection": "Too expensive for a cable",
+            "objection": "Priced well above my 500 rupee ceiling",
             "segments_affected": [
-              "Value-for-money buyers"
+              "Value & Budget Optimizers",
+              "Quality & Longevity Seekers",
+              "Performance & Functionality Purists",
+              "Convenience & Portability Prioritizers",
+              "Skeptical Critics"
             ]
           },
           {
-            "objection": "No warranty mentioned",
+            "objection": "Unknown brand with no clear local warranty or service support",
             "segments_affected": [
-              "Durability skeptics",
-              "Brand-trust shoppers"
+              "Quality & Longevity Seekers",
+              "Convenience & Portability Prioritizers",
+              "Skeptical Critics"
             ]
           },
           {
-            "objection": "Unknown brand with no reviews",
+            "objection": "No data transfer speed mentioned",
             "segments_affected": [
-              "Brand-trust shoppers"
+              "Performance & Functionality Purists"
             ]
           }
         ],
         "top_3_strengths": [
-          "65W laptop charging",
-          "Braided build",
-          "Long 2 m length"
+          "2-meter length is highly convenient (89.7%)",
+          "Durable nylon braiding appeals to users tired of flimsy cables (82.8%)",
+          "Supports 65W laptop charging (79.3%)"
         ],
-        "standout_quotes": [
-          "Every braided cable I bought frayed at the connector within months. No warranty, no deal."
-        ],
-        "recommended_target_segment": "Value-for-money buyers, if the price drops and a warranty is added",
-        "caveat": "These are AI-simulated customers; validate the winning variant with a small real-customer test."
+        "weakest_segments": [
+          {
+            "segment_name": "Value & Budget Optimizers",
+            "why": "Generated a 1.0 average intent and 100% rejection rate, as they refuse to pay more than ₹350 for a basic charging cable."
+          },
+          {
+            "segment_name": "Performance & Functionality Purists",
+            "why": "100% rejection rate due to the lack of data transfer speed specifications and missing safety certifications."
+          }
+        ]
       }
     },
     {
       "variant": "v1",
       "product": {
+        "channel": "E-commerce marketplace",
+        "competitors": "Basic USB-C cables ₹199–399, branded braided cables ₹499–999",
+        "description": "Nylon-braided USB-C to USB-C cable, 2 m, 65W fast charging for phones and laptops, 10,000-bend tested. Backed by a 1-Year Replacement Warranty.",
+        "has_image": false,
         "name": "WeaveCharge 65W USB-C Cable",
-        "description": "Same 2 m braided 65W cable, now with an 18-month replacement warranty and the bend test shown on the box.",
-        "price_inr": 449,
         "pack_size": "1 cable, 2 m",
-        "channel": "E-commerce marketplace"
+        "price_inr": 499.0
       },
       "n_personas": 30,
       "overall": {
-        "would_buy_pct": 63.3,
-        "maybe_pct": 16.7,
-        "avg_intent": 3.83,
-        "avg_wtp_inr": 537.67
+        "would_buy_pct": 13.3,
+        "maybe_pct": 30.0,
+        "avg_intent": 2.5,
+        "avg_wtp_inr": 351.4
       },
       "segments": [
         {
-          "segment_id": "seg_value",
-          "segment_name": "Value-for-money buyers",
-          "share": 0.3,
-          "n": 9,
-          "would_buy_pct": 77.8,
-          "maybe_pct": 11.1,
-          "no_pct": 11.1,
-          "avg_intent": 4.33,
-          "avg_wtp_inr": 370.56,
-          "median_wtp_inr": 370
+          "segment_id": "accessories_seg_1",
+          "segment_name": "Value & Budget Optimizers",
+          "share": 0.25,
+          "n": 8,
+          "would_buy_pct": 0.0,
+          "maybe_pct": 12.5,
+          "no_pct": 87.5,
+          "avg_intent": 1.88,
+          "avg_wtp_inr": 299.62,
+          "median_wtp_inr": 310
         },
         {
-          "segment_id": "seg_durable",
-          "segment_name": "Durability skeptics",
-          "share": 0.22,
+          "segment_id": "accessories_seg_2",
+          "segment_name": "Quality & Longevity Seekers",
+          "share": 0.25,
+          "n": 8,
+          "would_buy_pct": 37.5,
+          "maybe_pct": 25.0,
+          "no_pct": 37.5,
+          "avg_intent": 3.12,
+          "avg_wtp_inr": 418.25,
+          "median_wtp_inr": 424
+        },
+        {
+          "segment_id": "accessories_seg_3",
+          "segment_name": "Performance & Functionality Purists",
+          "share": 0.25,
           "n": 7,
-          "would_buy_pct": 71.4,
-          "maybe_pct": 14.3,
-          "no_pct": 14.3,
-          "avg_intent": 3.86,
-          "avg_wtp_inr": 495,
-          "median_wtp_inr": 495
+          "would_buy_pct": 0.0,
+          "maybe_pct": 57.1,
+          "no_pct": 42.9,
+          "avg_intent": 2.43,
+          "avg_wtp_inr": 321.43,
+          "median_wtp_inr": 350
         },
         {
-          "segment_id": "seg_power",
-          "segment_name": "Fast-charging power users",
-          "share": 0.2,
-          "n": 6,
-          "would_buy_pct": 50.0,
-          "maybe_pct": 0.0,
+          "segment_id": "accessories_seg_4",
+          "segment_name": "Convenience & Portability Prioritizers",
+          "share": 0.15,
+          "n": 4,
+          "would_buy_pct": 25.0,
+          "maybe_pct": 25.0,
           "no_pct": 50.0,
-          "avg_intent": 3.17,
-          "avg_wtp_inr": 785,
-          "median_wtp_inr": 788
+          "avg_intent": 2.75,
+          "avg_wtp_inr": 374.75,
+          "median_wtp_inr": 375
         },
         {
-          "segment_id": "seg_brand",
-          "segment_name": "Brand-trust shoppers",
-          "share": 0.16,
-          "n": 5,
-          "would_buy_pct": 40.0,
-          "maybe_pct": 60.0,
-          "no_pct": 0.0,
-          "avg_intent": 3.6,
-          "avg_wtp_inr": 561,
-          "median_wtp_inr": 560
-        },
-        {
-          "segment_id": "seg_gift",
-          "segment_name": "Convenience & gift buyers",
-          "share": 0.12,
+          "segment_id": "accessories_seg_5",
+          "segment_name": "Skeptical Critics",
+          "share": 0.1,
           "n": 3,
-          "would_buy_pct": 66.7,
-          "maybe_pct": 0.0,
-          "no_pct": 33.3,
-          "avg_intent": 4,
-          "avg_wtp_inr": 605,
-          "median_wtp_inr": 600
+          "would_buy_pct": 0.0,
+          "maybe_pct": 33.3,
+          "no_pct": 66.7,
+          "avg_intent": 2.33,
+          "avg_wtp_inr": 350.0,
+          "median_wtp_inr": 350
         }
       ],
       "price": {
-        "price_inr": 449.0,
-        "median_wtp_inr": 525,
-        "pct_wtp_at_or_above_price": 70.0,
+        "price_inr": 499.0,
+        "median_wtp_inr": 350,
+        "pct_wtp_at_or_above_price": 10.0,
         "buckets": [
           {
-            "from_inr": 269.0,
-            "to_inr": 359.0,
+            "from_inr": 0,
+            "to_inr": 99.0,
             "count": 1
           },
           {
-            "from_inr": 359.0,
-            "to_inr": 449.0,
-            "count": 8
+            "from_inr": 99.0,
+            "to_inr": 199.0,
+            "count": 1
           },
           {
-            "from_inr": 449.0,
-            "to_inr": 539.0,
-            "count": 7
+            "from_inr": 199.0,
+            "to_inr": 299.0,
+            "count": 1
           },
           {
-            "from_inr": 539.0,
-            "to_inr": 629.0,
-            "count": 8
+            "from_inr": 299.0,
+            "to_inr": 399.0,
+            "count": 15
           },
           {
-            "from_inr": 629.0,
-            "to_inr": 719.0,
-            "count": 0
+            "from_inr": 399.0,
+            "to_inr": 499.0,
+            "count": 9
           },
           {
-            "from_inr": 719.0,
-            "to_inr": 809.0,
-            "count": 6
+            "from_inr": 499.0,
+            "to_inr": 599.0,
+            "count": 3
           }
         ]
       },
       "top_objections": [
         {
-          "text": "Want to see real reviews",
-          "count": 5,
-          "pct": 16.7
+          "count": 17,
+          "pct": 56.7,
+          "text": "Can easily find workable cables for under ₹200"
         },
         {
-          "text": "Doubt 65W at this price",
+          "count": 17,
+          "pct": 56.7,
+          "text": "Unfamiliar brand name makes the 1-year warranty questionable"
+        },
+        {
+          "count": 11,
+          "pct": 36.7,
+          "text": "Price is way above my ₹200 budget ceiling"
+        },
+        {
+          "count": 8,
+          "pct": 26.7,
+          "text": "No mention of data transfer speeds or USB version"
+        },
+        {
           "count": 4,
-          "pct": 13.3
+          "pct": 13.3,
+          "text": "Too expensive for a basic accessory"
         },
         {
-          "text": "Still want a 2-pack deal",
           "count": 3,
-          "pct": 10.0
-        },
-        {
-          "text": "Unknown brand",
-          "count": 3,
-          "pct": 10.0
-        },
-        {
-          "text": "Plain packaging",
-          "count": 2,
-          "pct": 6.7
+          "pct": 10.0,
+          "text": "Need to see verified user reviews on long-term durability"
         }
       ],
       "top_likes": [
         {
-          "text": "18-month replacement warranty",
-          "count": 7,
-          "pct": 23.3
+          "count": 23,
+          "pct": 76.7,
+          "text": "65W laptop and phone fast charging"
         },
         {
-          "text": "Bend-test shown on pack",
-          "count": 7,
-          "pct": 23.3
+          "count": 22,
+          "pct": 73.3,
+          "text": "Long 2-meter length"
         },
         {
-          "text": "Warranty included",
-          "count": 6,
-          "pct": 20.0
+          "count": 21,
+          "pct": 70.0,
+          "text": "1-year replacement warranty gives peace of mind"
         },
         {
-          "text": "₹449 is fair",
-          "count": 6,
-          "pct": 20.0
+          "count": 20,
+          "pct": 66.7,
+          "text": "Durable nylon-braided build"
         },
         {
-          "text": "Braided build",
-          "count": 6,
-          "pct": 20.0
-        },
-        {
-          "text": "Good price",
-          "count": 6,
-          "pct": 20.0
+          "count": 1,
+          "pct": 3.3,
+          "text": "Good reach for awkward cafe wall outlets"
         }
       ],
       "quotes": [
         {
-          "persona_id": "p000",
-          "persona_name": "Priya",
-          "age": 19,
-          "city": "Pune",
-          "segment_name": "Value-for-money buyers",
+          "persona_id": "accessories_seg_2_p14",
+          "persona_name": "Sanya Mehra",
+          "age": 23,
+          "city": "Delhi",
+          "segment_name": "Quality & Longevity Seekers",
           "would_buy": "yes",
-          "purchase_intent": 5,
-          "main_reason": "₹449 is fair",
-          "quote": "At this price it beats my usual ₹299 cable."
+          "purchase_intent": 4.0,
+          "main_reason": "I hate fragile cables that die quickly, so a sturdy braided 65W cable backed by a 1-year warranty is completely worth ₹499.",
+          "quote": "I'm tired of flimsy cables giving out after just a few months, so a heavy-duty braided one with a full year warranty looks like a great buy."
         },
         {
-          "persona_id": "p012",
-          "persona_name": "Pooja",
-          "age": 40,
-          "city": "Kolkata",
-          "segment_name": "Durability skeptics",
+          "persona_id": "accessories_seg_4_p10",
+          "persona_name": "Meera Patel",
+          "age": 38,
+          "city": "Surat",
+          "segment_name": "Convenience & Portability Prioritizers",
           "would_buy": "yes",
-          "purchase_intent": 5,
-          "main_reason": "18-month replacement warranty",
-          "quote": "If it frays they'll replace it, so I'm not taking a risk."
+          "purchase_intent": 4.0,
+          "main_reason": "It offers simple, plug-and-play durability with a long cord that makes working and charging at home convenient.",
+          "quote": "A solid 2-meter cable saves so much trouble when the plug point is far from my work table. Since it's braided and has a warranty, it seems completely worth trying."
         },
         {
-          "persona_id": "p016",
-          "persona_name": "Kavya",
+          "persona_id": "accessories_seg_2_p3",
+          "persona_name": "Sameer Ansari",
           "age": 24,
-          "city": "Mumbai",
-          "segment_name": "Fast-charging power users",
+          "city": "Aligarh",
+          "segment_name": "Quality & Longevity Seekers",
           "would_buy": "yes",
-          "purchase_intent": 5,
-          "main_reason": "65W laptop charging",
-          "quote": "Same 65W cable, cheaper. Buying two."
+          "purchase_intent": 4.0,
+          "main_reason": "The combination of rugged braiding, 2-meter length, and a 1-year replacement warranty fits my shoot requirements at a fair price.",
+          "quote": "A 2m braided cable with a 1-year replacement warranty for ₹499 is a solid deal for outdoor shoots. I just hope the connector pin is reinforced enough so it doesn't give out after six months."
         },
         {
-          "persona_id": "p026",
-          "persona_name": "Aisha",
-          "age": 50,
-          "city": "Kolkata",
-          "segment_name": "Brand-trust shoppers",
-          "would_buy": "yes",
-          "purchase_intent": 5,
-          "main_reason": "Warranty builds trust",
-          "quote": "A replacement warranty makes an unknown brand less risky."
-        },
-        {
-          "persona_id": "p003",
-          "persona_name": "Rahul",
+          "persona_id": "accessories_seg_2_p2",
+          "persona_name": "Anjali Desai",
           "age": 19,
-          "city": "Indore",
-          "segment_name": "Value-for-money buyers",
-          "would_buy": "no",
-          "purchase_intent": 1,
-          "main_reason": "Still want a 2-pack deal",
-          "quote": "I'd wait for a 2-pack offer."
+          "city": "Surat",
+          "segment_name": "Quality & Longevity Seekers",
+          "would_buy": "maybe",
+          "purchase_intent": 4.0,
+          "main_reason": "The braided durability and 1-year warranty promise it won't stop working after just three or four months like cheap cables.",
+          "quote": "I'm sick of accessories giving up on me within months, so that 1-year warranty and braided wire look great. I'll probably wait for the next sale to see if it drops under ₹400 before ordering."
         },
         {
-          "persona_id": "p019",
-          "persona_name": "Suresh",
+          "persona_id": "accessories_seg_1_p3",
+          "persona_name": "Arjun Nair",
+          "age": 24,
+          "city": "Bengaluru",
+          "segment_name": "Value & Budget Optimizers",
+          "would_buy": "maybe",
+          "purchase_intent": 3.0,
+          "main_reason": "The specs are impressive for laptop charging and durability, but ₹499 is too close to my ceiling when I usually look for functional cables under ₹400.",
+          "quote": "The 65W PD spec and 2-meter braided wire are practical for charging my laptop, but ₹499 is steep for a basic cable. I'll probably wait for a sale to drop it to around ₹399."
+        },
+        {
+          "persona_id": "accessories_seg_3_p14",
+          "persona_name": "Pooja Sharma",
+          "age": 20,
+          "city": "Indore",
+          "segment_name": "Performance & Functionality Purists",
+          "would_buy": "maybe",
+          "purchase_intent": 3.0,
+          "main_reason": "I've wasted money on cables that promised fast charging but didn't support my phone's protocol, so I need to check user reviews about real speeds and heating first.",
+          "quote": "It looks well-built, but 65W on paper means nothing if it doesn't trigger real fast charging on my phone. I would have to dig through the reviews for heating complaints before spending ₹499."
+        },
+        {
+          "persona_id": "accessories_seg_4_p2",
+          "persona_name": "Nithya Menon",
+          "age": 24,
+          "city": "Bengaluru",
+          "segment_name": "Convenience & Portability Prioritizers",
+          "would_buy": "maybe",
+          "purchase_intent": 3.0,
+          "main_reason": "While 65W charging is great for working remotely, 2 meters is a bit too long and cumbersome for portable setups without a dedicated strap.",
+          "quote": "The 65W charging is perfect for my laptop at cafes, but a 2-meter cable is definitely going to clutter my bag unless it has a neat organizer tie."
+        },
+        {
+          "persona_id": "accessories_seg_2_p17",
+          "persona_name": "Vikram Reddy",
           "age": 28,
           "city": "Bengaluru",
-          "segment_name": "Fast-charging power users",
-          "would_buy": "no",
-          "purchase_intent": 1,
-          "main_reason": "Doubt 65W at this price",
-          "quote": "Cheaper makes me doubt the chip inside."
-        },
-        {
-          "persona_id": "p011",
-          "persona_name": "Aditya",
-          "age": 39,
-          "city": "Mumbai",
-          "segment_name": "Durability skeptics",
-          "would_buy": "no",
-          "purchase_intent": 2,
-          "main_reason": "Want to see real reviews",
-          "quote": "Warranty is good, but I'll wait for a few reviews."
-        },
-        {
-          "persona_id": "p028",
-          "persona_name": "Shreya",
-          "age": 30,
-          "city": "Bengaluru",
-          "segment_name": "Convenience & gift buyers",
-          "would_buy": "no",
-          "purchase_intent": 2,
-          "main_reason": "Plain packaging",
-          "quote": "Still a bit plain to gift."
+          "segment_name": "Quality & Longevity Seekers",
+          "would_buy": "maybe",
+          "purchase_intent": 3.0,
+          "main_reason": "I prioritize trusted brands for power delivery to protect my devices, so I need proof that their warranty support is actually responsive.",
+          "quote": "The 65W output and replacement warranty look solid for ₹499, but I usually stick to known brands for my work setup. I'd need to check reviews to see if their support actually honors the warranty before buying."
         }
       ],
       "insights": {
-        "headline": "At ₹449 with an 18-month warranty, purchase intent doubles to over 60%, led by value buyers and durability skeptics.",
-        "overall_verdict": "launch",
         "best_segments": [
           {
-            "segment_name": "Value-for-money buyers",
-            "why": "₹449 now beats replacing cheap cables, and the warranty removes the risk."
+            "segment_name": "Quality & Longevity Seekers",
+            "why": "They showed the highest purchase intent (37.5% Yes) and the highest median willingness to pay (₹424), driven by the braided build and 1-year warranty."
           },
           {
-            "segment_name": "Durability skeptics",
-            "why": "A replacement warranty on the box makes the bend-test claim believable."
+            "segment_name": "Convenience & Portability Prioritizers",
+            "why": "They appreciate the 2-meter length for awkward plug placements and showed a 25% Yes rate, though their willingness to pay is capped at ₹375."
           }
         ],
-        "weakest_segments": [
-          {
-            "segment_name": "Brand-trust shoppers",
-            "why": "Still wary of an unknown brand, though the warranty helps."
-          },
-          {
-            "segment_name": "Fast-charging power users",
-            "why": "Some now doubt a ₹449 cable can safely deliver 65W."
-          }
+        "caveat": "This report is based on simulated consumer data and should be validated with real-world A/B testing and actual sales metrics.",
+        "headline": "With 56.7% of buyers questioning the warranty due to brand unfamiliarity and willingness to pay peaking at ₹424, the ₹499 price point requires adjustment.",
+        "overall_verdict": "launch_with_changes",
+        "price_insight": "The ₹499 asking price is too high across the board. Even your most receptive segment (Quality & Longevity Seekers) has a median willingness to pay of only ₹424. To drive initial sales and build the reviews needed to justify a premium, consider launching at ₹399.",
+        "recommended_target_segment": "Quality & Longevity Seekers",
+        "standout_quotes": [
+          "I'm tired of flimsy cables giving out after just a few months, so a heavy-duty braided one with a full year warranty looks like a great buy.",
+          "For ₹499, a 2-meter 65W braided cable is decent value for purely powering a laptop, but I need to see the data throughput specs before buying.",
+          "The specs and warranty sound fine on paper, but claims are cheap. I need to see what the 1-star reviews say about its real-world durability before adding it to my cart."
         ],
-        "price_insight": "Most AI customers would pay ₹449 or more, so the new price sits comfortably inside their range.",
         "top_3_objections": [
           {
-            "objection": "Doubt 65W at this price",
+            "objection": "Can easily find workable cables for under ₹200",
             "segments_affected": [
-              "Fast-charging power users"
+              "Value & Budget Optimizers",
+              "Skeptical Critics"
             ]
           },
           {
-            "objection": "Unknown brand",
+            "objection": "Unfamiliar brand name makes the 1-year warranty questionable",
             "segments_affected": [
-              "Brand-trust shoppers"
+              "Quality & Longevity Seekers",
+              "Skeptical Critics",
+              "Convenience & Portability Prioritizers"
             ]
           },
           {
-            "objection": "Want to see real reviews first",
+            "objection": "No mention of data transfer speeds or USB version",
             "segments_affected": [
-              "Durability skeptics"
+              "Performance & Functionality Purists"
             ]
           }
         ],
         "top_3_strengths": [
-          "Fair price",
-          "18-month replacement warranty",
-          "Braided 65W build"
+          "65W laptop and phone fast charging (76.7% liked)",
+          "Long 2-meter length (73.3% liked)",
+          "1-year replacement warranty gives peace of mind (70.0% liked)"
         ],
-        "standout_quotes": [
-          "If it frays they'll replace it, so I'm not taking a risk."
-        ],
-        "recommended_target_segment": "Value-for-money buyers",
-        "caveat": "These are AI-simulated customers; validate with a small real-customer test before scaling."
+        "weakest_segments": [
+          {
+            "segment_name": "Value & Budget Optimizers",
+            "why": "They had a 0% Yes rate and an 87.5% No rate, citing that they can easily find basic cables for under ₹200."
+          },
+          {
+            "segment_name": "Performance & Functionality Purists",
+            "why": "They had a 0% Yes rate because the product listing lacks crucial technical specifications like data transfer speeds and USB version."
+          }
+        ]
       }
     }
   ],
   "suggestions": [
     {
-      "variant_id": "v1",
-      "title": "₹449 with an 18-month replacement warranty",
       "changes": [
-        "Price ₹799 → ₹449",
-        "Add an 18-month replacement warranty",
-        "Show the bend test on the box"
+        "Reduced price from ₹799 to ₹499",
+        "Added a 1-year replacement warranty to the product description"
       ],
+      "expected_effect": "Quality & Longevity Seekers will convert strongly as the price hits their ₹500 ceiling, and the explicit warranty removes the risk of buying from an unknown brand.",
+      "imagen_prompt": "A clean, modern cardboard box for a USB-C cable. The box is matte black with bold orange accents. The front label features a sleek illustration of a braided cable, a prominent '65W' icon, and a bright '1-Year Warranty' badge. Professional studio lighting, soft gray background.",
       "objections_addressed": [
-        "Too expensive for a cable",
-        "No warranty mentioned"
+        "Priced well above my 500 rupee ceiling",
+        "Unknown brand with no clear local warranty or service support"
       ],
-      "expected_effect": "Value buyers and durability skeptics should respond better: lower price and lower risk.",
-      "risk": "Power users may doubt a cheaper cable delivers 65W safely.",
+      "risk": "Profit margins will be significantly compressed at the ₹499 price point.",
+      "title": "Price Drop & Warranty Added",
       "updated_product": {
-        "product_name": "WeaveCharge 65W USB-C Cable",
-        "product_description": "Same 2 m braided 65W cable, now with an 18-month replacement warranty and the bend test shown on the box.",
-        "price_inr": 449,
+        "channel": "E-commerce marketplace",
         "pack_size": "1 cable, 2 m",
-        "channel": "E-commerce marketplace"
+        "price_inr": 499.0,
+        "product_description": "Nylon-braided USB-C to USB-C cable, 2 m, 65W fast charging for phones and laptops, 10,000-bend tested. Backed by a 1-Year Replacement Warranty.",
+        "product_name": "WeaveCharge 65W USB-C Cable"
       },
-      "imagen_prompt": "Clean product packshot of a coiled grey nylon-braided USB-C cable on a matte white box showing an 18-month warranty badge and a bend-test icon, soft studio light, white background."
+      "variant_id": "v1"
     },
     {
-      "variant_id": "v2",
-      "title": "Bundle with a 20W adapter for ₹999",
       "changes": [
-        "Add a 20W USB-C wall adapter",
-        "Price ₹799 → ₹999 for the bundle"
+        "Reduced price to ₹499",
+        "Added '480Mbps data transfer' and 'safety certified' to the description"
       ],
+      "expected_effect": "Performance & Functionality Purists will reconsider the product now that the exact data throughput and safety specs are transparent, combined with a price that aligns with market norms.",
+      "imagen_prompt": "A minimalist white tech packaging box for a charging cable. The front label has clean typography highlighting '65W Power', '480Mbps Data', and a 'Safety Certified' shield icon. A subtle image of a silver braided cable is on the side. Bright, clinical lighting, pure white background.",
       "objections_addressed": [
-        "Too expensive for a cable"
+        "No data transfer speed mentioned",
+        "Priced well above my 500 rupee ceiling"
       ],
-      "expected_effect": "Gift buyers and first-time USB-C users get a complete kit, so the price feels justified.",
-      "risk": "Value buyers who already own an adapter will see it as a more expensive cable.",
+      "risk": "Stating 480Mbps (standard USB 2.0 speed) might still deter hardcore purists who are looking for high-speed USB 3.2 data transfer.",
+      "title": "Spec Clarity & Price Drop",
       "updated_product": {
-        "product_name": "WeaveCharge 65W USB-C Cable + 20W Adapter",
-        "product_description": "2 m braided 65W USB-C cable bundled with a 20W USB-C wall adapter.",
-        "price_inr": 999,
-        "pack_size": "1 cable + 1 adapter",
-        "channel": "E-commerce marketplace"
+        "channel": "E-commerce marketplace",
+        "pack_size": "1 cable, 2 m",
+        "price_inr": 499.0,
+        "product_description": "Nylon-braided USB-C to USB-C cable, 2 m, 65W fast charging, 480Mbps data transfer, safety certified, 10,000-bend tested.",
+        "product_name": "WeaveCharge 65W USB-C Cable"
       },
-      "imagen_prompt": null
+      "variant_id": "v2"
+    },
+    {
+      "changes": [
+        "Changed pack size to 2 cables",
+        "Updated description to highlight home/office convenience",
+        "Maintained the ₹799 price point"
+      ],
+      "expected_effect": "Convenience & Portability Prioritizers will see high value in getting two long cables (effectively ₹400 each) for different rooms or travel, overcoming the price objection without dropping the absolute cart value.",
+      "imagen_prompt": "A premium rectangular retail box for a 2-pack of charging cables. The box is dark blue with silver text. The front graphic clearly shows two separate coiled braided cables. Text prominently highlights '2-Pack' and '2 Meters Each'. Well-lit, lifestyle desk background out of focus.",
+      "objections_addressed": [
+        "Priced well above my 500 rupee ceiling"
+      ],
+      "risk": "The ₹799 upfront cost might still deter pure budget shoppers who only want to spend ₹350 total and don't need a second cable.",
+      "title": "2-Pack Value Bundle",
+      "updated_product": {
+        "channel": "E-commerce marketplace",
+        "pack_size": "2 cables, 2 m each",
+        "price_inr": 799.0,
+        "product_description": "Twin pack of nylon-braided USB-C to USB-C cables, 2 m each. 65W fast charging for phones and laptops, 10,000-bend tested. Perfect for keeping one at home and one at the office.",
+        "product_name": "WeaveCharge 65W USB-C Cable (2-Pack)"
+      },
+      "variant_id": "v3"
     }
-  ]
+  ],
+  "source_test_id": "04a2d42750854b05"
 }
