@@ -37,6 +37,12 @@ const OUTCOMES = [
   { verb: "Run leaner", what: "with fewer failed launches", how: "Filter weak ideas before you buy stock, list or advertise" },
 ];
 
+const MARKETS = [
+  { tag: "Today", title: "Indian shoppers, prices in ₹", body: "Every AI customer comes from real Amazon India reviews: their budgets, cities, habits and complaints." },
+  { tag: "How a market is added", title: "Load its reviews, rebuild the panel", body: "The same pipeline turns Japanese, Indonesian or Thai reviews into local AI customers. No new model or prompts needed." },
+  { tag: "Ready in the data", title: "Answers in the shopper's own language", body: "Personas already know their preferred language, so quotes can come back in Hindi, Tamil, Bahasa or Japanese." },
+];
+
 const STEPS: { title: string; body: string; tech: string[] }[] = [
   { title: "Real shopper reviews", body: "6,800+ Amazon India reviews, cleaned and stored, grouped into three category panels.", tech: ["BigQuery"] },
   { title: "What drives each buyer", body: "Every review becomes structured signals: priorities, complaints, price sensitivity, dealbreakers.", tech: ["BigQuery AI", "Gemini Flash"] },
@@ -77,10 +83,11 @@ export default function Home() {
                 See a finished test
               </Link>
             </div>
-            <dl className="mt-10 grid max-w-lg grid-cols-3 gap-4 border-t border-white/10 pt-6">
+            <dl className="mt-10 grid max-w-xl grid-cols-2 gap-4 border-t border-white/10 pt-6 sm:grid-cols-4">
               <div><dt className="text-xs text-slate-400">Real reviews</dt><dd className="text-2xl font-semibold">6,800+</dd></div>
               <div><dt className="text-xs text-slate-400">Shopper panels</dt><dd className="text-2xl font-semibold">3</dd></div>
               <div><dt className="text-xs text-slate-400">Time per test</dt><dd className="text-2xl font-semibold">~1 min</dd></div>
+              <div><dt className="text-xs text-slate-400">Built for</dt><dd className="text-2xl font-semibold">India ₹</dd></div>
             </dl>
           </div>
           <HeroPreview />
@@ -191,6 +198,23 @@ export default function Home() {
               </li>
             ))}
           </ol>
+        </div>
+      </section>
+
+      {/* Market scope: honest about today, clear about the path */}
+      <section className="border-y border-slate-200 bg-white">
+        <div className="mx-auto max-w-6xl px-4 py-16">
+          <p className="text-sm font-semibold uppercase tracking-wide text-indigo-600">India first, Asia next</p>
+          <h2 className="mt-2 max-w-2xl text-3xl font-semibold tracking-tight">Proven on Indian shoppers. Built to travel.</h2>
+          <div className="mt-8 grid gap-6 md:grid-cols-3">
+            {MARKETS.map((m) => (
+              <div key={m.title} className="rounded-xl bg-slate-50 p-5">
+                <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">{m.tag}</p>
+                <h3 className="mt-1 text-lg font-semibold text-slate-900">{m.title}</h3>
+                <p className="mt-2 text-sm text-slate-600">{m.body}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 

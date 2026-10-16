@@ -1,6 +1,6 @@
 # PersonaPulse
 
-**Self-serve AI focus groups for every small business in Asia.** Test a product, price or pack on AI
+**Self-serve AI focus groups for small businesses, built and proven in India, designed for Asia.** Test a product, price or pack on AI
 customers built from real shopper reviews, and see who would buy, at what price, why not, and what to
 change, in about a minute instead of weeks.
 
@@ -165,6 +165,13 @@ but not used in this version.
 ## Deploy
 
 Cloud Run, step by step: [docs/deploy.md](docs/deploy.md).
+
+## Markets: India first, Asia next
+
+Today every AI customer comes from Amazon India reviews, with prices in ₹. A new market needs no new model or
+prompts: load that market's reviews, run the pipeline, and the panel is rebuilt with local shoppers. Personas
+already carry a preferred language (Hindi, Tamil, Bengali and more were generated); quotes are kept in English
+for now and can be switched to the shopper's language with one setting (`QUOTE_LANGUAGE`).
 
 ## Limitations
 
