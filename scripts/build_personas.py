@@ -34,6 +34,9 @@ from app.panels import PANELS
 MARKET = "urban and semi-urban India"
 DEMOGRAPHIC_MIX = "age 18-24: 30%, 25-34: 35%, 35-49: 25%, 50+: 10%; metro 50%, tier-2 35%, tier-3 15%"
 EXTRA_REVIEWS = 12
+# Prompt 4 writes each quote in the persona's preferred_language. Keep quotes in English for now;
+# the language Gemini chose is kept as original_preferred_language. Set to "" to allow any language.
+QUOTE_LANGUAGE = os.environ.get("QUOTE_LANGUAGE", "English")
 MAX_REVIEW_CHARS = 600
 
 
@@ -117,6 +120,9 @@ async def build_segment(seg: dict, count: int, reviews: list[dict]) -> list[dict
         p["segment_id"], p["segment_name"], p["panel"] = seg["segment_id"], seg["name"], seg["panel"]
         p["memories_claimed"] = len(p.get("memories") or [])
         p["memories"] = grounded(p.get("memories"), texts)
+        if QUOTE_LANGUAGE and p.get("preferred_language") != QUOTE_LANGUAGE:
+            p["original_preferred_language"] = p.get("preferred_language")
+            p["preferred_language"] = QUOTE_LANGUAGE
         out.append(p)
     failed = sum(not ok for _, ok in results)
     print(f"  {seg['segment_id']} {seg['name']}: {len(out)}/{count} personas"
